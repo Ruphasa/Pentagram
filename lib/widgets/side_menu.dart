@@ -1,5 +1,11 @@
 // (Salin kode SideMenu dari jawaban sebelumnya)
 import 'package:flutter/material.dart';
+import 'package:pentagram/page/mutasi_keluarga/daftar_page.dart';
+import 'package:pentagram/page/mutasi_keluarga/tambah_page.dart';
+import 'package:pentagram/page/manajemen_pengguna/daftar_pengguna.dart';
+import 'package:pentagram/page/manajemen_pengguna/tambah_pengguna.dart';
+import 'package:pentagram/page/channel_transfer/daftar_channel.dart';
+import 'package:pentagram/page/channel_transfer/tambah_channel.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({Key? key}) : super(key: key);
@@ -39,17 +45,121 @@ class SideMenu extends StatelessWidget {
                   leading: const Icon(Icons.people),
                   title: const Text("Kependudukan"),
                   children: <Widget>[
-                    DrawerListTile(title: "Data Warga & Rumah", icon: Icons.home_work, onTap: () {}, isSubMenu: true),
-                     DrawerListTile(title: "Penerimaan Warga", icon: Icons.person_add, onTap: () {}, isSubMenu: true),
-                     DrawerListTile(title: "Mutasi Keluarga", icon: Icons.transfer_within_a_station, onTap: () {}, isSubMenu: true),
+                    DrawerListTile(
+                      title: "Data Warga & Rumah",
+                      icon: Icons.home_work,
+                      onTap: () {},
+                      isSubMenu: true,
+                    ),
+                    DrawerListTile(
+                      title: "Penerimaan Warga",
+                      icon: Icons.person_add,
+                      onTap: () {},
+                      isSubMenu: true,
+                    ),
+                    // 🔹 Submenu Mutasi Keluarga
+                    ExpansionTile(
+                      leading: const Icon(Icons.transfer_within_a_station),
+                      title: const Text("Mutasi Keluarga"),
+                      children: [
+                        DrawerListTile(
+                          title: "Daftar",
+                          icon: Icons.list_alt,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DaftarMutasiPage(), // tanpa const
+                              ),
+                            );
+                          },
+                          isSubMenu: true,
+                        ),
+                        DrawerListTile(
+                          title: "Tambah",
+                          icon: Icons.add,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TambahMutasiPage(), // tanpa const
+                              ),
+                            );
+                          },
+                          isSubMenu: true,
+                        ),
+                      ],
+                    ),
                   ],
                 ),
                 DrawerListTile(title: "Kegiatan & Broadcast", icon: Icons.campaign, onTap: () {}),
                 DrawerListTile(title: "Pesan Warga", icon: Icons.message, onTap: () {}),
                 const Divider(),
                 DrawerListTile(title: "Log Aktifitas", icon: Icons.history, onTap: () {}),
-                DrawerListTile(title: "Manajemen Pengguna", icon: Icons.manage_accounts, onTap: () {}),
-                DrawerListTile(title: "Channel Transfer", icon: Icons.sync_alt, onTap: () {}),
+                ExpansionTile(
+                  leading: const Icon(Icons.manage_accounts),
+                  title: const Text("Manajemen Pengguna"),
+                  children: [
+                    DrawerListTile(
+                      title: "Daftar Pengguna",
+                      icon: Icons.list,
+                      isSubMenu: true,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DaftarPenggunaPage(), // tanpa const
+                          ),
+                        );
+                      },
+                    ),
+                    DrawerListTile(
+                      title: "Tambah Pengguna",
+                      icon: Icons.person_add,
+                      isSubMenu: true,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TambahPenggunaPage(), // tanpa const
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                ExpansionTile(
+                  leading: const Icon(Icons.sync_alt),
+                  title: const Text("Channel Transfer"),
+                  children: [
+                    DrawerListTile(
+                      title: "Daftar Channel",
+                      icon: Icons.list,
+                      isSubMenu: true,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DaftarChannelPage(), // tanpa const
+                          ),
+                        );
+                      },
+                    ),
+                    DrawerListTile(
+                      title: "Tambah Channel",
+                      icon: Icons.add,
+                      isSubMenu: true,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TambahChannelPage(), // tanpa const
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
