@@ -6,6 +6,7 @@ import 'package:pentagram/page/manajemen_pengguna/daftar_pengguna.dart';
 import 'package:pentagram/page/manajemen_pengguna/tambah_pengguna.dart';
 import 'package:pentagram/page/channel_transfer/daftar_channel.dart';
 import 'package:pentagram/page/channel_transfer/tambah_channel.dart';
+import 'package:pentagram/widgets/profile_dropdown.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({Key? key}) : super(key: key);
@@ -164,17 +165,8 @@ class SideMenu extends StatelessWidget {
             ),
           ),
           const Divider(),
-          ListTile(
-            leading: const CircleAvatar(
-              child: Icon(Icons.person),
-            ),
-            title: const Text("Admin Jawara"),
-            subtitle: const Text("admin@gmail.com"),
-            trailing: IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {},
-            ),
-          ),
+          const ProfileDropdown(),
+          const SizedBox(height: 16),
         ],
       ),
     );
