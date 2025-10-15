@@ -134,7 +134,9 @@ class SideMenu extends StatelessWidget {
                       title: 'Kegiatan - Tambah', 
                       icon: Icons.plus_one, 
                       isSubMenu: true,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, '/activity/add');
+                      },
                     ),
                     DrawerListTile(
                       title: 'Broadcast - Daftar', 

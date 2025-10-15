@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pentagram/page/activity_broadcast/activity_add.dart';
 import 'package:pentagram/page/dashboard.dart';
 import 'package:pentagram/page/activity_broadcast/activity_view.dart';
 import 'package:pentagram/page/login/login_page.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/': (ctx) => const DashboardScreen(),
         '/login': (ctx) => const LoginPage(),
         '/activity/view': (ctx) => const ActivityView(),
+        '/activity/add': (ctx) => const ActivityAdd()
       },
     );
   }
