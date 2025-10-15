@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pentagram/page/activity_broadcast/activity_add.dart';
-import 'package:pentagram/page/dashboard.dart';
-import 'package:pentagram/page/activity_broadcast/activity_view.dart';
-import 'package:pentagram/page/login/login_page.dart';
+import 'package:pentagram/pages/activity_broadcast/activity_add.dart';
+import 'package:pentagram/pages/dashboard.dart';
+import 'package:pentagram/pages/activity_broadcast/activity_view.dart';
+import 'package:pentagram/pages/login/login_page.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/page/activity_broadcast/data/activities.dart';
+import 'package:pentagram/pages/activity_broadcast/data/activities.dart';
 import 'package:pentagram/widgets/side_menu.dart';
-import 'package:pentagram/page/activity_broadcast/activity_detail.dart';
+import 'package:pentagram/pages/activity_broadcast/activity_detail.dart';
 
 class ActivityView extends StatelessWidget {
   const ActivityView({super.key});

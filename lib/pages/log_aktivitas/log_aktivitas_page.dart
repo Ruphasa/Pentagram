@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/widgets/side_menu.dart';
-import 'package:pentagram/page/log_aktivitas/aktivitas_data.dart';
-import 'package:pentagram/page/log_aktivitas/aktivitas_table.dart';
-import 'package:pentagram/page/log_aktivitas/filter_dialog.dart';
+import 'package:pentagram/pages/log_aktivitas/aktivitas_data.dart';
+import 'package:pentagram/pages/log_aktivitas/aktivitas_table.dart';
+import 'package:pentagram/pages/log_aktivitas/filter_dialog.dart';
 
 class LogAktivitasPage extends StatefulWidget {
   const LogAktivitasPage({super.key});

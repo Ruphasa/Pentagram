@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/page/mutasi_keluarga/daftar_page.dart';
-import 'package:pentagram/page/mutasi_keluarga/tambah_page.dart';
-import 'package:pentagram/page/manajemen_pengguna/daftar_pengguna.dart';
-import 'package:pentagram/page/manajemen_pengguna/tambah_pengguna.dart';
-import 'package:pentagram/page/channel_transfer/daftar_channel.dart';
-import 'package:pentagram/page/channel_transfer/tambah_channel.dart';
+import 'package:pentagram/pages/mutasi_keluarga/daftar_page.dart';
+import 'package:pentagram/pages/mutasi_keluarga/tambah_page.dart';
+import 'package:pentagram/pages/manajemen_pengguna/daftar_pengguna.dart';
+import 'package:pentagram/pages/manajemen_pengguna/tambah_pengguna.dart';
+import 'package:pentagram/pages/channel_transfer/daftar_channel.dart';
+import 'package:pentagram/pages/channel_transfer/tambah_channel.dart';
 import 'package:pentagram/widgets/profile_dropdown.dart';
-import 'package:pentagram/page/log_aktivitas/log_aktivitas_page.dart';
+import 'package:pentagram/pages/log_aktivitas/log_aktivitas_page.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
