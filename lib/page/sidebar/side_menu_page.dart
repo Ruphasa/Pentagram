@@ -223,18 +223,32 @@ class _MenuLabel extends StatelessWidget {
 class _LogoutButton extends StatelessWidget {
   const _LogoutButton();
 
+  void _logout(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Logout berhasil!',
+          style: TextStyle(color: Colors.black), 
+        ),
+        backgroundColor: Colors.cyan,
+        duration: Duration(seconds: 2),
+      ),
+    );
+
+    // Arahkan ke halaman login
+    Navigator.pushReplacementNamed(context, '/login');
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      leading: const Icon(Icons.logout, color: _kTextMuted, size: 20),
+      leading: const Icon(Icons.logout, color: Colors.red, size: 20),
       title: const Text(
         'Logout',
-        style: TextStyle(color: _kText, fontSize: 14),
+        style: TextStyle(color: Colors.red, fontSize: 14),
       ),
-      onTap: () {
-        // Handle logout
-      },
+      onTap: () => _logout(context),
     );
   }
 }
