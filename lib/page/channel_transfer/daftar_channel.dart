@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../responsive.dart';
-import '../../widgets/side_menu.dart';
+import 'package:pentagram/responsive.dart';
+import 'package:pentagram/widgets/side_menu.dart';
 
 class DaftarChannelPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -9,25 +9,25 @@ class DaftarChannelPage extends StatelessWidget {
 
   final List<Map<String, String>> channelData = [
     {
-      "no": "1",
-      "nama": "Transfer via BCA",
-      "tipe": "bank",
-      "an": "RT Jawara Karangploso",
-      "thumbnail": "-",
+      'no': '1',
+      'nama': 'Transfer via BCA',
+      'tipe': 'bank',
+      'an': 'RT Jawara Karangploso',
+      'thumbnail': '-',
     },
     {
-      "no": "2",
-      "nama": "Gopay Ketua RT",
-      "tipe": "ewallet",
-      "an": "Budi Santoso",
-      "thumbnail": "-",
+      'no': '2',
+      'nama': 'Gopay Ketua RT',
+      'tipe': 'ewallet',
+      'an': 'Budi Santoso',
+      'thumbnail': '-',
     },
     {
-      "no": "3",
-      "nama": "QRIS Resmi RT 08",
-      "tipe": "qris",
-      "an": "RW 08 Karangploso",
-      "thumbnail": "-",
+      'no': '3',
+      'nama': 'QRIS Resmi RT 08',
+      'tipe': 'qris',
+      'an': 'RW 08 Karangploso',
+      'thumbnail': '-',
     },
   ];
 
@@ -40,7 +40,7 @@ class DaftarChannelPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          "Daftar Channel",
+          'Daftar Channel',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
         ),
         leading: !Responsive.isDesktop(context)
@@ -78,7 +78,7 @@ class DaftarChannelPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Daftar Channel",
+                        'Daftar Channel',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -96,12 +96,12 @@ class DaftarChannelPage extends StatelessWidget {
                         ),
                         child: const Row(
                           children: [
-                            Expanded(flex: 1, child: Text("NO")),
-                            Expanded(flex: 3, child: Text("NAMA")),
-                            Expanded(flex: 2, child: Text("TIPE")),
-                            Expanded(flex: 3, child: Text("A/N")),
-                            Expanded(flex: 2, child: Text("THUMBNAIL")),
-                            Expanded(flex: 1, child: Text("AKSI")),
+                            Expanded(flex: 1, child: Text('NO')),
+                            Expanded(flex: 3, child: Text('NAMA')),
+                            Expanded(flex: 2, child: Text('TIPE')),
+                            Expanded(flex: 3, child: Text('A/N')),
+                            Expanded(flex: 2, child: Text('THUMBNAIL')),
+                            Expanded(flex: 1, child: Text('AKSI')),
                           ],
                         ),
                       ),
@@ -140,7 +140,7 @@ class DaftarChannelPage extends StatelessWidget {
                             ],
                           ),
                         );
-                      }).toList(),
+                      }),
 
                       const SizedBox(height: 24),
 
@@ -160,7 +160,7 @@ class DaftarChannelPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const Text(
-                              "1",
+                              '1',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

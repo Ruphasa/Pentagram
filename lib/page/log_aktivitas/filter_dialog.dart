@@ -8,13 +8,10 @@ class FilterAktivitasDialog extends StatefulWidget {
   final Function(String, String, DateTime?, DateTime?) onApply;
 
   const FilterAktivitasDialog({
-    Key? key,
-    required this.initialDeskripsi,
-    required this.initialNamaPelaku,
+    required this.initialDeskripsi, required this.initialNamaPelaku, required this.onApply, super.key,
     this.initialDariTanggal,
     this.initialSampaiTanggal,
-    required this.onApply,
-  }) : super(key: key);
+  });
 
   @override
   State<FilterAktivitasDialog> createState() => _FilterAktivitasDialogState();

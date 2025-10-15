@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'page/dashboard.dart'; // <-- DISESUAIKAN DENGAN STRUKTUR ANDA
-import 'page/login/login_page.dart';
+import 'package:pentagram/page/dashboard.dart';
+import 'package:pentagram/page/login/login_page.dart';
 
 void main() {
   runApp(const MyApp());

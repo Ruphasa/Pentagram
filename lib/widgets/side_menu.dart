@@ -10,7 +10,7 @@ import 'package:pentagram/widgets/profile_dropdown.dart';
 import 'package:pentagram/page/log_aktivitas/log_aktivitas_page.dart';
 
 class SideMenu extends StatelessWidget {
-  const SideMenu({Key? key}) : super(key: key);
+  const SideMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class SideMenu extends StatelessWidget {
           const DrawerHeader(
             child: Center(
               child: Text(
-                "Jawara Pintar",
+                'Jawara Pintar',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -34,28 +34,28 @@ class SideMenu extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: [
                 DrawerListTile(
-                  title: "Dashboard",
+                  title: 'Dashboard',
                   icon: Icons.dashboard,
                   onTap: () {},
                 ),
                 ExpansionTile(
                   leading: const Icon(Icons.attach_money),
-                  title: const Text("Keuangan"),
+                  title: const Text('Keuangan'),
                   children: <Widget>[
                     DrawerListTile(
-                      title: "Pemasukan",
+                      title: 'Pemasukan',
                       icon: Icons.arrow_downward,
                       onTap: () {},
                       isSubMenu: true,
                     ),
                     DrawerListTile(
-                      title: "Pengeluaran",
+                      title: 'Pengeluaran',
                       icon: Icons.arrow_upward,
                       onTap: () {},
                       isSubMenu: true,
                     ),
                     DrawerListTile(
-                      title: "Laporan Keuangan",
+                      title: 'Laporan Keuangan',
                       icon: Icons.receipt_long,
                       onTap: () {},
                       isSubMenu: true,
@@ -64,16 +64,16 @@ class SideMenu extends StatelessWidget {
                 ),
                 ExpansionTile(
                   leading: const Icon(Icons.people),
-                  title: const Text("Kependudukan"),
+                  title: const Text('Kependudukan'),
                   children: <Widget>[
                     DrawerListTile(
-                      title: "Data Warga & Rumah",
+                      title: 'Data Warga & Rumah',
                       icon: Icons.home_work,
                       onTap: () {},
                       isSubMenu: true,
                     ),
                     DrawerListTile(
-                      title: "Penerimaan Warga",
+                      title: 'Penerimaan Warga',
                       icon: Icons.person_add,
                       onTap: () {},
                       isSubMenu: true,
@@ -81,10 +81,10 @@ class SideMenu extends StatelessWidget {
                     // 🔹 Submenu Mutasi Keluarga
                     ExpansionTile(
                       leading: const Icon(Icons.transfer_within_a_station),
-                      title: const Text("Mutasi Keluarga"),
+                      title: const Text('Mutasi Keluarga'),
                       children: [
                         DrawerListTile(
-                          title: "Daftar",
+                          title: 'Daftar',
                           icon: Icons.list_alt,
                           onTap: () {
                             Navigator.push(
@@ -98,14 +98,14 @@ class SideMenu extends StatelessWidget {
                           isSubMenu: true,
                         ),
                         DrawerListTile(
-                          title: "Tambah",
+                          title: 'Tambah',
                           icon: Icons.add,
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    TambahMutasiPage(), // tanpa const
+                                    const TambahMutasiPage(), // tanpa const
                               ),
                             );
                           },
@@ -116,29 +116,29 @@ class SideMenu extends StatelessWidget {
                   ],
                 ),
                 DrawerListTile(
-                  title: "Kegiatan & Broadcast",
+                  title: 'Kegiatan & Broadcast',
                   icon: Icons.campaign,
                   onTap: () {},
                 ),
                 DrawerListTile(
-                  title: "Pesan Warga",
+                  title: 'Pesan Warga',
                   icon: Icons.message,
                   onTap: () {},
                 ),
                 const Divider(),
                 ExpansionTile(
                   leading: const Icon(Icons.history),
-                  title: const Text("Log Aktivitas"),
+                  title: const Text('Log Aktivitas'),
                   children: <Widget>[
                     DrawerListTile(
-                      title: "Semua Aktivitas",
+                      title: 'Semua Aktivitas',
                       icon: Icons.history,
                       isSubMenu: true,
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LogAktivitasPage(),
+                            builder: (context) => const LogAktivitasPage(),
                           ),
                         );
                       },
@@ -148,10 +148,10 @@ class SideMenu extends StatelessWidget {
 
                 ExpansionTile(
                   leading: const Icon(Icons.manage_accounts),
-                  title: const Text("Manajemen Pengguna"),
+                  title: const Text('Manajemen Pengguna'),
                   children: [
                     DrawerListTile(
-                      title: "Daftar Pengguna",
+                      title: 'Daftar Pengguna',
                       icon: Icons.list,
                       isSubMenu: true,
                       onTap: () {
@@ -165,7 +165,7 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
                     DrawerListTile(
-                      title: "Tambah Pengguna",
+                      title: 'Tambah Pengguna',
                       icon: Icons.person_add,
                       isSubMenu: true,
                       onTap: () {
@@ -182,10 +182,10 @@ class SideMenu extends StatelessWidget {
                 ),
                 ExpansionTile(
                   leading: const Icon(Icons.sync_alt),
-                  title: const Text("Channel Transfer"),
+                  title: const Text('Channel Transfer'),
                   children: [
                     DrawerListTile(
-                      title: "Daftar Channel",
+                      title: 'Daftar Channel',
                       icon: Icons.list,
                       isSubMenu: true,
                       onTap: () {
@@ -199,7 +199,7 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
                     DrawerListTile(
-                      title: "Tambah Channel",
+                      title: 'Tambah Channel',
                       icon: Icons.add,
                       isSubMenu: true,
                       onTap: () {
@@ -207,7 +207,7 @@ class SideMenu extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                TambahChannelPage(), // tanpa const
+                                const TambahChannelPage(), // tanpa const
                           ),
                         );
                       },
@@ -228,12 +228,9 @@ class SideMenu extends StatelessWidget {
 
 class DrawerListTile extends StatelessWidget {
   const DrawerListTile({
-    Key? key,
-    required this.title,
-    required this.icon,
-    required this.onTap,
+    required this.title, required this.icon, required this.onTap, super.key,
     this.isSubMenu = false,
-  }) : super(key: key);
+  });
 
   final String title;
   final IconData icon;

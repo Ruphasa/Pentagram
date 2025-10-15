@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../responsive.dart';
-import '../widgets/dashboard_grid.dart';
-import '../widgets/side_menu.dart';
+import 'package:pentagram/responsive.dart';
+import 'package:pentagram/widgets/dashboard_grid.dart';
+import 'package:pentagram/widgets/side_menu.dart';
 
 class DashboardScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

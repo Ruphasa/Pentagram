@@ -45,14 +45,14 @@ class _ProfileDropdownState extends State<ProfileDropdown> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ListTile(
-                    leading: const CircleAvatar(
+                  const ListTile(
+                    leading: CircleAvatar(
                       backgroundColor: Color(0xFF6C63FF),
                       child: Icon(Icons.person, color: Colors.white),
                     ),
-                    title: const Text("Admin Jawara",
+                    title: Text('Admin Jawara',
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: const Text("admin1@gmail.com",
+                    subtitle: Text('admin1@gmail.com',
                         style: TextStyle(color: Colors.black54, fontSize: 12)),
                   ),
                   const Divider(height: 0),
@@ -70,7 +70,7 @@ class _ProfileDropdownState extends State<ProfileDropdown> {
                           Icon(Icons.logout, color: Colors.redAccent),
                           SizedBox(width: 10),
                           Text(
-                            "Logout",
+                            'Logout',
                             style: TextStyle(
                                 color: Colors.redAccent,
                                 fontWeight: FontWeight.w500),
@@ -119,27 +119,27 @@ class _ProfileDropdownState extends State<ProfileDropdown> {
         onTap: _toggleDropdown,
         borderRadius: BorderRadius.circular(12),
         hoverColor: Colors.grey.shade200,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
+        child: const Padding(
+          padding: EdgeInsets.all(10),
           child: Row(
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 backgroundColor: Color(0xFF6C63FF),
                 child: Icon(Icons.person, color: Colors.white),
               ),
-              const SizedBox(width: 10),
-              const Expanded(
+              SizedBox(width: 10),
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Admin Jawara",
+                    Text('Admin Jawara',
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("admin1@gmail.com",
+                    Text('admin1@gmail.com',
                         style: TextStyle(color: Colors.black54, fontSize: 12)),
                   ],
                 ),
               ),
-              const Icon(Icons.keyboard_arrow_down, color: Colors.black54),
+              Icon(Icons.keyboard_arrow_down, color: Colors.black54),
             ],
           ),
         ),
