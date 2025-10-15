@@ -17,13 +17,11 @@ class DashboardScreen extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Tampilkan sidebar jika desktop
             if (Responsive.isDesktop(context))
               const Expanded(
                 child: SideMenu(),
               ),
             
-            // Konten Utama
             Expanded(
               flex: 5,
               child: SingleChildScrollView(
@@ -31,7 +29,6 @@ class DashboardScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Tombol menu untuk mobile
                     if (!Responsive.isDesktop(context))
                       IconButton(
                         icon: const Icon(Icons.menu),
@@ -39,7 +36,6 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     const SizedBox(height: 18.0),
 
-                    // Cukup panggil DashboardGrid widget
                     const DashboardGrid(),
                   ],
                 ),
