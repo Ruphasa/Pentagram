@@ -161,7 +161,7 @@ class _SideMenuHeader extends StatelessWidget {
             radius: 20,
             backgroundColor: _kPurple,
             child: Text(
-              'E',
+              'A',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
@@ -176,7 +176,7 @@ class _SideMenuHeader extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Evalin',
+                  'Admin',
                   style: TextStyle(
                     color: _kText,
                     fontSize: 16,
@@ -184,7 +184,7 @@ class _SideMenuHeader extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Guru',
+                  'Administrator',
                   style: TextStyle(
                     color: _kTextMuted,
                     fontSize: 12,
