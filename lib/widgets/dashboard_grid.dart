@@ -7,6 +7,24 @@ import 'package:pentagram/widgets/info_card.dart';
 class DashboardGrid extends StatelessWidget {
   const DashboardGrid({super.key});
 
+  Widget _buildLegendItem(String label, Color color) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(color: color, shape: BoxShape.rectangle),
+        ),
+        const SizedBox(width: 4),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<DashboardItem> dashboardItems = [
@@ -30,16 +48,114 @@ class DashboardGrid extends StatelessWidget {
         icon: Icons.category,
         color: const Color(0xFFE8F5E9),
         width: 300,
-        content: Row(
-          children: [
-            Container(width: 40, height: 30, color: Colors.blue),
-            const SizedBox(width: 8),
-            Container(width: 40, height: 30, color: Colors.orange),
-            const SizedBox(width: 8),
-            Container(width: 40, height: 30, color: Colors.purple),
-            const SizedBox(width: 8),
-            Container(width: 40, height: 30, color: Colors.yellow),
-          ],
+        content: Container(
+          height: 250,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Expanded(
+                child: PieChart(
+                  PieChartData(
+                    sectionsSpace: 2,
+                    centerSpaceRadius: 0,
+                    sections: [
+                      PieChartSectionData(
+                        color: const Color(0xFF4285F4), // Blue
+                        value: 100,
+                        title: '100%',
+                        radius: 80,
+                        titleStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      PieChartSectionData(
+                        color: const Color(0xFF34A853), // Green
+                        value: 0,
+                        title: '0%',
+                        radius: 80,
+                        titleStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      PieChartSectionData(
+                        color: const Color(0xFFFF9800), // Orange
+                        value: 0,
+                        title: '0%',
+                        radius: 80,
+                        titleStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      PieChartSectionData(
+                        color: const Color(0xFF9C27B0), // Purple
+                        value: 0,
+                        title: '0%',
+                        radius: 80,
+                        titleStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      PieChartSectionData(
+                        color: const Color(0xFFE91E63), // Pink
+                        value: 0,
+                        title: '0%',
+                        radius: 80,
+                        titleStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      PieChartSectionData(
+                        color: const Color(0xFF2196F3), // Light Blue
+                        value: 0,
+                        title: '0%',
+                        radius: 80,
+                        titleStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                    pieTouchData: PieTouchData(enabled: false),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Legend
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 8,
+                runSpacing: 4,
+                children: [
+                  _buildLegendItem(
+                    'Komunitas & Sosial',
+                    const Color(0xFF4285F4),
+                  ),
+                  _buildLegendItem(
+                    'Kebersihan & Keamanan',
+                    const Color(0xFF34A853),
+                  ),
+                  _buildLegendItem('Keagamaan', const Color(0xFFFF9800)),
+                  _buildLegendItem('Pendidikan', const Color(0xFF9C27B0)),
+                  _buildLegendItem(
+                    'Kesehatan & Olahraga',
+                    const Color(0xFFE91E63),
+                  ),
+                  _buildLegendItem('Lainnya', const Color(0xFF2196F3)),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       DashboardItem(
