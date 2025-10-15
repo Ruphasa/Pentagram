@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/responsive.dart';
 import 'package:pentagram/widgets/side_menu.dart';
+import 'package:pentagram/widgets/app_header.dart';
 
 class DaftarPenggunaPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -25,20 +25,7 @@ class DaftarPenggunaPage extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       drawer: const SideMenu(),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Daftar Pengguna',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-        ),
-        leading: !Responsive.isDesktop(context)
-            ? IconButton(
-                icon: const Icon(Icons.menu, color: Colors.black),
-                onPressed: () => _scaffoldKey.currentState?.openDrawer(),
-              )
-            : null,
-      ),
+      appBar: const AppHeader(),
       backgroundColor: const Color(0xFFF4F7FB),
       body: SafeArea(
         child: SingleChildScrollView(
