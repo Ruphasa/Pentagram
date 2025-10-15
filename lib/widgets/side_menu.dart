@@ -8,6 +8,9 @@ import 'package:pentagram/page/channel_transfer/daftar_channel.dart';
 import 'package:pentagram/page/channel_transfer/tambah_channel.dart';
 import 'package:pentagram/widgets/profile_dropdown.dart';
 import 'package:pentagram/page/log_aktivitas/log_aktivitas_page.dart';
+import 'package:pentagram/page/keuangan/pemasukan_page.dart';
+import 'package:pentagram/page/keuangan/pengeluaran_page.dart';
+
 
 class SideMenu extends StatelessWidget {
   const SideMenu({Key? key}) : super(key: key);
@@ -39,26 +42,36 @@ class SideMenu extends StatelessWidget {
                   onTap: () {},
                 ),
                 ExpansionTile(
-                  leading: const Icon(Icons.attach_money),
-                  title: const Text("Keuangan"),
-                  children: <Widget>[
-                    DrawerListTile(
-                      title: "Pemasukan",
-                      icon: Icons.arrow_downward,
-                      onTap: () {},
-                      isSubMenu: true,
-                    ),
-                    DrawerListTile(
-                      title: "Pengeluaran",
-                      icon: Icons.arrow_upward,
-                      onTap: () {},
-                      isSubMenu: true,
-                    ),
-                    DrawerListTile(
-                      title: "Laporan Keuangan",
-                      icon: Icons.receipt_long,
-                      onTap: () {},
-                      isSubMenu: true,
+  leading: const Icon(Icons.attach_money),
+  title: const Text("Keuangan"),
+  children: <Widget>[
+    DrawerListTile(
+      title: "Pemasukan",
+      icon: Icons.arrow_downward,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const PemasukanPage()),
+        );
+      },
+      isSubMenu: true,
+    ),
+    DrawerListTile(
+      title: "Pengeluaran",
+      icon: Icons.arrow_upward,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const PengeluaranPage()),
+        );
+      },
+      isSubMenu: true,
+    ),
+    DrawerListTile(
+      title: "Laporan Keuangan",
+      icon: Icons.receipt_long,
+      onTap: () {},
+      isSubMenu: true,
                     ),
                   ],
                 ),
