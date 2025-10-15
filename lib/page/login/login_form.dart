@@ -10,7 +10,7 @@ class LoginHeader extends StatelessWidget {
       style: TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.bold,
-        color: Color(0xFF00FFFF),
+        color: Colors.cyan,
       ),
     );
   }
@@ -73,7 +73,7 @@ class _LoginFormState extends State<LoginForm> {
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF00FFFF),
+              color: Colors.cyan,
             ),
           ),
           const SizedBox(height: 8),
@@ -123,7 +123,7 @@ class _LoginFormState extends State<LoginForm> {
               borderSide: const BorderSide(color: Colors.white24, width: 1.5),
             ),
             focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF00FFFF), width: 2),
+              borderSide: BorderSide(color: Colors.cyan, width: 2),
             ),
             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           ),
@@ -144,7 +144,7 @@ class _LoginFormState extends State<LoginForm> {
           child: ElevatedButton(
             onPressed: _login,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF00FFFF),
+              backgroundColor: Colors.cyan,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               elevation: _isHoveringButton ? 8 : 2,
@@ -179,9 +179,9 @@ class _LoginFormState extends State<LoginForm> {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: const Color(0xFF00FFFF),
+                color: Colors.cyan,
                 decoration: _isHoveringRegister ? TextDecoration.underline : TextDecoration.none,
-                decorationColor: const Color(0xFF00FFFF),
+                decorationColor: Colors.cyan,
                 decorationThickness: 2,
               ),
             ),
