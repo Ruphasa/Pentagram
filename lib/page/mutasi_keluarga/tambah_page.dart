@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../responsive.dart';
-import '../../widgets/side_menu.dart';
+import 'package:pentagram/responsive.dart';
+import 'package:pentagram/widgets/side_menu.dart';
 
 class TambahMutasiPage extends StatefulWidget {
   const TambahMutasiPage({super.key});
@@ -30,7 +30,7 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          "Tambah Mutasi Keluarga",
+          'Tambah Mutasi Keluarga',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
         ),
         leading: !Responsive.isDesktop(context)
@@ -64,7 +64,7 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Buat Mutasi Keluarga",
+                      'Buat Mutasi Keluarga',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -74,13 +74,13 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
 
                     // Jenis Mutasi
                     const Text(
-                      "Jenis Mutasi",
+                      'Jenis Mutasi',
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
                       value: jenisMutasi,
-                      hint: const Text("-- Pilih Jenis Mutasi --"),
+                      hint: const Text('-- Pilih Jenis Mutasi --'),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -100,13 +100,13 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
 
                     // Keluarga
                     const Text(
-                      "Keluarga",
+                      'Keluarga',
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
                       value: keluarga,
-                      hint: const Text("-- Pilih Keluarga --"),
+                      hint: const Text('-- Pilih Keluarga --'),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -126,7 +126,7 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
 
                     // Alasan Mutasi
                     const Text(
-                      "Alasan Mutasi",
+                      'Alasan Mutasi',
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 8),
@@ -134,7 +134,7 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
                       maxLines: 3,
                       onChanged: (val) => alasanMutasi = val,
                       decoration: InputDecoration(
-                        hintText: "Masukkan alasan disini...",
+                        hintText: 'Masukkan alasan disini...',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -146,7 +146,7 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
 
                     // Tanggal Mutasi
                     const Text(
-                      "Tanggal Mutasi",
+                      'Tanggal Mutasi',
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 8),
@@ -158,10 +158,10 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
                             controller: TextEditingController(
                               text: tanggalMutasi == null
                                   ? ''
-                                  : "${tanggalMutasi!.day}/${tanggalMutasi!.month}/${tanggalMutasi!.year}",
+                                  : '${tanggalMutasi!.day}/${tanggalMutasi!.month}/${tanggalMutasi!.year}',
                             ),
                             decoration: InputDecoration(
-                              hintText: "--/--/----",
+                              hintText: '--/--/----',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -215,7 +215,7 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
                             foregroundColor: Colors.white, // tambahkan ini
                           ),
                           child: const Text(
-                            "Simpan",
+                            'Simpan',
                             style: TextStyle(color: Colors.white), // pastikan ini juga
                           ),
                         ),
@@ -238,7 +238,7 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
                             foregroundColor: Colors.grey, // tambahkan ini
                           ),
                           child: const Text(
-                            "Reset",
+                            'Reset',
                             style: TextStyle(color: Colors.grey), // pastikan ini juga
                           ),
                         ),

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import '../models/dashboard_item.dart';
+import 'package:pentagram/models/dashboard_item.dart';
 
 class InfoCard extends StatelessWidget {
   final DashboardItem item;
 
   const InfoCard({
-    Key? key,
-    required this.item,
-  }) : super(key: key);
+    required this.item, super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

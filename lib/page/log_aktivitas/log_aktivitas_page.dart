@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/widgets/side_menu.dart';
-import 'aktivitas_data.dart';
-import 'aktivitas_table.dart';
-import 'filter_dialog.dart';
+import 'package:pentagram/page/log_aktivitas/aktivitas_data.dart';
+import 'package:pentagram/page/log_aktivitas/aktivitas_table.dart';
+import 'package:pentagram/page/log_aktivitas/filter_dialog.dart';
 
 class LogAktivitasPage extends StatefulWidget {
-  const LogAktivitasPage({Key? key}) : super(key: key);
+  const LogAktivitasPage({super.key});
 
   @override
   State<LogAktivitasPage> createState() => _LogAktivitasPageState();

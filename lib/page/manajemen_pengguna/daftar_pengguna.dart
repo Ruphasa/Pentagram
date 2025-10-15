@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../responsive.dart';
-import '../../widgets/side_menu.dart';
+import 'package:pentagram/responsive.dart';
+import 'package:pentagram/widgets/side_menu.dart';
 
 class DaftarPenggunaPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -29,7 +29,7 @@ class DaftarPenggunaPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          "Daftar Pengguna",
+          'Daftar Pengguna',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
         ),
         leading: !Responsive.isDesktop(context)
@@ -64,7 +64,7 @@ class DaftarPenggunaPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Daftar Pengguna",
+                        'Daftar Pengguna',
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                       ),
                       ElevatedButton.icon(
@@ -77,7 +77,7 @@ class DaftarPenggunaPage extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                         ),
                         icon: const Icon(Icons.filter_list, color: Colors.white),
-                        label: const Text("Filter", style: TextStyle(color: Colors.white)),
+                        label: const Text('Filter', style: TextStyle(color: Colors.white)),
                       ),
                     ],
                   ),
@@ -89,11 +89,11 @@ class DaftarPenggunaPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: const Row(
                     children: [
-                      Expanded(flex: 1, child: Text("NO")),
-                      Expanded(flex: 3, child: Text("NAMA")),
-                      Expanded(flex: 4, child: Text("EMAIL")),
-                      Expanded(flex: 3, child: Text("STATUS REGISTRASI")),
-                      Expanded(flex: 1, child: Text("AKSI")),
+                      Expanded(flex: 1, child: Text('NO')),
+                      Expanded(flex: 3, child: Text('NAMA')),
+                      Expanded(flex: 4, child: Text('EMAIL')),
+                      Expanded(flex: 3, child: Text('STATUS REGISTRASI')),
+                      Expanded(flex: 1, child: Text('AKSI')),
                     ],
                   ),
                 ),
@@ -162,7 +162,7 @@ class DaftarPenggunaPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Text(
-                          "1",
+                          '1',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -173,7 +173,7 @@ class DaftarPenggunaPage extends StatelessWidget {
                           border: Border.all(color: Colors.grey.shade300),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Text("2"),
+                        child: const Text('2'),
                       ),
                       IconButton(
                         onPressed: () {},

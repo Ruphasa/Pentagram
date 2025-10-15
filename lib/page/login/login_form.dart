@@ -6,7 +6,7 @@ class LoginHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      "Jawara Pintar",
+      'Jawara Pintar',
       style: TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class _LoginFormState extends State<LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Masuk ke akun anda",
+            'Masuk ke akun anda',
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -78,13 +78,13 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 8),
           const Text(
-            "Login untuk mengakses sistem Jawara Pintar.",
+            'Login untuk mengakses sistem Jawara Pintar.',
             style: TextStyle(fontSize: 14, color: Colors.white70),
           ),
           const SizedBox(height: 32),
-          _buildTextField("Email", _emailController, false),
+          _buildTextField('Email', _emailController, false),
           const SizedBox(height: 24),
-          _buildTextField("Password", _passwordController, true),
+          _buildTextField('Password', _passwordController, true),
           const SizedBox(height: 32),
           _buildLoginButton(),
           const SizedBox(height: 20),
@@ -112,7 +112,7 @@ class _LoginFormState extends State<LoginForm> {
           obscureText: obscure,
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
-            hintText: "Masukkan $label disini",
+            hintText: 'Masukkan $label disini',
             hintStyle: const TextStyle(color: Colors.white38),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -150,7 +150,7 @@ class _LoginFormState extends State<LoginForm> {
               elevation: _isHoveringButton ? 8 : 2,
             ),
             child: const Text(
-              "Login",
+              'Login',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -167,7 +167,7 @@ class _LoginFormState extends State<LoginForm> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Belum punya akun? ", style: TextStyle(fontSize: 14, color: Colors.white70)),
+        const Text('Belum punya akun? ', style: TextStyle(fontSize: 14, color: Colors.white70)),
         MouseRegion(
           onEnter: (_) => setState(() => _isHoveringRegister = true),
           onExit: (_) => setState(() => _isHoveringRegister = false),
@@ -175,7 +175,7 @@ class _LoginFormState extends State<LoginForm> {
           child: GestureDetector(
             onTap: () => Navigator.pushReplacementNamed(context, '/register'),
             child: Text(
-              "Daftar",
+              'Daftar',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
