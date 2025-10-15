@@ -1,4 +1,3 @@
-// (Salin kode SideMenu dari jawaban sebelumnya)
 import 'package:flutter/material.dart';
 import 'package:pentagram/page/mutasi_keluarga/daftar_page.dart';
 import 'package:pentagram/page/mutasi_keluarga/tambah_page.dart';
@@ -36,12 +35,14 @@ class SideMenu extends StatelessWidget {
                 DrawerListTile(
                   title: 'Dashboard',
                   icon: Icons.dashboard,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, '/');
+                  },
                 ),
                 ExpansionTile(
                   leading: const Icon(Icons.attach_money),
                   title: const Text('Keuangan'),
-                  children: <Widget>[
+                  children: [
                     DrawerListTile(
                       title: 'Pemasukan',
                       icon: Icons.arrow_downward,
@@ -65,7 +66,7 @@ class SideMenu extends StatelessWidget {
                 ExpansionTile(
                   leading: const Icon(Icons.people),
                   title: const Text('Kependudukan'),
-                  children: <Widget>[
+                  children: [
                     DrawerListTile(
                       title: 'Data Warga & Rumah',
                       icon: Icons.home_work,
@@ -90,8 +91,9 @@ class SideMenu extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    DaftarMutasiPage(), // tanpa const
+                                builder: (context) {
+                                  return DaftarMutasiPage();
+                                },
                               ),
                             );
                           },
@@ -104,8 +106,9 @@ class SideMenu extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const TambahMutasiPage(), // tanpa const
+                                builder: (context) {
+                                  return const TambahMutasiPage();
+                                },
                               ),
                             );
                           },
@@ -115,10 +118,37 @@ class SideMenu extends StatelessWidget {
                     ),
                   ],
                 ),
-                DrawerListTile(
-                  title: 'Kegiatan & Broadcast',
-                  icon: Icons.campaign,
-                  onTap: () {},
+                ExpansionTile(
+                  leading: const Icon(Icons.calendar_month),
+                  title: const Text('Kegiatan & Broadcast'),
+                  children: [
+                    DrawerListTile(
+                      title: 'Kegiatan - Daftar', 
+                      icon: Icons.app_registration_rounded, 
+                      isSubMenu: true,
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, '/activity/view');
+                      },
+                    ),
+                    DrawerListTile(
+                      title: 'Kegiatan - Tambah', 
+                      icon: Icons.plus_one, 
+                      isSubMenu: true,
+                      onTap: () {},
+                    ),
+                    DrawerListTile(
+                      title: 'Broadcast - Daftar', 
+                      icon: Icons.app_registration_rounded, 
+                      isSubMenu: true,
+                      onTap: () {},
+                    ),
+                    DrawerListTile(
+                      title: 'Broadcast - Tambah', 
+                      icon: Icons.plus_one, 
+                      isSubMenu: true,
+                      onTap: () {},
+                    ),
+                  ],
                 ),
                 DrawerListTile(
                   title: 'Pesan Warga',
@@ -129,7 +159,7 @@ class SideMenu extends StatelessWidget {
                 ExpansionTile(
                   leading: const Icon(Icons.history),
                   title: const Text('Log Aktivitas'),
-                  children: <Widget>[
+                  children: [
                     DrawerListTile(
                       title: 'Semua Aktivitas',
                       icon: Icons.history,
@@ -158,8 +188,7 @@ class SideMenu extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                DaftarPenggunaPage(), // tanpa const
+                            builder: (context) => DaftarPenggunaPage(),
                           ),
                         );
                       },
@@ -172,8 +201,7 @@ class SideMenu extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                TambahPenggunaPage(), // tanpa const
+                            builder: (context) => TambahPenggunaPage(),
                           ),
                         );
                       },
@@ -192,8 +220,7 @@ class SideMenu extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                DaftarChannelPage(), // tanpa const
+                            builder: (context) => DaftarChannelPage(),
                           ),
                         );
                       },
@@ -206,8 +233,7 @@ class SideMenu extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                const TambahChannelPage(), // tanpa const
+                            builder: (context) => const TambahChannelPage(),
                           ),
                         );
                       },
@@ -228,7 +254,10 @@ class SideMenu extends StatelessWidget {
 
 class DrawerListTile extends StatelessWidget {
   const DrawerListTile({
-    required this.title, required this.icon, required this.onTap, super.key,
+    required this.title,
+    required this.icon,
+    required this.onTap,
+    super.key,
     this.isSubMenu = false,
   });
 

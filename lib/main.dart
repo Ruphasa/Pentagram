@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pentagram/page/dashboard.dart';
+import 'package:pentagram/page/activity_broadcast/activity_view.dart';
 import 'package:pentagram/page/login/login_page.dart';
 
 void main() {
@@ -24,8 +25,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/login',
       routes: {
-        '/': (context) => DashboardScreen(),
-        '/login': (context) => const LoginPage(),
+        '/': (ctx) => const DashboardScreen(),
+        '/login': (ctx) => const LoginPage(),
+        '/activity/view': (ctx) => const ActivityView(),
       },
     );
   }
