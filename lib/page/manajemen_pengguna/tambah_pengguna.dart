@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../responsive.dart';
-import '../../widgets/side_menu.dart';
+import 'package:pentagram/responsive.dart';
+import 'package:pentagram/widgets/side_menu.dart';
 
 class TambahPenggunaPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -16,7 +16,7 @@ class TambahPenggunaPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          "Tambah Akun Pengguna",
+          'Tambah Akun Pengguna',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
         ),
         leading: !Responsive.isDesktop(context)
@@ -59,7 +59,7 @@ class TambahPenggunaPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Tambah Akun Pengguna",
+                        'Tambah Akun Pengguna',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -68,32 +68,32 @@ class TambahPenggunaPage extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       // Nama Lengkap
-                      buildTextField("Nama Lengkap", "Masukkan nama lengkap"),
+                      buildTextField('Nama Lengkap', 'Masukkan nama lengkap'),
 
                       // Email
-                      buildTextField("Email", "Masukkan email aktif"),
+                      buildTextField('Email', 'Masukkan email aktif'),
 
                       // Nomor HP
                       buildTextField(
-                        "Nomor HP",
-                        "Masukkan nomor HP (cth: 08xxxxxxxxxx)",
+                        'Nomor HP',
+                        'Masukkan nomor HP (cth: 08xxxxxxxxxx)',
                       ),
 
                       // Password
-                      buildTextField("Password", "Masukkan password",
+                      buildTextField('Password', 'Masukkan password',
                           obscureText: true),
 
                       // Konfirmasi Password
                       buildTextField(
-                        "Konfirmasi Password",
-                        "Masukkan ulang password",
+                        'Konfirmasi Password',
+                        'Masukkan ulang password',
                         obscureText: true,
                       ),
 
                       // Role Dropdown
                       const SizedBox(height: 16),
                       const Text(
-                        "Role",
+                        'Role',
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                         ),
@@ -110,27 +110,27 @@ class TambahPenggunaPage extends StatelessWidget {
                             border: InputBorder.none,
                             isDense: true,
                           ),
-                          hint: const Text("-- Pilih Role --"),
+                          hint: const Text('-- Pilih Role --'),
                           items: const [
                             DropdownMenuItem(
-                              value: "Admin",
-                              child: Text("Admin"),
+                              value: 'Admin',
+                              child: Text('Admin'),
                             ),
                             DropdownMenuItem(
-                              value: "Ketua RW",
-                              child: Text("Ketua RW"),
+                              value: 'Ketua RW',
+                              child: Text('Ketua RW'),
                             ),
                             DropdownMenuItem(
-                              value: "Ketua RT",
-                              child: Text("Ketua RT"),
+                              value: 'Ketua RT',
+                              child: Text('Ketua RT'),
                             ),
                             DropdownMenuItem(
-                              value: "Sekretaris",
-                              child: Text("Sekretaris"),
+                              value: 'Sekretaris',
+                              child: Text('Sekretaris'),
                             ),
                             DropdownMenuItem(
-                              value: "Bendahara",
-                              child: Text("Bendahara"),
+                              value: 'Bendahara',
+                              child: Text('Bendahara'),
                             ),
                           ],
                           onChanged: (value) {},
@@ -152,7 +152,7 @@ class TambahPenggunaPage extends StatelessWidget {
                               ),
                             ),
                             child: const Text(
-                              "Simpan",
+                              'Simpan',
                               style: TextStyle(color: Colors.white), // teks putih
                             ),
                           ),
@@ -168,7 +168,7 @@ class TambahPenggunaPage extends StatelessWidget {
                               side: const BorderSide(color: Colors.grey),
                             ),
                             child: const Text(
-                              "Reset",
+                              'Reset',
                               style: TextStyle(color: Colors.grey), // teks grey
                             ),
                           ),

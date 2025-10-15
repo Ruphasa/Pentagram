@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'login_form.dart';
+import 'package:pentagram/page/login/login_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 LoginHeader(),
                 SizedBox(height: 40),
                 LoginForm(),

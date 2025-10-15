@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../responsive.dart';
-import '../../widgets/side_menu.dart';
+import 'package:pentagram/responsive.dart';
+import 'package:pentagram/widgets/side_menu.dart';
 
 
 class TambahChannelPage extends StatefulWidget {
@@ -29,7 +29,7 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          "Daftar Channel",
+          'Daftar Channel',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
         ),
         leading: !Responsive.isDesktop(context)
@@ -68,7 +68,7 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Buat Transfer Channel",
+                        'Buat Transfer Channel',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -77,41 +77,41 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
                       const SizedBox(height: 24),
 
                       _buildTextField(
-                        label: "Nama Channel",
-                        hint: "Contoh: BCA, Dana, QRIS RT",
+                        label: 'Nama Channel',
+                        hint: 'Contoh: BCA, Dana, QRIS RT',
                         controller: namaController,
                       ),
                       _buildDropdownField(
-                        label: "Tipe",
-                        hint: "-- Pilih Tipe --",
+                        label: 'Tipe',
+                        hint: '-- Pilih Tipe --',
                         value: selectedTipe,
-                        items: const ["Bank", "E-Wallet", "QRIS"],
+                        items: const ['Bank', 'E-Wallet', 'QRIS'],
                         onChanged: (val) => setState(() => selectedTipe = val),
                       ),
                       _buildTextField(
-                        label: "Nomor Rekening / Akun",
-                        hint: "Contoh: 1234567890",
+                        label: 'Nomor Rekening / Akun',
+                        hint: 'Contoh: 1234567890',
                         controller: rekeningController,
                       ),
                       _buildTextField(
-                        label: "Nama Pemilik",
-                        hint: "Contoh: John Doe",
+                        label: 'Nama Pemilik',
+                        hint: 'Contoh: John Doe',
                         controller: pemilikController,
                       ),
 
                       _buildUploadField(
-                        label: "QR",
-                        hint: "Upload foto QR (jika ada) png/jpeg/jpg",
+                        label: 'QR',
+                        hint: 'Upload foto QR (jika ada) png/jpeg/jpg',
                       ),
                       _buildUploadField(
-                        label: "Thumbnail",
-                        hint: "Upload thumbnail (jika ada) png/jpeg/jpg",
+                        label: 'Thumbnail',
+                        hint: 'Upload thumbnail (jika ada) png/jpeg/jpg',
                       ),
 
                       _buildTextArea(
-                        label: "Catatan (Opsional)",
+                        label: 'Catatan (Opsional)',
                         hint:
-                            "Contoh: Transfer hanya dari bank yang sama agar instan",
+                            'Contoh: Transfer hanya dari bank yang sama agar instan',
                         controller: catatanController,
                       ),
 
@@ -129,7 +129,7 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
                               ),
                             ),
                             child: const Text(
-                              "Simpan",
+                              'Simpan',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600),
@@ -151,7 +151,7 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: const Text("Reset"),
+                            child: const Text('Reset'),
                           ),
                         ],
                       ),

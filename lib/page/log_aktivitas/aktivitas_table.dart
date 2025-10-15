@@ -8,13 +8,9 @@ class AktivitasTable extends StatelessWidget {
   final bool isMobile;
 
   const AktivitasTable({
-    Key? key,
-    required this.aktivitasData,
-    required this.currentPage,
-    required this.totalPages,
-    required this.onPageChanged,
+    required this.aktivitasData, required this.currentPage, required this.totalPages, required this.onPageChanged, super.key,
     this.isMobile = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../responsive.dart';
-import '../../widgets/side_menu.dart';
+import 'package:pentagram/responsive.dart';
+import 'package:pentagram/widgets/side_menu.dart';
 
 class DaftarMutasiPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -31,7 +31,7 @@ class DaftarMutasiPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          "Daftar Mutasi Keluarga",
+          'Daftar Mutasi Keluarga',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
         ),
         leading: !Responsive.isDesktop(context)
@@ -66,7 +66,7 @@ class DaftarMutasiPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Daftar Mutasi",
+                        'Daftar Mutasi',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -84,7 +84,7 @@ class DaftarMutasiPage extends StatelessWidget {
                         ),
                         icon: const Icon(Icons.filter_list, color: Colors.white),
                         label: const Text(
-                          "Filter",
+                          'Filter',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -99,11 +99,11 @@ class DaftarMutasiPage extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: const Row(
                     children: [
-                      Expanded(flex: 1, child: Text("NO")),
-                      Expanded(flex: 3, child: Text("TANGGAL")),
-                      Expanded(flex: 4, child: Text("KELUARGA")),
-                      Expanded(flex: 3, child: Text("JENIS MUTASI")),
-                      Expanded(flex: 1, child: Text("AKSI")),
+                      Expanded(flex: 1, child: Text('NO')),
+                      Expanded(flex: 3, child: Text('TANGGAL')),
+                      Expanded(flex: 4, child: Text('KELUARGA')),
+                      Expanded(flex: 3, child: Text('JENIS MUTASI')),
+                      Expanded(flex: 1, child: Text('AKSI')),
                     ],
                   ),
                 ),
@@ -172,7 +172,7 @@ class DaftarMutasiPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Text(
-                          "1",
+                          '1',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
