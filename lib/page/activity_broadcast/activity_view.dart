@@ -1,53 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/page/activity_broadcast/data/activities.dart';
 import 'package:pentagram/widgets/side_menu.dart';
 import 'package:pentagram/page/activity_broadcast/activity_detail.dart';
 
 class ActivityView extends StatelessWidget {
   const ActivityView({super.key});
-
-  // Sample data - replace with your actual data source
-  final List<Map<String, dynamic>> activities = const [
-    {
-      'id': 1,
-      'nama': 'Gotong Royong Kampung',
-      'kategori': 'Kebersihan & Keamanan',
-      'penanggung_jawab': 'Pak Budi',
-      'tanggal': '2024-10-20',
-      'deskripsi': 'Kegiatan gotong royong membersihkan lingkungan kampung',
-      'lokasi': 'RT 01/RW 02',
-      'peserta': 25,
-    },
-    {
-      'id': 2,
-      'nama': 'Pengajian Rutin',
-      'kategori': 'Keagamaan',
-      'penanggung_jawab': 'Pak Ahmad',
-      'tanggal': '2024-10-22',
-      'deskripsi': 'Pengajian rutin mingguan untuk jamaah',
-      'lokasi': 'Masjid Al-Ikhlas',
-      'peserta': 40,
-    },
-    {
-      'id': 3,
-      'nama': 'Senam Sehat',
-      'kategori': 'Kesehatan & Olahraga',
-      'penanggung_jawab': 'Bu Sari',
-      'tanggal': '2024-10-25',
-      'deskripsi': 'Senam sehat untuk ibu-ibu PKK',
-      'lokasi': 'Balai Desa',
-      'peserta': 30,
-    },
-    {
-      'id': 4,
-      'nama': 'Bimbel Gratis',
-      'kategori': 'Pendidikan',
-      'penanggung_jawab': 'Pak Joko',
-      'tanggal': '2024-10-28',
-      'deskripsi': 'Bimbingan belajar gratis untuk anak-anak',
-      'lokasi': 'Rumah Pak Joko',
-      'peserta': 15,
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +27,7 @@ class ActivityView extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               'Total: ${activities.length} kegiatan',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-              ),
+              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
             const SizedBox(height: 24),
             Expanded(
@@ -88,19 +42,14 @@ class ActivityView extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add new activity
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Tambah kegiatan baru')),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
     );
   }
 
-  Widget _buildActivityCard(BuildContext context, Map<String, dynamic> activity, int number) {
+  Widget _buildActivityCard(
+    BuildContext context,
+    Map<String, dynamic> activity,
+    int number,
+  ) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       elevation: 2,
@@ -114,7 +63,10 @@ class ActivityView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.blue.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
@@ -129,9 +81,14 @@ class ActivityView extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
-                    color: _getCategoryColor(activity['kategori']).withOpacity(0.1),
+                    color: _getCategoryColor(
+                      activity['kategori'],
+                    ).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -146,17 +103,14 @@ class ActivityView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            
+
             // Activity name
             Text(
               activity['nama'],
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            
+
             // Details
             Row(
               children: [
@@ -165,10 +119,7 @@ class ActivityView extends StatelessWidget {
                 Expanded(
                   child: Text(
                     activity['penanggung_jawab'],
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                 ),
               ],
@@ -180,15 +131,12 @@ class ActivityView extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   _formatDate(activity['tanggal']),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
+                  style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            
+
             // Action buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -201,7 +149,8 @@ class ActivityView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ActivityDetail(activity: activity),
+                        builder: (context) =>
+                            ActivityDetail(activity: activity),
                       ),
                     );
                   },
@@ -244,10 +193,7 @@ class ActivityView extends StatelessWidget {
         child: ElevatedButton.icon(
           onPressed: onPressed,
           icon: Icon(icon, size: 16),
-          label: Text(
-            label,
-            style: const TextStyle(fontSize: 12),
-          ),
+          label: Text(label, style: const TextStyle(fontSize: 12)),
           style: ElevatedButton.styleFrom(
             backgroundColor: color.withOpacity(0.1),
             foregroundColor: color,
@@ -279,8 +225,18 @@ class ActivityView extends StatelessWidget {
   String _formatDate(String dateString) {
     final date = DateTime.parse(dateString);
     final months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
@@ -291,7 +247,9 @@ class ActivityView extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Hapus Kegiatan'),
-          content: Text('Apakah Anda yakin ingin menghapus kegiatan "$activityName"?'),
+          content: Text(
+            'Apakah Anda yakin ingin menghapus kegiatan "$activityName"?',
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
