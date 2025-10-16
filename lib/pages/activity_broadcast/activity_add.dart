@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/pages/activity_broadcast/data/activity_const.dart';
 
 class ActivityAdd extends StatefulWidget {
   const ActivityAdd({super.key});
@@ -11,47 +12,11 @@ class _ActivityAddState extends State<ActivityAdd> {
   final _formKey = GlobalKey<FormState>();
   final _namaKegiatanController = TextEditingController();
   final _deskripsiController = TextEditingController();
-  
+
   String? _selectedKategori;
   String? _selectedLokasi;
   String? _selectedPenanggungJawab;
   DateTime? _selectedDate;
-
-  // Dropdown options
-  final List<String> _kategoriOptions = [
-    'Komunitas & Sosial',
-    'Kebersihan & Keamanan',
-    'Keagamaan',
-    'Pendidikan',
-    'Kesehatan & Olahraga',
-    'Lainnya',
-  ];
-
-  final List<String> _lokasiOptions = [
-    'RT 01/RW 01',
-    'RT 02/RW 01',
-    'RT 03/RW 01',
-    'RT 01/RW 02',
-    'RT 02/RW 02',
-    'RT 03/RW 02',
-    'Balai Desa',
-    'Masjid Al-Ikhlas',
-    'Lapangan Desa',
-    'Kantor Desa',
-  ];
-
-  final List<String> _penanggungJawabOptions = [
-    'Pak Bambang',
-    'Pak Rosyid',
-    'Pak Budi',
-    'Pak Ahmad',
-    'Bu Sari',
-    'Pak Joko',
-    'Bu Rina',
-    'Pak Sutrisno',
-    'Bu Endah',
-    'Pak Wahyu',
-  ];
 
   @override
   void dispose() {
@@ -79,18 +44,12 @@ class _ActivityAddState extends State<ActivityAdd> {
               // Header
               const Text(
                 'Informasi Kegiatan',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Text(
                 'Lengkapi form di bawah untuk menambahkan kegiatan baru',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.grey[600]),
               ),
               const SizedBox(height: 24),
 
@@ -115,7 +74,7 @@ class _ActivityAddState extends State<ActivityAdd> {
                 label: 'Kategori Kegiatan',
                 hint: 'Pilih kategori kegiatan',
                 icon: Icons.category,
-                items: _kategoriOptions,
+                items: ActivityConst.kategoriOptions,
                 onChanged: (value) {
                   setState(() {
                     _selectedKategori = value;
@@ -140,7 +99,7 @@ class _ActivityAddState extends State<ActivityAdd> {
                 label: 'Lokasi Kegiatan',
                 hint: 'Pilih lokasi kegiatan',
                 icon: Icons.location_on,
-                items: _lokasiOptions,
+                items: ActivityConst.lokasiOptions,
                 onChanged: (value) {
                   setState(() {
                     _selectedLokasi = value;
@@ -161,7 +120,7 @@ class _ActivityAddState extends State<ActivityAdd> {
                 label: 'Penanggung Jawab',
                 hint: 'Pilih penanggung jawab',
                 icon: Icons.person,
-                items: _penanggungJawabOptions,
+                items: ActivityConst.penanggungJawabOptions,
                 onChanged: (value) {
                   setState(() {
                     _selectedPenanggungJawab = value;
@@ -206,10 +165,7 @@ class _ActivityAddState extends State<ActivityAdd> {
                       ),
                       child: const Text(
                         'Batal',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey,
-                        ),
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
                       ),
                     ),
                   ),
@@ -252,10 +208,7 @@ class _ActivityAddState extends State<ActivityAdd> {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         TextFormField(
@@ -305,10 +258,7 @@ class _ActivityAddState extends State<ActivityAdd> {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         DropdownButtonFormField<String>(
@@ -340,10 +290,7 @@ class _ActivityAddState extends State<ActivityAdd> {
             ),
           ),
           items: items.map((String item) {
-            return DropdownMenuItem<String>(
-              value: item,
-              child: Text(item),
-            );
+            return DropdownMenuItem<String>(value: item, child: Text(item));
           }).toList(),
         ),
       ],
@@ -356,10 +303,7 @@ class _ActivityAddState extends State<ActivityAdd> {
       children: [
         const Text(
           'Tanggal Pelaksanaan',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         InkWell(
@@ -381,7 +325,9 @@ class _ActivityAddState extends State<ActivityAdd> {
                         : _formatDate(_selectedDate!),
                     style: TextStyle(
                       fontSize: 16,
-                      color: _selectedDate == null ? Colors.grey[600] : Colors.black87,
+                      color: _selectedDate == null
+                          ? Colors.grey[600]
+                          : Colors.black87,
                     ),
                   ),
                 ),
@@ -403,9 +349,7 @@ class _ActivityAddState extends State<ActivityAdd> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.blue,
-            ),
+            colorScheme: const ColorScheme.light(primary: Colors.blue),
           ),
           child: child!,
         );
@@ -420,8 +364,18 @@ class _ActivityAddState extends State<ActivityAdd> {
 
   String _formatDate(DateTime date) {
     final months = [
-      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+      'Januari',
+      'Februari',
+      'Maret',
+      'April',
+      'Mei',
+      'Juni',
+      'Juli',
+      'Agustus',
+      'September',
+      'Oktober',
+      'November',
+      'Desember',
     ];
     return '${date.day} ${months[date.month - 1]} ${date.year}';
   }

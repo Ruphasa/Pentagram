@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 class ActivityDetail extends StatelessWidget {
   final Map<String, dynamic> activity;
 
-  const ActivityDetail({
-    super.key,
-    required this.activity,
-  });
+  const ActivityDetail({required this.activity, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +15,9 @@ class ActivityDetail extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Edit kegiatan')),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('Edit kegiatan')));
             },
             icon: const Icon(Icons.edit),
           ),
@@ -51,9 +48,14 @@ class ActivityDetail extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
                           decoration: BoxDecoration(
-                            color: _getCategoryColor(activity['kategori']).withOpacity(0.1),
+                            color: _getCategoryColor(
+                              activity['kategori'],
+                            ).withOpacity(0.1),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Text(
@@ -70,10 +72,7 @@ class ActivityDetail extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(
                       activity['deskripsi'],
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[600],
-                      ),
+                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -230,8 +229,18 @@ class ActivityDetail extends StatelessWidget {
   String _formatDate(String dateString) {
     final date = DateTime.parse(dateString);
     final months = [
-      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+      'Januari',
+      'Februari',
+      'Maret',
+      'April',
+      'Mei',
+      'Juni',
+      'Juli',
+      'Agustus',
+      'September',
+      'Oktober',
+      'November',
+      'Desember',
     ];
     return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
@@ -242,7 +251,9 @@ class ActivityDetail extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Hapus Kegiatan'),
-          content: Text('Apakah Anda yakin ingin menghapus kegiatan "${activity['nama']}"?'),
+          content: Text(
+            'Apakah Anda yakin ingin menghapus kegiatan "${activity['nama']}"?',
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -253,7 +264,9 @@ class ActivityDetail extends StatelessWidget {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop(); // Go back to list
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${activity['nama']} berhasil dihapus')),
+                  SnackBar(
+                    content: Text('${activity['nama']} berhasil dihapus'),
+                  ),
                 );
               },
               style: TextButton.styleFrom(foregroundColor: Colors.red),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/widgets/dashboard_grid.dart';
 import 'package:pentagram/widgets/side_menu.dart';
-import 'package:pentagram/widgets/app_header.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});

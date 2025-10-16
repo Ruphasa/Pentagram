@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/page/login/login_form.dart';
+import 'package:pentagram/pages/login/login_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/page/sidebar/side_menu_page.dart';
+import 'package:pentagram/pages/sidebar/side_menu_page.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});

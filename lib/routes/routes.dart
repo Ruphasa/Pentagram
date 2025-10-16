@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/page/dashboard.dart';
-import 'package:pentagram/page/keuangan/pemasukan_page.dart';
-import 'package:pentagram/page/keuangan/pengeluaran_page.dart';
-import 'package:pentagram/page/warga/daftar_warga_page.dart';
-import 'package:pentagram/page/warga/tambah_warga_page.dart';
-import 'package:pentagram/page/mutasi_keluarga/daftar_page.dart' as mutasi;
-import 'package:pentagram/page/mutasi_keluarga/tambah_page.dart' as mutasi;
-import 'package:pentagram/page/manajemen_pengguna/daftar_pengguna.dart' as pengguna;
-import 'package:pentagram/page/manajemen_pengguna/tambah_pengguna.dart' as pengguna;
-import 'package:pentagram/page/channel_transfer/daftar_channel.dart' as channel;
-import 'package:pentagram/page/channel_transfer/tambah_channel.dart' as channel;
-import 'package:pentagram/page/log_aktivitas/log_aktivitas_page.dart' as logx;
+import 'package:pentagram/pages/dashboard.dart';
+import 'package:pentagram/pages/keuangan/pemasukan_page.dart';
+import 'package:pentagram/pages/keuangan/pengeluaran_page.dart';
+import 'package:pentagram/pages/warga/daftar_warga_page.dart';
+import 'package:pentagram/pages/warga/tambah_warga_page.dart';
+import 'package:pentagram/pages/mutasi_keluarga/daftar_page.dart' as mutasi;
+import 'package:pentagram/pages/mutasi_keluarga/tambah_page.dart' as mutasi;
+import 'package:pentagram/pages/manajemen_pengguna/daftar_pengguna.dart' as pengguna;
+import 'package:pentagram/pages/manajemen_pengguna/tambah_pengguna.dart' as pengguna;
+import 'package:pentagram/pages/channel_transfer/daftar_channel.dart' as channel;
+import 'package:pentagram/pages/channel_transfer/tambah_channel.dart' as channel;
+import 'package:pentagram/pages/log_aktivitas/log_aktivitas_page.dart' as logx;
 
 WidgetBuilder? builderFromAction(String? action) {
   switch (action) {
