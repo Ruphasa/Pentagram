@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/pages/activity_broadcast/activity_add.dart';
+import 'package:pentagram/pages/activity_broadcast/activity_view.dart';
 import 'package:pentagram/pages/dashboard.dart';
 import 'package:pentagram/pages/keuangan/pemasukan_page.dart';
 import 'package:pentagram/pages/keuangan/pengeluaran_page.dart';
@@ -34,6 +36,10 @@ WidgetBuilder? builderFromAction(String? action) {
       return (_) => channel.DaftarChannelPage();
     case 'channel-tambah':
       return (_) => const channel.TambahChannelPage();
+    case 'activity-view':
+      return (_) => const ActivityView();
+    case 'activity-add':
+      return (_) => const ActivityAdd();
     case 'pemasukan':
       return (_) => const PemasukanPage();
     case 'pengeluaran':
@@ -66,6 +72,10 @@ String? routeFromAction(String? action) {
       return '/channel-transfer/daftar';
     case 'channel-tambah':
       return '/channel-transfer/tambah';
+    case 'activity-view':
+      return '/activity-view';
+    case 'activity-add':
+      return '/activity-add';
     case 'pemasukan':
       return '/pemasukan';
     case 'pengeluaran':
