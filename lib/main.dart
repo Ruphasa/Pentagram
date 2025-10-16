@@ -6,8 +6,11 @@ import 'package:pentagram/pages/activity_broadcast/activity_view.dart';
 import 'package:pentagram/pages/keuangan/pemasukan_page.dart';
 import 'package:pentagram/pages/keuangan/pengeluaran_page.dart';
 import 'package:pentagram/pages/login/login_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:pentagram/firebase_options.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
         '/activity/view': (ctx) => const ActivityView(),
         '/activity/add': (ctx) => const ActivityAdd(),
         '/pemasukan': (ctx) => const PemasukanPage(),
-        '/pengeluaran': (ctx) => const PengeluaranPage()
+        '/pengeluaran': (ctx) => const PengeluaranPage(),
       },
     );
   }
