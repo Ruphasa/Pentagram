@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/widgets/side_menu.dart';
+import 'package:pentagram/widgets/app_header.dart';
 import 'package:pentagram/pages/log_aktivitas/aktivitas_data.dart';
 import 'package:pentagram/pages/log_aktivitas/aktivitas_table.dart';
 import 'package:pentagram/pages/log_aktivitas/filter_dialog.dart';
@@ -49,17 +50,7 @@ class _LogAktivitasPageState extends State<LogAktivitasPage> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-        title: const Text('Semua Aktivitas', style: TextStyle(color: Colors.white)),
-      ),
+      appBar: const AppHeader(),
       drawer: const SideMenu(),
       body: Padding(
         padding: const EdgeInsets.all(16),
