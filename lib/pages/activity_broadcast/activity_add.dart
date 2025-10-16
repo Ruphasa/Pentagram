@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/pages/activity_broadcast/const/activity_const.dart';
+import 'package:pentagram/pages/activity_broadcast/data/activity_const.dart';
 
 class ActivityAdd extends StatefulWidget {
   const ActivityAdd({super.key});
