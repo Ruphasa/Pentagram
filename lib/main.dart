@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pentagram/page/activity_broadcast/activity_add.dart';
 import 'package:pentagram/page/dashboard.dart';
 import 'package:pentagram/page/activity_broadcast/activity_view.dart';
+import 'package:pentagram/page/keuangan/pemasukan_page.dart';
+import 'package:pentagram/page/keuangan/pengeluaran_page.dart';
 import 'package:pentagram/page/login/login_page.dart';
 
 void main() {
@@ -29,7 +31,9 @@ class MyApp extends StatelessWidget {
         '/': (ctx) => const DashboardScreen(),
         '/login': (ctx) => const LoginPage(),
         '/activity/view': (ctx) => const ActivityView(),
-        '/activity/add': (ctx) => const ActivityAdd()
+        '/activity/add': (ctx) => const ActivityAdd(),
+        '/pemasukan': (ctx) => const PemasukanPage(),
+        '/pengeluaran': (ctx) => const PengeluaranPage()
       },
     );
   }

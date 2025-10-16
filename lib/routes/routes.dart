@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/page/dashboard.dart';
+import 'package:pentagram/page/keuangan/pemasukan_page.dart';
+import 'package:pentagram/page/keuangan/pengeluaran_page.dart';
 import 'package:pentagram/page/warga/daftar_warga_page.dart';
 import 'package:pentagram/page/warga/tambah_warga_page.dart';
 import 'package:pentagram/page/mutasi_keluarga/daftar_page.dart' as mutasi;
@@ -13,7 +15,7 @@ import 'package:pentagram/page/log_aktivitas/log_aktivitas_page.dart' as logx;
 WidgetBuilder? builderFromAction(String? action) {
   switch (action) {
     case 'dashboard':
-      return (_) => DashboardScreen();
+      return (_) => const DashboardScreen();
     case 'warga-daftar':
       return (_) => const DaftarWargaPage();
     case 'warga-tambah':
@@ -32,6 +34,10 @@ WidgetBuilder? builderFromAction(String? action) {
       return (_) => channel.DaftarChannelPage();
     case 'channel-tambah':
       return (_) => const channel.TambahChannelPage();
+    case 'pemasukan':
+      return (_) => const PemasukanPage();
+    case 'pengeluaran':
+      return (_) => const PengeluaranPage();
     default:
       return null;
   }
@@ -60,6 +66,10 @@ String? routeFromAction(String? action) {
       return '/channel-transfer/daftar';
     case 'channel-tambah':
       return '/channel-transfer/tambah';
+    case 'pemasukan':
+      return '/pemasukan';
+    case 'pengeluaran':
+      return '/pengeluaran';
     default:
       return null;
   }
