@@ -39,36 +39,50 @@
 
 ---
 
-## 🧩 Pembagian Tugas
+# 📱 Pembagian Tugas Case Method (Mobile)
+
+---
 
 ### 🟩 Rizqi (Total Bobot: 8)
-- **Data warga dan rumah** — 5  
+- **Data warga dan rumah** — 5 ✅  
 - **Laporan keuangan** — 3  
 
 ---
 
 ### 🟦 Farrel (Total Bobot: 7)
-- **Kegiatan & broadcast** — 4  
-- **Dashboard** — 3  
+- **Kegiatan & broadcast** — 4 ✅  
+- **Dashboard** — 3 ✅  
 
 ---
 
 ### 🟨 Nasih (Total Bobot: 7)
-- **Pemasukan** — 5  
-- **Pengeluaran** — 2  
+- **Pemasukan** — 5 ✅  
+- **Pengeluaran** — 2 ✅  
 
 ---
 
 ### 🟧 Nadit (Total Bobot: 6)
-- **Mutasi keluarga** — 2  
-- **Manajemen pengguna** — 2  
-- **Channel transfer** — 2  
+- **Mutasi keluarga** — 2 ✅  
+- **Manajemen pengguna** — 2 ✅  
+- **Channel transfer** — 2 ✅  
 
 ---
 
 ### 🟥 Iir (Total Bobot: 6)
-- **Login, logout** — 2  
+- **Login, logout** — 2 ✅  
 - **Pesan warga** — 1  
 - **Penerimaan warga** — 1  
-- **Log aktivitas** — 1  
+- **Log aktivitas** — 1 ✅  
 - **Register** — 1  
+
+---
+
+## 📊 Summary Progress
+**Total Progress:** ✅ 9 / 16  
+**Persentase Selesai:** `56.25%`
+
+---
+
+📌 *Catatan:*  
+Tanda **✅** menunjukkan tugas yang sudah selesai atau diimplementasikan sepenuhnya.
+
