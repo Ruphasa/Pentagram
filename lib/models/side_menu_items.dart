@@ -96,8 +96,14 @@ const List<Map<String, dynamic>> sideMenuSections = [
       {
         'title': 'Daftar Kegiatan',
         'iconKey': 'event',
-        'action': null,
-        'route': null,
+        'action': 'activity-view',
+        'route': '/activity/view',
+      },
+      {
+        'title': 'Tambah Kegiatan',
+        'iconKey': 'event',
+        'action': 'activity-add',
+        'route': '/activity/add',
       },
     ],
   },
@@ -172,7 +178,7 @@ const List<Map<String, dynamic>> sideMenuSections = [
       },
       {
         'title': 'Tambah Pengguna',
-        'iconKey': 'person_add',
+        'iconKey': 'plus_one',
         'action': 'pengguna-tambah',
         'route': '/manajemen-pengguna/tambah',
       },
