@@ -35,7 +35,7 @@ class _LoginFormState extends State<LoginForm> {
 
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Email dan password harus diisi')),
+        const SnackBar(content: Text('Email dan password harus diisi'), backgroundColor: Colors.red),
       );
       return;
     }
@@ -44,7 +44,7 @@ class _LoginFormState extends State<LoginForm> {
       Navigator.pushReplacementNamed(context, '/');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Email atau password salah')),
+        const SnackBar(content: Text('Email atau password salah'), backgroundColor: Colors.red),
       );
     }
   }
@@ -71,9 +71,9 @@ class _LoginFormState extends State<LoginForm> {
           const Text(
             'Masuk ke akun anda',
             style: TextStyle(
-              fontSize: 28,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF5a63b9),
+              color: Colors.black87,
             ),
           ),
           const SizedBox(height: 8),

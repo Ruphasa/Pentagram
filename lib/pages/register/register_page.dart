@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/widgets/login_form.dart';
+import 'package:pentagram/widgets/register_form.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,16 @@ class LoginPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                LoginHeader(),
+                Text(
+                  'Jawara Pintar',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF5a63b9),
+                  ),
+                ),
                 SizedBox(height: 40),
-                LoginForm(),
+                RegisterForm(),
               ],
             ),
           ),

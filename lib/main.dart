@@ -8,6 +8,7 @@ import 'package:pentagram/pages/keuangan/pengeluaran_page.dart';
 import 'package:pentagram/pages/login/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:pentagram/firebase_options.dart';
+import 'package:pentagram/pages/register/register_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (ctx) => const DashboardScreen(),
         '/login': (ctx) => const LoginPage(),
+        '/register': (ctx) => const RegisterPage(),
         '/activity/view': (ctx) => const ActivityView(),
         '/activity/add': (ctx) => const ActivityAdd(),
         '/pemasukan': (ctx) => const PemasukanPage(),
