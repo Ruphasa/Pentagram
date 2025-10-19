@@ -10,7 +10,7 @@ class LoginHeader extends StatelessWidget {
       style: TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.bold,
-        color: Colors.cyan,
+        color: Color(0xFF5a63b9), 
       ),
     );
   }
@@ -55,11 +55,11 @@ class _LoginFormState extends State<LoginForm> {
       constraints: const BoxConstraints(maxWidth: 500),
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.08),
+            color: Colors.black.withOpacity(0.15),
             blurRadius: 15,
             offset: const Offset(0, 5),
           ),
@@ -73,13 +73,13 @@ class _LoginFormState extends State<LoginForm> {
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: Colors.cyan,
+              color: Color(0xFF5a63b9),
             ),
           ),
           const SizedBox(height: 8),
           const Text(
             'Login untuk mengakses sistem Jawara Pintar.',
-            style: TextStyle(fontSize: 14, color: Colors.white70),
+            style: TextStyle(fontSize: 14, color: Colors.black54),
           ),
           const SizedBox(height: 32),
           _buildTextField('Email', _emailController, false),
@@ -95,6 +95,8 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _buildTextField(String label, TextEditingController controller, bool obscure) {
+    const secondaryColor = Color(0xFF5a63b9);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -103,29 +105,30 @@ class _LoginFormState extends State<LoginForm> {
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: Colors.black87,
           ),
         ),
         const SizedBox(height: 8),
         TextField(
           controller: controller,
           obscureText: obscure,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.black87),
           decoration: InputDecoration(
-            hintText: 'Masukkan $label disini',
-            hintStyle: const TextStyle(color: Colors.white38),
+            hintText: 'Masukkan $label di sini',
+            hintStyle: const TextStyle(color: Colors.black38),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.white24, width: 1.5),
+              borderSide: const BorderSide(color: Colors.black26, width: 1.5),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.white24, width: 1.5),
+              borderSide: const BorderSide(color: Colors.black26, width: 1.5),
             ),
             focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.cyan, width: 2),
+              borderSide: BorderSide(color: secondaryColor, width: 2),
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           ),
         ),
       ],
@@ -133,6 +136,8 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _buildLoginButton() {
+    const secondaryColor = Color(0xFF5a63b9);
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHoveringButton = true),
       onExit: (_) => setState(() => _isHoveringButton = false),
@@ -144,9 +149,11 @@ class _LoginFormState extends State<LoginForm> {
           child: ElevatedButton(
             onPressed: _login,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.cyan,
+              backgroundColor: secondaryColor,
               padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
               elevation: _isHoveringButton ? 8 : 2,
             ),
             child: const Text(
@@ -154,7 +161,7 @@ class _LoginFormState extends State<LoginForm> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
           ),
@@ -164,10 +171,13 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _buildRegisterLink(BuildContext context) {
+    const secondaryColor = Color(0xFF5a63b9);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Belum punya akun? ', style: TextStyle(fontSize: 14, color: Colors.white70)),
+        const Text('Belum punya akun? ',
+            style: TextStyle(fontSize: 14, color: Colors.black54)),
         MouseRegion(
           onEnter: (_) => setState(() => _isHoveringRegister = true),
           onExit: (_) => setState(() => _isHoveringRegister = false),
@@ -179,9 +189,11 @@ class _LoginFormState extends State<LoginForm> {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: Colors.cyan,
-                decoration: _isHoveringRegister ? TextDecoration.underline : TextDecoration.none,
-                decorationColor: Colors.cyan,
+                color: secondaryColor,
+                decoration: _isHoveringRegister
+                    ? TextDecoration.underline
+                    : TextDecoration.none,
+                decorationColor: secondaryColor,
                 decorationThickness: 2,
               ),
             ),

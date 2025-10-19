@@ -8,7 +8,11 @@ class AktivitasTable extends StatelessWidget {
   final bool isMobile;
 
   const AktivitasTable({
-    required this.aktivitasData, required this.currentPage, required this.totalPages, required this.onPageChanged, super.key,
+    required this.aktivitasData,
+    required this.currentPage,
+    required this.totalPages,
+    required this.onPageChanged,
+    super.key,
     this.isMobile = false,
   });
 
@@ -16,31 +20,30 @@ class AktivitasTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
+        color: Colors.white, 
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade300),
       ),
       child: Column(
         children: [
-          // Header
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             child: Row(
               children: [
                 SizedBox(
                   width: 32,
-                  child: Text('NO', style: _headerStyle(), textAlign: TextAlign.center),
+                  child: Text(
+                    'NO',
+                    style: _headerStyle(),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   flex: 3,
                   child: Text('DESKRIPSI', style: _headerStyle()),
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  flex: 2,
-                  child: Text('AKTOR', style: _headerStyle()),
-                ),
-                const SizedBox(width: 8),
+                Expanded(flex: 2, child: Text('AKTOR', style: _headerStyle())),
                 Expanded(
                   flex: 2,
                   child: Text('TANGGAL', style: _headerStyle()),
@@ -48,16 +51,18 @@ class AktivitasTable extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(color: Color(0xFF2A2A2A), height: 1),
+          Divider(color: Colors.grey.shade300, height: 1),
 
-          // Data
           Expanded(
             child: ListView.builder(
               itemCount: aktivitasData.length,
               itemBuilder: (context, index) {
                 final item = aktivitasData[index];
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -66,7 +71,10 @@ class AktivitasTable extends StatelessWidget {
                         child: Text(
                           '${item['no']}',
                           textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.white70, fontSize: 12),
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -74,26 +82,30 @@ class AktivitasTable extends StatelessWidget {
                         flex: 3,
                         child: Text(
                           item['deskripsi'],
-                          style: const TextStyle(color: Colors.white, fontSize: 13),
-                          softWrap: true,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 13,
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 8),
                       Expanded(
                         flex: 2,
                         child: Text(
                           item['aktor'],
-                          style: const TextStyle(color: Colors.white70, fontSize: 12),
-                          softWrap: true,
+                          style: const TextStyle(
+                            color: Colors.black87,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 8),
                       Expanded(
                         flex: 2,
                         child: Text(
                           item['tanggal'],
-                          style: const TextStyle(color: Colors.white70, fontSize: 12),
-                          softWrap: true,
+                          style: const TextStyle(
+                            color: Colors.black87,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ],
@@ -106,8 +118,8 @@ class AktivitasTable extends StatelessWidget {
           // Pagination
           Container(
             padding: const EdgeInsets.all(12),
-            decoration: const BoxDecoration(
-              border: Border(top: BorderSide(color: Color(0xFF2A2A2A))),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: Colors.grey.shade300)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -116,19 +128,19 @@ class AktivitasTable extends StatelessWidget {
                   onPressed: currentPage > 1
                       ? () => onPageChanged(currentPage - 1)
                       : null,
-                  icon: const Icon(Icons.chevron_left, color: Colors.white70),
+                  icon: const Icon(Icons.chevron_left, color: Colors.black54),
                 ),
                 for (int i = 1; i <= 3; i++) _buildPageButton(i),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Text('...', style: TextStyle(color: Colors.white70)),
+                  child: Text('...', style: TextStyle(color: Colors.black54)),
                 ),
                 _buildPageButton(totalPages),
                 IconButton(
                   onPressed: currentPage < totalPages
                       ? () => onPageChanged(currentPage + 1)
                       : null,
-                  icon: const Icon(Icons.chevron_right, color: Colors.white70),
+                  icon: const Icon(Icons.chevron_right, color: Colors.black54),
                 ),
               ],
             ),
@@ -146,13 +158,14 @@ class AktivitasTable extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 4),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: isActive ? Colors.cyan : Colors.transparent,
+          color: isActive ? const Color(0xFF5A63B9) : Colors.transparent,
           borderRadius: BorderRadius.circular(6),
+          border: Border.all(color: const Color(0xFF5A63B9)),
         ),
         child: Text(
           '$page',
           style: TextStyle(
-            color: isActive ? Colors.black : Colors.white70,
+            color: isActive ? Colors.white : const Color(0xFF5A63B9),
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
           ),
         ),
@@ -161,8 +174,8 @@ class AktivitasTable extends StatelessWidget {
   }
 
   TextStyle _headerStyle() => const TextStyle(
-        color: Colors.grey,
-        fontWeight: FontWeight.bold,
-        fontSize: 12,
-      );
+    color: Color(0xFF5A63B9),
+    fontWeight: FontWeight.bold,
+    fontSize: 12,
+  );
 }

@@ -8,7 +8,10 @@ class FilterAktivitasDialog extends StatefulWidget {
   final Function(String, String, DateTime?, DateTime?) onApply;
 
   const FilterAktivitasDialog({
-    required this.initialDeskripsi, required this.initialNamaPelaku, required this.onApply, super.key,
+    required this.initialDeskripsi,
+    required this.initialNamaPelaku,
+    required this.onApply,
+    super.key,
     this.initialDariTanggal,
     this.initialSampaiTanggal,
   });
@@ -57,7 +60,7 @@ class _FilterAktivitasDialogState extends State<FilterAktivitasDialog> {
     final isMobile = MediaQuery.of(context).size.width < 600;
 
     return Dialog(
-      backgroundColor: const Color(0xFF1A1A1A),
+      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -68,26 +71,24 @@ class _FilterAktivitasDialogState extends State<FilterAktivitasDialog> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     'Filter Aktivitas',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Color(0xFF5A63B9),
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   IconButton(
                     onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.close, color: Colors.white),
+                    icon: const Icon(Icons.close, color: Colors.black87),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
-
               _buildField(
                 'Deskripsi',
                 deskripsiController,
@@ -98,7 +99,6 @@ class _FilterAktivitasDialogState extends State<FilterAktivitasDialog> {
                 namaPelakuController,
                 hint: 'Contoh: Fafa',
               ),
-
               _buildDateField(
                 'Dari Tanggal',
                 dariTanggal,
@@ -124,7 +124,7 @@ class _FilterAktivitasDialogState extends State<FilterAktivitasDialog> {
                     },
                     child: const Text(
                       'Reset',
-                      style: TextStyle(color: Colors.white70),
+                      style: TextStyle(color: Colors.black54),
                     ),
                   ),
                   ElevatedButton(
@@ -138,8 +138,8 @@ class _FilterAktivitasDialogState extends State<FilterAktivitasDialog> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.cyan,
-                      foregroundColor: Colors.black,
+                      backgroundColor: const Color(0xFF5A63B9),
+                      foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 24,
                         vertical: 10,
@@ -178,7 +178,7 @@ class _FilterAktivitasDialogState extends State<FilterAktivitasDialog> {
               hintText: hint,
               hintStyle: TextStyle(color: Colors.grey[600]),
               filled: true,
-              fillColor: Colors.black,
+              fillColor: Colors.white,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: const BorderSide(color: Color(0xFF2A2A2A)),
@@ -208,7 +208,7 @@ class _FilterAktivitasDialogState extends State<FilterAktivitasDialog> {
                 readOnly: true,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Colors.black,
+                  fillColor: Colors.white,
                   hintText: '--/--/----',
                   hintStyle: const TextStyle(color: Colors.grey),
                   suffixIcon: const Icon(
