@@ -115,8 +115,8 @@ const List<Map<String, dynamic>> sideMenuSections = [
       {
         'title': 'Kotak Masuk',
         'iconKey': 'inbox',
-        'action': null,
-        'route': null,
+        'action': 'pesan-warga',
+        'route': '/pesan-warga',
       },
     ],
   },

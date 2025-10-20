@@ -4,6 +4,7 @@ import 'package:pentagram/pages/activity_broadcast/activity_view.dart';
 import 'package:pentagram/pages/dashboard.dart';
 import 'package:pentagram/pages/keuangan/pemasukan_page.dart';
 import 'package:pentagram/pages/keuangan/pengeluaran_page.dart';
+import 'package:pentagram/pages/pesan_warga/pesan_warga_page.dart';
 import 'package:pentagram/pages/warga/daftar_warga_page.dart';
 import 'package:pentagram/pages/warga/tambah_warga_page.dart';
 import 'package:pentagram/pages/mutasi_keluarga/daftar_page.dart' as mutasi;
@@ -44,6 +45,9 @@ WidgetBuilder? builderFromAction(String? action) {
       return (_) => const PemasukanPage();
     case 'pengeluaran':
       return (_) => const PengeluaranPage();
+    case 'pesan-warga':
+      return (_) => const PesanWargaPage();
+
     default:
       return null;
   }
@@ -80,6 +84,8 @@ String? routeFromAction(String? action) {
       return '/pemasukan';
     case 'pengeluaran':
       return '/pengeluaran';
+    case 'pesan-warga':
+      return '/pesan-warga';
     default:
       return null;
   }

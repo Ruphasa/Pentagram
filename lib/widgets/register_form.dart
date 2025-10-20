@@ -35,7 +35,6 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    const secondaryColor = Color(0xFF5a63b9);
 
     return Container(
       constraints: const BoxConstraints(maxWidth: 600),
