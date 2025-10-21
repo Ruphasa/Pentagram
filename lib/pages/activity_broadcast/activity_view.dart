@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/pages/activity_broadcast/data/activities.dart';
-import 'package:pentagram/widgets/side_menu.dart';
 import 'package:pentagram/pages/activity_broadcast/activity_detail.dart';
+import 'package:pentagram/pages/activity_broadcast/activity_add.dart';
+import 'package:pentagram/utils/app_colors.dart';
 
 class ActivityView extends StatelessWidget {
   const ActivityView({super.key});
@@ -9,26 +10,17 @@ class ActivityView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text('Daftar Kegiatan'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textOnPrimary,
+        title: const Text('Daftar Kegiatan & Broadcast'),
       ),
-      drawer: const SideMenu(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Daftar seluruh kegiatan',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Total: ${activities.length} kegiatan',
-              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-            ),
             const SizedBox(height: 24),
             Expanded(
               child: ListView.builder(
@@ -41,6 +33,16 @@ class ActivityView extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ActivityAdd()),
+          );
+        },
+        backgroundColor: AppColors.primary,
+        child: const Icon(Icons.add_rounded, color: AppColors.textOnPrimary),
       ),
     );
   }

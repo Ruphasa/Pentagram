@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/pages/main_page.dart';
+import 'package:pentagram/utils/app_colors.dart';
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Jawara Pintar',
-      style: TextStyle(
-        fontSize: 32,
-        fontWeight: FontWeight.bold,
-        color: Colors.cyan,
+    return ShaderMask(
+      shaderCallback: (bounds) => AppColors.primaryGradient.createShader(bounds),
+      child: const Text(
+        'Jawara Pintar',
+        style: TextStyle(
+          fontSize: 36,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
     );
   }
@@ -41,7 +46,10 @@ class _LoginFormState extends State<LoginForm> {
     }
 
     if (email == 'admin@gmail.com' && password == 'password') {
-      Navigator.pushReplacementNamed(context, '/');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const MainPage()),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Email atau password salah')),
@@ -55,31 +63,34 @@ class _LoginFormState extends State<LoginForm> {
       constraints: const BoxConstraints(maxWidth: 500),
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        color: AppColors.cardBackground,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
           BoxShadow(
-            color: Colors.white.withOpacity(0.08),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
+            color: AppColors.shadow,
+            blurRadius: 20,
+            offset: Offset(0, 8),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Masuk ke akun anda',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.cyan,
+          ShaderMask(
+            shaderCallback: (bounds) => AppColors.primaryGradient.createShader(bounds),
+            child: const Text(
+              'Masuk ke akun anda',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
           const SizedBox(height: 8),
           const Text(
             'Login untuk mengakses sistem Jawara Pintar.',
-            style: TextStyle(fontSize: 14, color: Colors.white70),
+            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
           ),
           const SizedBox(height: 32),
           _buildTextField('Email', _emailController, false),
@@ -103,29 +114,32 @@ class _LoginFormState extends State<LoginForm> {
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
           ),
         ),
         const SizedBox(height: 8),
         TextField(
           controller: controller,
           obscureText: obscure,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: AppColors.textPrimary),
           decoration: InputDecoration(
             hintText: 'Masukkan $label disini',
-            hintStyle: const TextStyle(color: Colors.white38),
+            hintStyle: const TextStyle(color: AppColors.textMuted),
+            filled: true,
+            fillColor: AppColors.backgroundGrey,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.white24, width: 1.5),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.white24, width: 1.5),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
             ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.cyan, width: 2),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.primary, width: 2),
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           ),
         ),
       ],
@@ -139,22 +153,37 @@ class _LoginFormState extends State<LoginForm> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         transform: Matrix4.identity()..scale(_isHoveringButton ? 1.02 : 1.0),
-        child: SizedBox(
+        child: Container(
           width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: AppColors.primaryGradient,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: _isHoveringButton
+                ? [
+                    BoxShadow(
+                      color: AppColors.primary.withOpacity(0.4),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ]
+                : null,
+          ),
           child: ElevatedButton(
             onPressed: _login,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.cyan,
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
               padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              elevation: _isHoveringButton ? 8 : 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
             child: const Text(
               'Login',
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textOnPrimary,
               ),
             ),
           ),
@@ -167,22 +196,27 @@ class _LoginFormState extends State<LoginForm> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Belum punya akun? ', style: TextStyle(fontSize: 14, color: Colors.white70)),
+        const Text('Belum punya akun? ', style: TextStyle(fontSize: 14, color: AppColors.textSecondary)),
         MouseRegion(
           onEnter: (_) => setState(() => _isHoveringRegister = true),
           onExit: (_) => setState(() => _isHoveringRegister = false),
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
-            onTap: () => Navigator.pushReplacementNamed(context, '/register'),
-            child: Text(
-              'Daftar',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.cyan,
-                decoration: _isHoveringRegister ? TextDecoration.underline : TextDecoration.none,
-                decorationColor: Colors.cyan,
-                decorationThickness: 2,
+            onTap: () {
+              // TODO: Navigate to register page
+            },
+            child: ShaderMask(
+              shaderCallback: (bounds) => AppColors.primaryGradient.createShader(bounds),
+              child: Text(
+                'Daftar',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  decoration: _isHoveringRegister ? TextDecoration.underline : TextDecoration.none,
+                  decorationColor: AppColors.primary,
+                  decorationThickness: 2,
+                ),
               ),
             ),
           ),

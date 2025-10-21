@@ -23,23 +23,23 @@ class CustomDateField extends StatelessWidget {
       onTap: onTap,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(
-          color: Colors.grey[600],
+        hintStyle: const TextStyle(
+          color: AppColors.textMuted,
           fontSize: 14,
         ),
         filled: true,
-        fillColor: const Color(0xFF0F0F13),
+        fillColor: AppColors.backgroundGrey,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFF333333)),
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFF333333)),
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.magenta, width: 2),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -49,19 +49,19 @@ class CustomDateField extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              icon: const Icon(Icons.close, size: 18, color: AppColors.white),
+              icon: const Icon(Icons.close, size: 18, color: AppColors.textSecondary),
               onPressed: () {
                 controller.clear();
               },
             ),
             IconButton(
-              icon: const Icon(Icons.calendar_today, size: 18, color: AppColors.cyan),
+              icon: const Icon(Icons.calendar_today, size: 18, color: AppColors.primary),
               onPressed: onTap,
             ),
           ],
         ),
       ),
-      style: const TextStyle(color: AppColors.white),
+      style: const TextStyle(color: AppColors.textPrimary),
       validator: validator ?? (value) {
         if (value == null || value.isEmpty) {
           return 'Field ini harus diisi';

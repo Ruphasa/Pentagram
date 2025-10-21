@@ -13,7 +13,7 @@ class TransaksiCard extends StatelessWidget {
       child: ListTile(
         title: Text(transaksi.keterangan),
         subtitle: Text(
-          "${transaksi.tanggal.day}-${transaksi.tanggal.month}-${transaksi.tanggal.year}",
+          '${transaksi.tanggal.day}-${transaksi.tanggal.month}-${transaksi.tanggal.year}',
         ),
         trailing: Text(
           'Rp ${transaksi.jumlah}',

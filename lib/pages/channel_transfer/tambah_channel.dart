@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/responsive.dart';
-import 'package:pentagram/widgets/side_menu.dart';
-import 'package:pentagram/widgets/app_header.dart';
-
+import 'package:pentagram/utils/app_colors.dart';
 
 class TambahChannelPage extends StatefulWidget {
   const TambahChannelPage({super.key});
@@ -12,7 +9,6 @@ class TambahChannelPage extends StatefulWidget {
 }
 
 class _TambahChannelPageState extends State<TambahChannelPage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final TextEditingController namaController = TextEditingController();
   final TextEditingController rekeningController = TextEditingController();
@@ -24,16 +20,16 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      drawer: const SideMenu(),
-            appBar: const AppHeader(),
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textOnPrimary,
+        title: const Text('Tambah Channel Transfer'),
+      ),
       body: SafeArea(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (Responsive.isDesktop(context))
-              const Expanded(child: SideMenu()),
-
             // Konten utama
             Expanded(
               flex: 5,
