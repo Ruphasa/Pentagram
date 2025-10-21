@@ -22,30 +22,30 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(
-          color: Colors.grey[600],
+        hintStyle: const TextStyle(
+          color: AppColors.textMuted,
           fontSize: 14,
         ),
         filled: true,
-        fillColor: const Color(0xFF0F0F13),
+        fillColor: AppColors.backgroundGrey,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFF333333)),
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFF333333)),
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.magenta, width: 2),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 12,
         ),
       ),
-      style: const TextStyle(color: AppColors.white),
+      style: const TextStyle(color: AppColors.textPrimary),
       validator: validator ?? (value) {
         if (value == null || value.isEmpty) {
           return 'Field ini harus diisi';

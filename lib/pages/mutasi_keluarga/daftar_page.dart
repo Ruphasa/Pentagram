@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/widgets/side_menu.dart';
-import 'package:pentagram/widgets/app_header.dart';
+import 'package:pentagram/utils/app_colors.dart';
 
 class DaftarMutasiPage extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   DaftarMutasiPage({super.key});
 
   final List<Map<String, String>> dataMutasi = [
@@ -25,9 +22,12 @@ class DaftarMutasiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      drawer: const SideMenu(),
-      appBar: const AppHeader(),
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textOnPrimary,
+        title: const Text('Daftar Mutasi Keluarga'),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -176,7 +176,6 @@ class DaftarMutasiPage extends StatelessWidget {
           ),
         ),
       ),
-      backgroundColor: const Color(0xFFF4F7FB),
     );
   }
 }

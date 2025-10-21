@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/models/transaksi.dart';
 import 'package:pentagram/widgets/transaksi_card.dart';
+import 'package:pentagram/pages/keuangan/pengeluaran_page.dart';
+import 'package:pentagram/utils/app_colors.dart';
 
 class PemasukanPage extends StatefulWidget {
   const PemasukanPage({super.key});
@@ -9,7 +11,9 @@ class PemasukanPage extends StatefulWidget {
   State<PemasukanPage> createState() => _PemasukanPageState();
 }
 
-class _PemasukanPageState extends State<PemasukanPage> {
+class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  
   final List<Transaksi> _pemasukanList = [
     Transaksi(
       id: '1',
@@ -26,6 +30,18 @@ class _PemasukanPageState extends State<PemasukanPage> {
       tanggal: DateTime(2025, 10, 5),
     ),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   void _tambahPemasukan() {
     final TextEditingController keteranganCtrl = TextEditingController();
@@ -77,16 +93,55 @@ class _PemasukanPageState extends State<PemasukanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Pemasukan")),
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textOnPrimary,
+        title: const Text("Keuangan"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Fitur cetak laporan akan segera hadir'),
+                  backgroundColor: AppColors.primary,
+                ),
+              );
+            },
+            icon: const Icon(Icons.print_rounded),
+            tooltip: 'Cetak Laporan',
+          ),
+        ],
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: AppColors.secondary,
+          labelColor: AppColors.textOnPrimary,
+          unselectedLabelColor: AppColors.textOnPrimary,
+          tabs: const [
+            Tab(text: 'Pemasukan', icon: Icon(Icons.arrow_downward_rounded)),
+            Tab(text: 'Pengeluaran', icon: Icon(Icons.arrow_upward_rounded)),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          // Tab Pemasukan
+          ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: _pemasukanList.length,
+            itemBuilder: (context, index) {
+              return TransaksiCard(transaksi: _pemasukanList[index]);
+            },
+          ),
+          // Tab Pengeluaran
+          const PengeluaranPage(),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _tambahPemasukan,
-        child: const Icon(Icons.add),
-      ),
-      body: ListView.builder(
-        itemCount: _pemasukanList.length,
-        itemBuilder: (context, index) {
-          return TransaksiCard(transaksi: _pemasukanList[index]);
-        },
+        backgroundColor: AppColors.primary,
+        child: const Icon(Icons.add_rounded, color: AppColors.textOnPrimary),
       ),
     );
   }
