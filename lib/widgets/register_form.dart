@@ -217,11 +217,8 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           const SizedBox(height: 8),
           DropdownButtonFormField<String>(
-            value: value,
-            hint: Text(
-              hint,
-              style: const TextStyle(color: AppColors.textMuted),
-            ),
+            initialValue: value,
+            hint: Text(hint, style: const TextStyle(color: AppColors.textMuted),
             isExpanded: true,
             items: items
                 .map((e) => DropdownMenuItem<String>(value: e, child: Text(e)))

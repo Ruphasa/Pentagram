@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/pages/dashboard/dashboard.dart';
 import 'package:pentagram/pages/activity_broadcast/activity_view.dart';
-import 'package:pentagram/pages/keuangan/pemasukan_page.dart';
-import 'package:pentagram/pages/warga/daftar_warga_page.dart';
+import 'package:pentagram/pages/keuangan/keuangan_page.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/pages/masyarakat/masyarakat_page.dart';
+import 'package:pentagram/pages/pesan/pesan_warga_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -18,8 +19,8 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _pages = [
     const Dashboard(),
     const ActivityView(),
-    const PemasukanPage(),
-    const DaftarWargaPage(),
+    const KeuanganPage(),
+    const MasyarakatPage(),
   ];
 
   @override
@@ -29,6 +30,73 @@ class _MainPageState extends State<MainPage> {
         index: _currentIndex,
         children: _pages,
       ),
+      floatingActionButton: Container(
+        margin: const EdgeInsets.only(bottom: 8),
+        decoration: BoxDecoration(
+          gradient: AppColors.primaryGradient,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withOpacity(0.4),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PesanWargaPage(),
+                ),
+              );
+            },
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Stack(
+                    children: [
+                      const Icon(
+                        Icons.message_rounded,
+                        color: AppColors.textOnPrimary,
+                        size: 24,
+                      ),
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: Container(
+                          width: 8,
+                          height: 8,
+                          decoration: const BoxDecoration(
+                            color: AppColors.error,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Pesan',
+                    style: TextStyle(
+                      color: AppColors.textOnPrimary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           color: AppColors.background,

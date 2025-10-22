@@ -1,30 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
 
-class TambahMutasiPage extends StatefulWidget {
-  const TambahMutasiPage({super.key});
+class TambahWargaPage extends StatefulWidget {
+  const TambahWargaPage({super.key});
 
   @override
-  State<TambahMutasiPage> createState() => _TambahMutasiPageState();
+  State<TambahWargaPage> createState() => _TambahWargaPageState();
 }
 
-class _TambahMutasiPageState extends State<TambahMutasiPage> {
+class _TambahWargaPageState extends State<TambahWargaPage> {
   final _formKey = GlobalKey<FormState>();
+  final _namaController = TextEditingController();
+  final _nikController = TextEditingController();
+  final _tempatLahirController = TextEditingController();
+  final _alamatController = TextEditingController();
+  final _noTelpController = TextEditingController();
+  
+  DateTime? _tanggalLahir;
+  String _jenisKelamin = 'Laki-laki';
+  String _statusPerkawinan = 'Belum Kawin';
+  String _agama = 'Islam';
+  String _pekerjaan = '';
+  String _pendidikan = 'SD';
+  String _statusDomisili = 'Tetap';
+  String _statusHidup = 'Hidup';
+  String _hubunganKeluarga = 'Kepala Keluarga';
 
-  String? _jenisMutasi;
-  String? _keluarga;
-  String? _alasanMutasi;
-  DateTime? _tanggalMutasi;
+  final List<String> _jenisKelaminOptions = ['Laki-laki', 'Perempuan'];
+  final List<String> _statusPerkawinanOptions = ['Belum Kawin', 'Kawin', 'Cerai Hidup', 'Cerai Mati'];
+  final List<String> _agamaOptions = ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'];
+  final List<String> _pendidikanOptions = ['Tidak/Belum Sekolah', 'SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'];
+  final List<String> _statusDomisiliOptions = ['Tetap', 'Sementara', 'Pindah'];
+  final List<String> _statusHidupOptions = ['Hidup', 'Meninggal'];
+  final List<String> _hubunganKeluargaOptions = [
+    'Kepala Keluarga',
+    'Istri',
+    'Suami',
+    'Anak',
+    'Menantu',
+    'Cucu',
+    'Orang Tua',
+    'Mertua',
+    'Famili Lain',
+    'Pembantu',
+  ];
 
-  final List<String> _jenisList = ['Pindah Rumah', 'Pindah Kota', 'Pindah Negara'];
-  final List<String> _keluargaList = ['Keluarga Mara Nunez', 'Keluarga Ijat', 'Keluarga Damar'];
+  @override
+  void dispose() {
+    _namaController.dispose();
+    _nikController.dispose();
+    _tempatLahirController.dispose();
+    _alamatController.dispose();
+    _noTelpController.dispose();
+    super.dispose();
+  }
 
-  Future<void> _pilihTanggalMutasi(BuildContext context) async {
+  Future<void> _pilihTanggalLahir(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      initialDate: DateTime(2000),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -42,7 +78,7 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
 
     if (picked != null) {
       setState(() {
-        _tanggalMutasi = picked;
+        _tanggalLahir = picked;
       });
     }
   }
@@ -54,24 +90,23 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
 
   void _simpanData() {
     if (_formKey.currentState!.validate()) {
-      if (_tanggalMutasi == null) {
+      if (_tanggalLahir == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Harap pilih tanggal mutasi'),
+            content: Text('Harap pilih tanggal lahir'),
             backgroundColor: AppColors.error,
           ),
         );
         return;
       }
 
-      // TODO: Tambahkan logika simpan ke backend / database
+      // TODO: Implement save functionality
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Data mutasi berhasil disimpan'),
+          content: Text('Data warga berhasil disimpan'),
           backgroundColor: AppColors.success,
         ),
       );
-
       Navigator.pop(context);
     }
   }
@@ -83,7 +118,7 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textOnPrimary,
-        title: const Text('Tambah Mutasi Keluarga'),
+        title: const Text('Tambah Warga'),
         elevation: 0,
       ),
       body: Form(
@@ -93,39 +128,182 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSectionHeader('Data Mutasi'),
-              _buildDropdownField(
-                label: 'Jenis Mutasi',
-                value: _jenisMutasi,
-                items: _jenisList,
-                icon: Icons.change_circle_rounded,
-                hint: '-- Pilih Jenis Mutasi --',
-                onChanged: (val) => setState(() => _jenisMutasi = val),
-              ),
-              const SizedBox(height: 16),
-              _buildDropdownField(
-                label: 'Keluarga',
-                value: _keluarga,
-                items: _keluargaList,
-                icon: Icons.family_restroom_rounded,
-                hint: '-- Pilih Keluarga --',
-                onChanged: (val) => setState(() => _keluarga = val),
+              // Data Identitas Section
+              _buildSectionHeader('Data Identitas'),
+              _buildTextField(
+                controller: _namaController,
+                label: 'Nama Lengkap',
+                hint: 'Masukkan nama lengkap',
+                icon: Icons.person_rounded,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Nama tidak boleh kosong';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               _buildTextField(
-                label: 'Alasan Mutasi',
-                hint: 'Masukkan alasan mutasi...',
-                icon: Icons.text_fields_rounded,
-                maxLines: 3,
-                onChanged: (val) => _alasanMutasi = val,
+                controller: _nikController,
+                label: 'NIK',
+                hint: 'Masukkan NIK 16 digit',
+                icon: Icons.badge_rounded,
+                keyboardType: TextInputType.number,
+                maxLength: 16,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'NIK tidak boleh kosong';
+                  }
+                  if (value.length != 16) {
+                    return 'NIK harus 16 digit';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildDropdownField(
+                label: 'Jenis Kelamin',
+                value: _jenisKelamin,
+                items: _jenisKelaminOptions,
+                icon: Icons.wc_rounded,
+                onChanged: (value) {
+                  setState(() {
+                    _jenisKelamin = value!;
+                  });
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildTextField(
+                controller: _tempatLahirController,
+                label: 'Tempat Lahir',
+                hint: 'Masukkan tempat lahir',
+                icon: Icons.location_city_rounded,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Tempat lahir tidak boleh kosong';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               _buildDateField(
-                label: 'Tanggal Mutasi',
-                value: _tanggalMutasi,
-                onTap: () => _pilihTanggalMutasi(context),
+                label: 'Tanggal Lahir',
+                value: _tanggalLahir,
+                onTap: () => _pilihTanggalLahir(context),
+              ),
+              const SizedBox(height: 24),
+
+              // Data Keluarga Section
+              _buildSectionHeader('Data Keluarga'),
+              _buildDropdownField(
+                label: 'Hubungan dalam Keluarga',
+                value: _hubunganKeluarga,
+                items: _hubunganKeluargaOptions,
+                icon: Icons.family_restroom_rounded,
+                onChanged: (value) {
+                  setState(() {
+                    _hubunganKeluarga = value!;
+                  });
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildDropdownField(
+                label: 'Status Perkawinan',
+                value: _statusPerkawinan,
+                items: _statusPerkawinanOptions,
+                icon: Icons.favorite_rounded,
+                onChanged: (value) {
+                  setState(() {
+                    _statusPerkawinan = value!;
+                  });
+                },
+              ),
+              const SizedBox(height: 24),
+
+              // Data Lainnya Section
+              _buildSectionHeader('Data Lainnya'),
+              _buildDropdownField(
+                label: 'Agama',
+                value: _agama,
+                items: _agamaOptions,
+                icon: Icons.mosque_rounded,
+                onChanged: (value) {
+                  setState(() {
+                    _agama = value!;
+                  });
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildDropdownField(
+                label: 'Pendidikan Terakhir',
+                value: _pendidikan,
+                items: _pendidikanOptions,
+                icon: Icons.school_rounded,
+                onChanged: (value) {
+                  setState(() {
+                    _pendidikan = value!;
+                  });
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildTextField(
+                controller: TextEditingController(text: _pekerjaan),
+                label: 'Pekerjaan',
+                hint: 'Masukkan pekerjaan',
+                icon: Icons.work_rounded,
+                onChanged: (value) {
+                  _pekerjaan = value;
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildTextField(
+                controller: _alamatController,
+                label: 'Alamat',
+                hint: 'Masukkan alamat lengkap',
+                icon: Icons.home_rounded,
+                maxLines: 3,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Alamat tidak boleh kosong';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildTextField(
+                controller: _noTelpController,
+                label: 'No. Telepon',
+                hint: 'Masukkan nomor telepon',
+                icon: Icons.phone_rounded,
+                keyboardType: TextInputType.phone,
+              ),
+              const SizedBox(height: 16),
+              _buildDropdownField(
+                label: 'Status Domisili',
+                value: _statusDomisili,
+                items: _statusDomisiliOptions,
+                icon: Icons.location_on_rounded,
+                onChanged: (value) {
+                  setState(() {
+                    _statusDomisili = value!;
+                  });
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildDropdownField(
+                label: 'Status Hidup',
+                value: _statusHidup,
+                items: _statusHidupOptions,
+                icon: Icons.health_and_safety_rounded,
+                onChanged: (value) {
+                  setState(() {
+                    _statusHidup = value!;
+                  });
+                },
               ),
               const SizedBox(height: 32),
+
+              // Action Buttons
               Row(
                 children: [
                   Expanded(
@@ -169,8 +347,6 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
     );
   }
 
-  // ==== WIDGET HELPERS ====
-
   Widget _buildSectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
@@ -199,10 +375,14 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
   }
 
   Widget _buildTextField({
+    required TextEditingController controller,
     required String label,
     required String hint,
     required IconData icon,
+    TextInputType? keyboardType,
     int maxLines = 1,
+    int? maxLength,
+    String? Function(String?)? validator,
     void Function(String)? onChanged,
   }) {
     return Column(
@@ -218,7 +398,11 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          controller: controller,
+          keyboardType: keyboardType,
           maxLines: maxLines,
+          maxLength: maxLength,
+          validator: validator,
           onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hint,
@@ -236,6 +420,10 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: AppColors.primary, width: 2),
             ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.error),
+            ),
             filled: true,
             fillColor: AppColors.cardBackground,
             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -247,11 +435,10 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
 
   Widget _buildDropdownField({
     required String label,
+    required String value,
     required List<String> items,
     required IconData icon,
     required void Function(String?) onChanged,
-    String? value,
-    String? hint,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,7 +474,6 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
                 child: Text(item),
               );
             }).toList(),
-            hint: hint != null ? Text(hint) : null,
             onChanged: onChanged,
           ),
         ),

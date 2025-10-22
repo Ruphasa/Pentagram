@@ -122,7 +122,7 @@ class _FilterAktivitasDialogState extends State<FilterAktivitasDialog> {
       ),
       actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       actions: [
-        Container(
+        SizedBox(
           width: double.infinity,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

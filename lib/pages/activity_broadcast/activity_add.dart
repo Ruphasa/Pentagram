@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/pages/activity_broadcast/data/activity_const.dart';
+import 'package:pentagram/pages/activity_broadcast/activity_add_step_1.dart';
+import 'package:pentagram/pages/activity_broadcast/activity_add_step_2.dart';
+import 'package:pentagram/pages/activity_broadcast/activity_add_step_3.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/widgets/snackbar_helper.dart';
 
 class ActivityAdd extends StatefulWidget {
   const ActivityAdd({super.key});
@@ -96,9 +99,7 @@ class _ActivityAddState extends State<ActivityAdd> {
                     children: List.generate(3, (index) {
                       return Expanded(
                         child: Container(
-                          margin: EdgeInsets.only(
-                            right: index < 2 ? 8 : 0,
-                          ),
+                          margin: EdgeInsets.only(right: index < 2 ? 8 : 0),
                           height: 6,
                           decoration: BoxDecoration(
                             color: index <= _currentStep
@@ -133,11 +134,40 @@ class _ActivityAddState extends State<ActivityAdd> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (_currentStep == 0) ...[
-                        _buildStepOne(),
+                        ActivityAddStep1(
+                          namaController: _namaKegiatanController,
+                          selectedKategori: _selectedKategori,
+                          onKategoriChanged: (value) {
+                            setState(() {
+                              _selectedKategori = value;
+                            });
+                          },
+                        ),
                       ] else if (_currentStep == 1) ...[
-                        _buildStepTwo(),
+                        ActivityAddStep2(
+                          selectedDate: _selectedDate,
+                          onDateTap: _selectDate,
+                          selectedLokasi: _selectedLokasi,
+                          onLokasiChanged: (value) {
+                            setState(() {
+                              _selectedLokasi = value;
+                            });
+                          },
+                        ),
                       ] else ...[
-                        _buildStepThree(),
+                        ActivityAddStep3(
+                          deskripsiController: _deskripsiController,
+                          selectedPenanggungJawab: _selectedPenanggungJawab,
+                          onPenanggungJawabChanged: (value) {
+                            setState(() {
+                              _selectedPenanggungJawab = value;
+                            });
+                          },
+                          namaController: _namaKegiatanController,
+                          selectedKategori: _selectedKategori,
+                          selectedDate: _selectedDate,
+                          selectedLokasi: _selectedLokasi,
+                        ),
                       ],
                     ],
                   ),
@@ -175,7 +205,7 @@ class _ActivityAddState extends State<ActivityAdd> {
                         ),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          side: BorderSide(color: AppColors.primary),
+                          side: const BorderSide(color: AppColors.primary),
                           foregroundColor: AppColors.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -214,554 +244,6 @@ class _ActivityAddState extends State<ActivityAdd> {
     );
   }
 
-  Widget _buildStepOne() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildSectionTitle('Informasi Dasar', Icons.info_outline),
-        const SizedBox(height: 20),
-        _buildEnhancedTextField(
-          controller: _namaKegiatanController,
-          label: 'Nama Kegiatan',
-          hint: 'Contoh: Kerja Bakti Lingkungan',
-          icon: Icons.event_rounded,
-          validator: (value) {
-            if (value == null || value.trim().isEmpty) {
-              return 'Nama kegiatan harus diisi';
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 20),
-        _buildEnhancedDropdown(
-          value: _selectedKategori,
-          label: 'Kategori Kegiatan',
-          hint: 'Pilih kategori',
-          icon: Icons.category_rounded,
-          items: ActivityConst.kategoriOptions,
-          onChanged: (value) {
-            setState(() {
-              _selectedKategori = value;
-            });
-          },
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Kategori harus dipilih';
-            }
-            return null;
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildStepTwo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildSectionTitle('Waktu & Tempat', Icons.schedule_rounded),
-        const SizedBox(height: 20),
-        _buildEnhancedDateField(),
-        const SizedBox(height: 20),
-        _buildEnhancedDropdown(
-          value: _selectedLokasi,
-          label: 'Lokasi Kegiatan',
-          hint: 'Pilih lokasi',
-          icon: Icons.location_on_rounded,
-          items: ActivityConst.lokasiOptions,
-          onChanged: (value) {
-            setState(() {
-              _selectedLokasi = value;
-            });
-          },
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Lokasi harus dipilih';
-            }
-            return null;
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildStepThree() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildSectionTitle('Detail Kegiatan', Icons.description_rounded),
-        const SizedBox(height: 20),
-        _buildEnhancedDropdown(
-          value: _selectedPenanggungJawab,
-          label: 'Penanggung Jawab',
-          hint: 'Pilih penanggung jawab',
-          icon: Icons.person_rounded,
-          items: ActivityConst.penanggungJawabOptions,
-          onChanged: (value) {
-            setState(() {
-              _selectedPenanggungJawab = value;
-            });
-          },
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Penanggung jawab harus dipilih';
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 20),
-        _buildEnhancedTextField(
-          controller: _deskripsiController,
-          label: 'Deskripsi Kegiatan',
-          hint: 'Jelaskan detail kegiatan...',
-          icon: Icons.notes_rounded,
-          maxLines: 5,
-          validator: (value) {
-            if (value == null || value.trim().isEmpty) {
-              return 'Deskripsi harus diisi';
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 24),
-        // Summary Card
-        _buildSummaryCard(),
-      ],
-    );
-  }
-
-  Widget _buildSectionTitle(String title, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: AppColors.primary.withOpacity(0.3),
-          width: 1.5,
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(icon, color: Colors.white, size: 24),
-          ),
-          const SizedBox(width: 12),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primary,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEnhancedTextField({
-    required TextEditingController controller,
-    required String label,
-    required String hint,
-    required IconData icon,
-    int maxLines = 1,
-    String? Function(String?)? validator,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-            child: Row(
-              children: [
-                Icon(icon, color: AppColors.primary, size: 20),
-                const SizedBox(width: 8),
-                Text(
-                  label,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: TextFormField(
-              controller: controller,
-              maxLines: maxLines,
-              validator: validator,
-              style: const TextStyle(fontSize: 16),
-              decoration: InputDecoration(
-                hintText: hint,
-                hintStyle: TextStyle(
-                  color: Colors.grey[400],
-                  fontSize: 15,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey[300]!),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey[300]!),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: AppColors.primary, width: 2),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.red, width: 2),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.red, width: 2),
-                ),
-                contentPadding: const EdgeInsets.all(16),
-                filled: true,
-                fillColor: Colors.grey[50],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEnhancedDropdown({
-    required String? value,
-    required String label,
-    required String hint,
-    required IconData icon,
-    required List<String> items,
-    required void Function(String?) onChanged,
-    String? Function(String?)? validator,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-            child: Row(
-              children: [
-                Icon(icon, color: AppColors.primary, size: 20),
-                const SizedBox(width: 8),
-                Text(
-                  label,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: DropdownButtonFormField<String>(
-              value: value,
-              onChanged: onChanged,
-              validator: validator,
-              style: const TextStyle(fontSize: 16, color: Colors.black87),
-              decoration: InputDecoration(
-                hintText: hint,
-                hintStyle: TextStyle(
-                  color: Colors.grey[400],
-                  fontSize: 15,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey[300]!),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey[300]!),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: AppColors.primary, width: 2),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.red, width: 2),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-                filled: true,
-                fillColor: Colors.grey[50],
-              ),
-              icon: Icon(Icons.arrow_drop_down, color: AppColors.primary),
-              items: items.map((String item) {
-                return DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(item),
-                );
-              }).toList(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEnhancedDateField() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-            child: Row(
-              children: [
-                Icon(Icons.calendar_today_rounded,
-                    color: AppColors.primary, size: 20),
-                const SizedBox(width: 8),
-                const Text(
-                  'Tanggal Pelaksanaan',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: InkWell(
-              onTap: _selectDate,
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.grey[50],
-                  border: Border.all(
-                    color: _selectedDate == null
-                        ? Colors.grey[300]!
-                        : AppColors.primary,
-                    width: _selectedDate == null ? 1 : 2,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: _selectedDate == null
-                            ? Colors.grey[200]
-                            : AppColors.primary.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.event_rounded,
-                        color: _selectedDate == null
-                            ? Colors.grey[600]
-                            : AppColors.primary,
-                        size: 24,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        _selectedDate == null
-                            ? 'Pilih tanggal pelaksanaan'
-                            : _formatDate(_selectedDate!),
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: _selectedDate == null
-                              ? FontWeight.normal
-                              : FontWeight.w600,
-                          color: _selectedDate == null
-                              ? Colors.grey[600]
-                              : Colors.black87,
-                        ),
-                      ),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.grey[400],
-                      size: 16,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSummaryCard() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.primary.withOpacity(0.1),
-            AppColors.primary.withOpacity(0.05),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.primary.withOpacity(0.3),
-          width: 1.5,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.checklist_rounded,
-                  color: AppColors.primary, size: 24),
-              const SizedBox(width: 8),
-              const Text(
-                'Ringkasan Kegiatan',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          _buildSummaryItem(
-            'Nama',
-            _namaKegiatanController.text.isNotEmpty
-                ? _namaKegiatanController.text
-                : '-',
-            Icons.event_rounded,
-          ),
-          _buildSummaryItem(
-            'Kategori',
-            _selectedKategori ?? '-',
-            Icons.category_rounded,
-          ),
-          _buildSummaryItem(
-            'Tanggal',
-            _selectedDate != null ? _formatDate(_selectedDate!) : '-',
-            Icons.calendar_today_rounded,
-          ),
-          _buildSummaryItem(
-            'Lokasi',
-            _selectedLokasi ?? '-',
-            Icons.location_on_rounded,
-          ),
-          _buildSummaryItem(
-            'Penanggung Jawab',
-            _selectedPenanggungJawab ?? '-',
-            Icons.person_rounded,
-            isLast: true,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSummaryItem(
-      String label, String value, IconData icon,
-      {bool isLast = false}) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Icon(icon, size: 16, color: AppColors.primary),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    value,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        if (!isLast) ...[
-          const SizedBox(height: 12),
-          Divider(color: Colors.grey[300]),
-          const SizedBox(height: 12),
-        ],
-      ],
-    );
-  }
-
   String _getStepTitle(int step) {
     switch (step) {
       case 0:
@@ -784,7 +266,7 @@ class _ActivityAddState extends State<ActivityAdd> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(primary: AppColors.primary),
+            colorScheme: const ColorScheme.light(primary: AppColors.primary),
           ),
           child: child!,
         );
@@ -795,24 +277,6 @@ class _ActivityAddState extends State<ActivityAdd> {
         _selectedDate = picked;
       });
     }
-  }
-
-  String _formatDate(DateTime date) {
-    final months = [
-      'Januari',
-      'Februari',
-      'Maret',
-      'April',
-      'Mei',
-      'Juni',
-      'Juli',
-      'Agustus',
-      'September',
-      'Oktober',
-      'November',
-      'Desember',
-    ];
-    return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
 
   void _handleNext() {
@@ -831,31 +295,55 @@ class _ActivityAddState extends State<ActivityAdd> {
     switch (_currentStep) {
       case 0:
         if (_namaKegiatanController.text.trim().isEmpty) {
-          _showSnackBar('Nama kegiatan harus diisi', Colors.red);
+          SnackbarHelper.show(
+            context,
+            'Nama kegiatan harus diisi',
+            backgroundColor: Colors.red,
+          );
           return false;
         }
         if (_selectedKategori == null) {
-          _showSnackBar('Kategori harus dipilih', Colors.red);
+          SnackbarHelper.show(
+            context,
+            'Kategori harus dipilih',
+            backgroundColor: Colors.red,
+          );
           return false;
         }
         return true;
       case 1:
         if (_selectedDate == null) {
-          _showSnackBar('Tanggal harus dipilih', Colors.red);
+          SnackbarHelper.show(
+            context,
+            'Tanggal harus dipilih',
+            backgroundColor: Colors.red,
+          );
           return false;
         }
         if (_selectedLokasi == null) {
-          _showSnackBar('Lokasi harus dipilih', Colors.red);
+          SnackbarHelper.show(
+            context,
+            'Lokasi harus dipilih',
+            backgroundColor: Colors.red,
+          );
           return false;
         }
         return true;
       case 2:
         if (_selectedPenanggungJawab == null) {
-          _showSnackBar('Penanggung jawab harus dipilih', Colors.red);
+          SnackbarHelper.show(
+            context,
+            'Penanggung jawab harus dipilih',
+            backgroundColor: Colors.red,
+          );
           return false;
         }
         if (_deskripsiController.text.trim().isEmpty) {
-          _showSnackBar('Deskripsi harus diisi', Colors.red);
+          SnackbarHelper.show(
+            context,
+            'Deskripsi harus diisi',
+            backgroundColor: Colors.red,
+          );
           return false;
         }
         return true;
@@ -875,25 +363,12 @@ class _ActivityAddState extends State<ActivityAdd> {
         'deskripsi': _deskripsiController.text.trim(),
       };
 
-      _showSnackBar('Kegiatan berhasil ditambahkan!', Colors.green);
+      SnackbarHelper.show(
+        context,
+        'Kegiatan berhasil ditambahkan!',
+        backgroundColor: Colors.green,
+      );
       Navigator.pop(context, activityData);
     }
-  }
-
-  void _showSnackBar(String message, Color backgroundColor) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          message,
-          style: const TextStyle(fontSize: 15),
-        ),
-        backgroundColor: backgroundColor,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        margin: const EdgeInsets.all(20),
-      ),
-    );
   }
 }

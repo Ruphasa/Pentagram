@@ -197,7 +197,7 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
                   const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
           const SizedBox(height: 6),
           DropdownButtonFormField<String>(
-            value: value,
+            initialValue: value,
             hint: Text(hint),
             items: items
                 .map((e) => DropdownMenuItem<String>(

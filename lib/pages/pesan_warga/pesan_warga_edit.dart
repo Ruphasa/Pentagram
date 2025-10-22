@@ -83,7 +83,7 @@ class _PesanWargaEditOverlayState extends State<PesanWargaEditOverlay> {
                     labelText: 'Status',
                     border: OutlineInputBorder(),
                   ),
-                  value: status,
+                  initialValue: status,
                   items: const [
                     DropdownMenuItem(value: 'Pending', child: Text('Pending')),
                     DropdownMenuItem(value: 'Diterima', child: Text('Diterima')),
