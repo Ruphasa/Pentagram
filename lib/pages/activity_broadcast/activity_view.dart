@@ -14,6 +14,7 @@ class ActivityView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textOnPrimary,
+        toolbarHeight: 72,
         title: const Text('Daftar Kegiatan & Broadcast'),
       ),
       body: Padding(
