@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/models/pesan_warga.dart';
+import 'package:pentagram/widgets/pesan_card.dart';
+import 'package:pentagram/widgets/filter_pesan_dialog.dart';
+import 'package:pentagram/pages/pesan/detail_pesan.dart';
 
 class PesanWargaPage extends StatefulWidget {
   const PesanWargaPage({super.key});
@@ -12,35 +16,84 @@ class _PesanWargaPageState extends State<PesanWargaPage> {
   final TextEditingController _searchController = TextEditingController();
   String selectedFilter = 'Semua';
 
-  final List<Map<String, dynamic>> _pesanList = [
-    {
-      'nama': 'Ahmad Subarjo',
-      'pesan': 'Kapan ada rapat RT bulan ini?',
-      'waktu': '10:30',
-      'unread': true,
-      'avatar': 'AS',
-    },
-    {
-      'nama': 'Budi Santoso',
-      'pesan': 'Terima kasih atas informasinya',
-      'waktu': 'Kemarin',
-      'unread': false,
-      'avatar': 'BS',
-    },
-    {
-      'nama': 'Siti Aminah',
-      'pesan': 'Bagaimana cara membayar iuran bulanan?',
-      'waktu': '2 hari lalu',
-      'unread': true,
-      'avatar': 'SA',
-    },
-    {
-      'nama': 'Andi Wijaya',
-      'pesan': 'Mohon informasi jadwal kerja bakti',
-      'waktu': '3 hari lalu',
-      'unread': false,
-      'avatar': 'AW',
-    },
+  final List<PesanWarga> _pesanList = [
+    PesanWarga(
+      nama: 'Ahmad Subarjo',
+      pesan: 'Kapan ada rapat RT bulan ini?',
+      waktu: '10:30',
+      unread: true,
+      avatar: 'AS',
+    ),
+    PesanWarga(
+      nama: 'Budi Santoso',
+      pesan: 'Terima kasih atas informasinya',
+      waktu: 'Kemarin',
+      unread: false,
+      avatar: 'BS',
+    ),
+    PesanWarga(
+      nama: 'Siti Aminah',
+      pesan: 'Bagaimana cara membayar iuran bulanan?',
+      waktu: '2 hari lalu',
+      unread: true,
+      avatar: 'SA',
+    ),
+    PesanWarga(
+      nama: 'Andi Wijaya',
+      pesan: 'Mohon informasi jadwal kerja bakti',
+      waktu: '3 hari lalu',
+      unread: false,
+      avatar: 'AW',
+    ),
+    PesanWarga(
+      nama: 'Rina Kartika',
+      pesan: 'Apakah taman depan akan diperbaiki minggu ini?',
+      waktu: '4 hari lalu',
+      unread: true,
+      avatar: 'RK',
+    ),
+    PesanWarga(
+      nama: 'Dewi Lestari',
+      pesan: 'Laporan saya tentang lampu jalan belum ditindaklanjuti.',
+      waktu: '5 hari lalu',
+      unread: false,
+      avatar: 'DL',
+    ),
+    PesanWarga(
+      nama: 'Fajar Pratama',
+      pesan: 'Saya ingin mendaftar jadi relawan kebersihan.',
+      waktu: '6 hari lalu',
+      unread: true,
+      avatar: 'FP',
+    ),
+    PesanWarga(
+      nama: 'Lukman Hakim',
+      pesan: 'Apakah bisa membayar iuran lewat transfer?',
+      waktu: '7 hari lalu',
+      unread: false,
+      avatar: 'LH',
+    ),
+    PesanWarga(
+      nama: 'Tina Marlina',
+      pesan: 'Kapan jadwal pengangkutan sampah berikutnya?',
+      waktu: '1 minggu lalu',
+      unread: true,
+      avatar: 'TM',
+    ),
+    PesanWarga(
+      nama: 'Wawan Setiawan',
+      pesan: 'Saya kehilangan kartu warga, bagaimana cara buat baru?',
+      waktu: '2 minggu lalu',
+      unread: false,
+      avatar: 'WS',
+    ),
+    PesanWarga(
+      nama: 'Nur Aini',
+      pesan: 'Mohon diperbaiki got depan rumah saya tersumbat.',
+      waktu: '2 minggu lalu',
+      unread: true,
+      avatar: 'NA',
+    ),
   ];
 
   @override
@@ -49,8 +102,28 @@ class _PesanWargaPageState extends State<PesanWargaPage> {
     super.dispose();
   }
 
+  void _showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => FilterPesanDialog(
+        selectedFilter: selectedFilter,
+        onFilterSelected: (label) {
+          setState(() => selectedFilter = label);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final filteredList = _pesanList.where((p) {
+      final query = _searchController.text.toLowerCase();
+      if (selectedFilter == 'Belum Dibaca' && !p.unread) return false;
+      if (selectedFilter == 'Sudah Dibaca' && p.unread) return false;
+      return p.nama.toLowerCase().contains(query) ||
+          p.pesan.toLowerCase().contains(query);
+    }).toList();
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -107,7 +180,7 @@ class _PesanWargaPageState extends State<PesanWargaPage> {
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
-              onChanged: (value) {
+              onChanged: (_) {
                 setState(() {});
               },
             ),
@@ -134,10 +207,24 @@ class _PesanWargaPageState extends State<PesanWargaPage> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: _pesanList.length,
+              itemCount: filteredList.length,
               itemBuilder: (context, index) {
-                final pesan = _pesanList[index];
-                return _buildPesanCard(pesan);
+                final pesan = filteredList[index];
+                return PesanCard(
+                  pesan: pesan,
+                    onTap: () {
+                    DetailPesanOverlay.show(
+                      context,
+                      PesanWarga(
+                        nama: pesan.nama,
+                        pesan: pesan.pesan,
+                        waktu: pesan.waktu,
+                        unread: pesan.unread,
+                        avatar: pesan.avatar,
+                      ),
+                    );
+                  },
+                );
               },
             ),
           ),
@@ -184,175 +271,6 @@ class _PesanWargaPageState extends State<PesanWargaPage> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildPesanCard(Map<String, dynamic> pesan) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: pesan['unread'] ? AppColors.primary.withOpacity(0.3) : AppColors.border,
-          width: pesan['unread'] ? 2 : 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow.withOpacity(0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {
-            // TODO: Navigate to detail pesan
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Buka detail pesan dari ${pesan['nama']}'),
-                backgroundColor: AppColors.primary,
-              ),
-            );
-          },
-          borderRadius: BorderRadius.circular(12),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Avatar
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    gradient: AppColors.primaryGradient,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Text(
-                      pesan['avatar'],
-                      style: const TextStyle(
-                        color: AppColors.textOnPrimary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                // Content
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              pesan['nama'],
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: pesan['unread'] ? FontWeight.bold : FontWeight.w600,
-                                color: AppColors.textPrimary,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            pesan['waktu'],
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: pesan['unread'] ? AppColors.primary : AppColors.textSecondary,
-                              fontWeight: pesan['unread'] ? FontWeight.w600 : FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        pesan['pesan'],
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: pesan['unread'] ? AppColors.textPrimary : AppColors.textSecondary,
-                          fontWeight: pesan['unread'] ? FontWeight.w500 : FontWeight.normal,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-                // Unread Indicator
-                if (pesan['unread'])
-                  Container(
-                    width: 10,
-                    height: 10,
-                    margin: const EdgeInsets.only(left: 8, top: 4),
-                    decoration: const BoxDecoration(
-                      gradient: AppColors.primaryGradient,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showFilterDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: AppColors.cardBackground,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        title: const Text(
-          'Filter Pesan',
-          style: TextStyle(
-            color: AppColors.textPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildDialogOption('Semua', Icons.all_inbox_rounded),
-            _buildDialogOption('Belum Dibaca', Icons.mark_email_unread_rounded),
-            _buildDialogOption('Sudah Dibaca', Icons.drafts_rounded),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDialogOption(String label, IconData icon) {
-    final isSelected = selectedFilter == label;
-    return ListTile(
-      leading: Icon(
-        icon,
-        color: isSelected ? AppColors.primary : AppColors.iconPrimary,
-      ),
-      title: Text(
-        label,
-        style: TextStyle(
-          color: AppColors.textPrimary,
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-        ),
-      ),
-      trailing: isSelected
-          ? const Icon(Icons.check_circle_rounded, color: AppColors.primary)
-          : null,
-      onTap: () {
-        setState(() {
-          selectedFilter = label;
-        });
-        Navigator.pop(context);
-      },
     );
   }
 }
