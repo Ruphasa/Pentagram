@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/pages/notifikasi/notifikasi.dart';
 import 'package:pentagram/utils/app_colors.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -38,7 +39,12 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (ctx) => const Notifikasi())
+                        );
+                      },
                       icon: const Icon(Icons.notifications_outlined),
                       color: Colors.white,
                     ),
