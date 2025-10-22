@@ -65,8 +65,8 @@ class _LogAktivitasPageState extends State<LogAktivitasPage> {
                 icon: const Icon(Icons.filter_list, size: 20),
                 label: const Text('Filter'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.cyan,
-                  foregroundColor: Colors.black,
+                  backgroundColor: const Color(0xFF5A63B9),
+                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
