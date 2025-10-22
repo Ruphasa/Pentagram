@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/pages/notifikasi/notifikasi.dart';
+import 'package:pentagram/pages/profil/profil_page.dart';
 import 'package:pentagram/utils/app_colors.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -22,10 +23,20 @@ class HomeScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const CircleAvatar(
-                      radius: 24,
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.person, color: Colors.grey),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ProfilPage(),
+                          ),
+                        );
+                      },
+                      child: const CircleAvatar(
+                        radius: 24,
+                        backgroundColor: Colors.white,
+                        child: Icon(Icons.person, color: Colors.grey),
+                      ),
                     ),
                     const SizedBox(width: 12),
                     const Expanded(
