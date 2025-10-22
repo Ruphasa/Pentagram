@@ -6,10 +6,6 @@ import 'package:pentagram/utils/app_colors.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  void _testFunc() {
-    print('test function');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
