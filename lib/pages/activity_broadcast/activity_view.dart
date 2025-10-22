@@ -19,8 +19,10 @@ class _ActivityViewState extends State<ActivityView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final ActivityService _activityService = ActivityService();
+  final ScrollController _scrollController = ScrollController();
   
   List<Activity> _filteredActivities = [];
+  bool _isHeaderVisible = true;
 
   @override
   void initState() {
@@ -31,13 +33,28 @@ class _ActivityViewState extends State<ActivityView>
         _filteredActivities = _getFilteredActivities();
       });
     });
+    _scrollController.addListener(_onScroll);
     _loadActivities();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  /// Handle scroll to hide/show header
+  void _onScroll() {
+    if (_scrollController.offset > 100 && _isHeaderVisible) {
+      setState(() {
+        _isHeaderVisible = false;
+      });
+    } else if (_scrollController.offset <= 100 && !_isHeaderVisible) {
+      setState(() {
+        _isHeaderVisible = true;
+      });
+    }
   }
 
   /// Load activities from service
@@ -68,204 +85,229 @@ class _ActivityViewState extends State<ActivityView>
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6FA),
       body: SafeArea(
-        child: Column(
-          children: [
-            // Header Section
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    AppColors.primary,
-                    AppColors.primary.withOpacity(0.8),
-                  ],
-                ),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Top bar
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            // Header Section (Collapsible)
+            SliverAppBar(
+              expandedHeight: 320,
+              floating: false,
+              pinned: true,
+              backgroundColor: AppColors.primary,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        AppColors.primary,
+                        AppColors.primary.withOpacity(0.8),
+                      ],
+                    ),
+                  ),
+                  child: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Icon(
-                              Icons.event_note_rounded,
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          // Top bar
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Total Kegiatan',
-                                style: TextStyle(
-                                  color: Colors.white.withOpacity(0.9),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: const Icon(
+                                      Icons.event_note_rounded,
+                                      color: Colors.white,
+                                      size: 24,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Total Kegiatan',
+                                        style: TextStyle(
+                                          color: Colors.white.withOpacity(0.9),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Text(
+                                        '$totalActivities',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              Text(
-                                '$totalActivities',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              IconButton(
+                                onPressed: () {
+                                  _showFilterDialog();
+                                },
+                                icon: const Icon(Icons.filter_list_rounded),
+                                color: Colors.white,
+                                iconSize: 28,
                               ),
                             ],
                           ),
+                          const SizedBox(height: 20),
+
+                          // Welcome text
+                          const Text(
+                            'Kelola Kegiatan',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: -0.5,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Pantau dan kelola semua kegiatan RT',
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+
+                          // Progress Card
+                          const ProgressCard(),
                         ],
                       ),
-                      IconButton(
-                        onPressed: () {
-                          _showFilterDialog();
-                        },
-                        icon: const Icon(Icons.filter_list_rounded),
-                        color: Colors.white,
-                        iconSize: 28,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Welcome text
-                  const Text(
-                    'Kelola Kegiatan',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: -0.5,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Pantau dan kelola semua kegiatan RT',
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.9),
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Progress Card
-                  const ProgressCard(),
-                ],
+                ),
               ),
             ),
 
-            const SizedBox(height: 20),
-
-            // Tab Bar
-            ActivityTabBar(tabController: _tabController),
-
-            const SizedBox(height: 20),
+            // Tab Bar (Sticky)
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _SliverAppBarDelegate(
+                minHeight: 70,
+                maxHeight: 70,
+                child: Container(
+                  color: const Color(0xFFF5F6FA),
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ActivityTabBar(tabController: _tabController),
+                ),
+              ),
+            ),
 
             // Current Task Label
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  const Text(
-                    'Daftar Kegiatan',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      '${_filteredActivities.length}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+                child: Row(
+                  children: [
+                    const Text(
+                      'Daftar Kegiatan',
+                      style: TextStyle(
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.black87,
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        '${_filteredActivities.length}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
 
-            const SizedBox(height: 16),
-
             // Activity List
-            Expanded(
-              child: _filteredActivities.isEmpty
-                  ? const NoActivities()
-                  : ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      itemCount: _filteredActivities.length,
-                      itemBuilder: (context, index) {
-                        final activity = _filteredActivities[index];
-                        return ActivityCard(
-                          activity: activity,
-                          number: index + 1,
-                        );
-                      },
+            _filteredActivities.isEmpty
+                ? const SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: NoActivities(),
+                  )
+                : SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final activity = _filteredActivities[index];
+                          return ActivityCard(
+                            activity: activity,
+                            number: index + 1,
+                          );
+                        },
+                        childCount: _filteredActivities.length,
+                      ),
                     ),
-            ),
+                  ),
           ],
         ),
       ),
-      floatingActionButton: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-            colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withOpacity(0.4),
-              blurRadius: 15,
-              offset: const Offset(0, 5),
+      floatingActionButton: AnimatedScale(
+        scale: _isHeaderVisible ? 1.0 : 0.9,
+        duration: const Duration(milliseconds: 200),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            gradient: LinearGradient(
+              colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
             ),
-          ],
-        ),
-        child: FloatingActionButton.extended(
-          onPressed: () async {
-            final result = await Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ActivityAdd()),
-            );
-            // Reload activities if new activity was added
-            if (result == true) {
-              _loadActivities();
-            }
-          },
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          icon: const Icon(Icons.add_rounded, size: 28),
-          label: const Text(
-            'Tambah',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withOpacity(0.4),
+                blurRadius: 15,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: FloatingActionButton.extended(
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ActivityAdd()),
+              );
+              // Reload activities if new activity was added
+              if (result == true) {
+                _loadActivities();
+              }
+            },
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            icon: const Icon(Icons.add_rounded, size: 28),
+            label: const Text(
+              'Tambah',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ),
@@ -277,6 +319,7 @@ class _ActivityViewState extends State<ActivityView>
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
       builder: (context) => Container(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -309,7 +352,13 @@ class _ActivityViewState extends State<ActivityView>
               ),
             ),
             const SizedBox(height: 20),
-            ..._buildCategoryFilters(),
+            Flexible(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: _buildCategoryFilters(),
+                ),
+              ),
+            ),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
@@ -451,7 +500,7 @@ class _ActivityViewState extends State<ActivityView>
               Expanded(
                 child: ListView.builder(
                   controller: scrollController,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 80),
                   itemCount: categoryActivities.length,
                   itemBuilder: (context, index) {
                     return ActivityCard(
@@ -466,5 +515,40 @@ class _ActivityViewState extends State<ActivityView>
         ),
       ),
     );
+  }
+}
+
+/// Custom delegate for sticky tab bar
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
+  });
+
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return SizedBox.expand(child: child);
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
   }
 }
