@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/pages/activity_broadcast/components/activity_card.dart';
+import 'package:pentagram/pages/activity_broadcast/components/activity_tab_bar.dart';
+import 'package:pentagram/pages/activity_broadcast/components/no_activities.dart';
+import 'package:pentagram/pages/activity_broadcast/components/progress_card.dart';
 import 'package:pentagram/pages/activity_broadcast/data/activities.dart';
 import 'package:pentagram/pages/activity_broadcast/activity_add.dart';
 import 'package:pentagram/utils/app_colors.dart';
@@ -11,7 +14,8 @@ class ActivityView extends StatefulWidget {
   State<ActivityView> createState() => _ActivityViewState();
 }
 
-class _ActivityViewState extends State<ActivityView> with SingleTickerProviderStateMixin {
+class _ActivityViewState extends State<ActivityView>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   String _selectedFilter = 'Semua';
 
@@ -19,6 +23,10 @@ class _ActivityViewState extends State<ActivityView> with SingleTickerProviderSt
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
+
+    _tabController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -29,7 +37,7 @@ class _ActivityViewState extends State<ActivityView> with SingleTickerProviderSt
 
   List<Map<String, dynamic>> _getFilteredActivities() {
     final now = DateTime.now();
-    
+
     switch (_tabController.index) {
       case 0: // Recent
         return activities.where((activity) {
@@ -40,8 +48,8 @@ class _ActivityViewState extends State<ActivityView> with SingleTickerProviderSt
         return activities.where((activity) {
           final activityDate = DateTime.parse(activity['tanggal']);
           return activityDate.year == now.year &&
-                 activityDate.month == now.month &&
-                 activityDate.day == now.day;
+              activityDate.month == now.month &&
+              activityDate.day == now.day;
         }).toList();
       case 2: // Upcoming
         return activities.where((activity) {
@@ -131,7 +139,7 @@ class _ActivityViewState extends State<ActivityView> with SingleTickerProviderSt
                     ],
                   ),
                   const SizedBox(height: 20),
-                  
+
                   // Welcome text
                   const Text(
                     'Kelola Kegiatan',
@@ -154,130 +162,14 @@ class _ActivityViewState extends State<ActivityView> with SingleTickerProviderSt
                   const SizedBox(height: 24),
 
                   // Progress Card
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Progress Bulan Ini',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.green.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: const Text(
-                                '75%',
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: LinearProgressIndicator(
-                            value: 0.75,
-                            minHeight: 10,
-                            backgroundColor: Colors.grey[200],
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              AppColors.primary,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '${(activities.length * 0.75).round()}/${activities.length} Kegiatan Selesai',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  const ProgressCard(),
                 ],
               ),
             ),
 
             const SizedBox(height: 20),
 
-            // Tab Bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: TabBar(
-                  controller: _tabController,
-                  onTap: (index) => setState(() {}),
-                  indicator: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        AppColors.primary,
-                        AppColors.primary.withOpacity(0.8),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  indicatorPadding: const EdgeInsets.all(4),
-                  labelColor: Colors.white,
-                  unselectedLabelColor: Colors.grey[600],
-                  labelStyle: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  unselectedLabelStyle: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  tabs: const [
-                    Tab(text: 'Selesai'),
-                    Tab(text: 'Hari Ini'),
-                    Tab(text: 'Mendatang'),
-                  ],
-                ),
-              ),
-            ),
+            ActivityTabBar(tabController: _tabController),
 
             const SizedBox(height: 20),
 
@@ -322,35 +214,7 @@ class _ActivityViewState extends State<ActivityView> with SingleTickerProviderSt
             // Activity List
             Expanded(
               child: _getFilteredActivities().isEmpty
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.event_busy_rounded,
-                            size: 80,
-                            color: Colors.grey[300],
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'Tidak ada kegiatan',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Belum ada kegiatan untuk kategori ini',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey[500],
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
+                  ? const NoActivities()
                   : ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       itemCount: _getFilteredActivities().length,
@@ -370,10 +234,7 @@ class _ActivityViewState extends State<ActivityView> with SingleTickerProviderSt
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(
-            colors: [
-              AppColors.primary,
-              AppColors.primary.withOpacity(0.8),
-            ],
+            colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
           ),
           boxShadow: [
             BoxShadow(
@@ -395,10 +256,7 @@ class _ActivityViewState extends State<ActivityView> with SingleTickerProviderSt
           icon: const Icon(Icons.add_rounded, size: 28),
           label: const Text(
             'Tambah',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
       ),
