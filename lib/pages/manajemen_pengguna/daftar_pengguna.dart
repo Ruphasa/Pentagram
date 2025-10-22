@@ -97,7 +97,7 @@ class DaftarPenggunaPage extends StatelessWidget {
                           backgroundColor: AppColors.primary.withOpacity(0.2),
                           child: Text(
                             data['no']!,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: AppColors.primary,
                               fontWeight: FontWeight.bold,
                             ),

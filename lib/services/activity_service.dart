@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:pentagram/models/activity.dart';
 import 'package:pentagram/repositories/activity_repository.dart';
 
@@ -79,32 +80,31 @@ class ActivityService {
     return _repository.findByDateRange(startOfMonth, endOfMonth);
   }
 
-  /// Get completion statistics for current month
+  /// Get monthly statistics
   Map<String, dynamic> getMonthlyStatistics() {
-    final monthActivities = getCurrentMonthActivities();
-    final pastActivities = getPastActivities();
-    
-    final completedThisMonth = monthActivities.where((activity) {
-      final now = DateTime.now();
-      final today = DateTime(now.year, now.month, now.day);
-      final activityDate = DateTime(
-        activity.tanggal.year,
-        activity.tanggal.month,
-        activity.tanggal.day,
-      );
-      return activityDate.isBefore(today);
-    }).length;
+    final allActivities = _repository.findAll();
+    final now = DateTime.now();
+    final firstDayOfMonth = DateTime(now.year, now.month, 1);
+    final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
 
-    final totalThisMonth = monthActivities.length;
-    final percentage = totalThisMonth > 0 
-        ? (completedThisMonth / totalThisMonth * 100).round() 
-        : 0;
+    final monthlyActivities = allActivities.where((activity) {
+      return activity.tanggal.isAfter(firstDayOfMonth.subtract(const Duration(days: 1))) &&
+          activity.tanggal.isBefore(lastDayOfMonth.add(const Duration(days: 1)));
+    }).toList();
+
+    final completed = monthlyActivities.where((a) => 
+      a.tanggal.isBefore(now.subtract(const Duration(days: 1)))
+    ).length;
+
+    final total = monthlyActivities.length;
+    final percentage = total > 0 ? ((completed / total) * 100).round() : 0;
+    final remaining = total - completed;
 
     return {
-      'total': totalThisMonth,
-      'completed': completedThisMonth,
+      'total': total,
+      'completed': completed,
       'percentage': percentage,
-      'remaining': totalThisMonth - completedThisMonth,
+      'remaining': remaining,
     };
   }
 
@@ -162,24 +162,124 @@ class ActivityService {
         .toList();
   }
 
-  /// Get popular categories (most used)
+  /// Get popular categories with count and percentage
   List<Map<String, dynamic>> getPopularCategories() {
-    final activities = _repository.findAll();
-    final categoryCount = <String, int>{};
-
-    for (var activity in activities) {
-      categoryCount[activity.kategori] = 
-          (categoryCount[activity.kategori] ?? 0) + 1;
+    final allActivities = _repository.findAll();
+    if (allActivities.isEmpty) {
+      return [];
     }
 
-    final sorted = categoryCount.entries.toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
+    final categoryCount = <String, int>{};
+    
+    for (var activity in allActivities) {
+      categoryCount[activity.kategori] = 
+        (categoryCount[activity.kategori] ?? 0) + 1;
+    }
 
-    return sorted.map((entry) {
+    final total = allActivities.length;
+    final categories = categoryCount.entries.map((entry) {
+      final percentage = total > 0 ? ((entry.value / total) * 100).round() : 0;
       return {
         'kategori': entry.key,
         'count': entry.value,
+        'percentage': percentage,
       };
     }).toList();
+
+    categories.sort((a, b) => (b['count'] as int).compareTo(a['count'] as int));
+    
+    return categories;
+  }
+
+    /// Get activity statistics
+  Map<String, dynamic> getActivityStatistics() {
+    final allActivities = _repository.findAll();
+    final now = DateTime.now();
+    
+    final completed = allActivities.where((a) => 
+      a.tanggal.isBefore(now.subtract(const Duration(days: 1)))
+    ).length;
+    
+    final ongoing = allActivities.where((a) {
+      final activityDate = DateTime(a.tanggal.year, a.tanggal.month, a.tanggal.day);
+      final today = DateTime(now.year, now.month, now.day);
+      return activityDate.isAtSameMomentAs(today);
+    }).length;
+    
+    final upcoming = allActivities.where((a) => 
+      a.tanggal.isAfter(now)
+    ).length;
+    
+    return {
+      'totalActivities': allActivities.length,
+      'activityChange': 15.0, // Percentage change from last period
+      'completed': completed,
+      'ongoing': ongoing,
+      'upcoming': upcoming,
+    };
+  }
+
+  /// Get activity by category with statistics
+  List<Map<String, dynamic>> getActivityByCategory() {
+    final categories = getPopularCategories();
+    if (categories.isEmpty) {
+      return [];
+    }
+
+    final colors = [
+      const Color(0xFF42A5F5),
+      const Color(0xFF66BB6A),
+      const Color(0xFFFFB74D),
+      const Color(0xFFEF5350),
+      const Color(0xFFAB47BC),
+    ];
+    
+    return categories.asMap().entries.map((entry) {
+      final index = entry.key;
+      final cat = entry.value;
+      return {
+        'category': cat['kategori'] as String,
+        'count': cat['count'] as int,
+        'percentage': cat['percentage'] as int,
+        'color': colors[index % colors.length],
+      };
+    }).toList();
+  }
+
+  /// Get top contributors (most responsible persons)
+  List<Map<String, dynamic>> getTopContributors() {
+    final allActivities = _repository.findAll();
+    if (allActivities.isEmpty) {
+      return [];
+    }
+
+    final contributorMap = <String, Map<String, int>>{};
+    
+    for (var activity in allActivities) {
+      if (!contributorMap.containsKey(activity.penanggungJawab)) {
+        contributorMap[activity.penanggungJawab] = {
+          'activities': 0,
+          'participants': 0,
+        };
+      }
+      contributorMap[activity.penanggungJawab]!['activities'] = 
+        contributorMap[activity.penanggungJawab]!['activities']! + 1;
+      contributorMap[activity.penanggungJawab]!['participants'] = 
+        contributorMap[activity.penanggungJawab]!['participants']! + activity.peserta;
+    }
+    
+    final contributors = contributorMap.entries.map((entry) {
+      return {
+        'name': entry.key,
+        'activities': entry.value['activities'] ?? 0,
+        'participants': entry.value['participants'] ?? 0,
+      };
+    }).toList();
+    
+    contributors.sort((a, b) => 
+      (b['activities'] as int).compareTo(a['activities'] as int)
+    );
+    
+    return contributors.take(5).toList();
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/models/activity.dart';
 import 'package:pentagram/models/activity_log.dart';
+import 'package:pentagram/pages/dashboard/activity_statistics_page.dart';
+import 'package:pentagram/pages/dashboard/finance_statistics_page.dart';
+import 'package:pentagram/pages/dashboard/population_statistics_page.dart';
 import 'package:pentagram/services/activity_service.dart';
 import 'package:pentagram/services/activity_log_service.dart';
 import 'package:pentagram/pages/dashboard/components/event_card.dart';
@@ -25,7 +28,7 @@ class _DashboardState extends State<Dashboard> {
   final PageController _pageController = PageController(viewportFraction: 0.9);
   final ActivityService _activityService = ActivityService();
   final ActivityLogService _activityLogService = ActivityLogService();
-  
+
   int _currentPage = 0;
   late List<Activity> _upcomingActivities;
   late List<ActivityLog> _recentLogs;
@@ -144,10 +147,7 @@ class _DashboardState extends State<Dashboard> {
             children: [
               const Text(
                 'Kegiatan yang akan datang',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               if (_upcomingActivities.length > 1)
                 Container(
@@ -190,11 +190,7 @@ class _DashboardState extends State<Dashboard> {
       child: Center(
         child: Column(
           children: [
-            Icon(
-              Icons.event_busy_rounded,
-              size: 48,
-              color: Colors.grey[400],
-            ),
+            Icon(Icons.event_busy_rounded, size: 48, color: Colors.grey[400]),
             const SizedBox(height: 12),
             Text(
               'Belum ada kegiatan mendatang',
@@ -246,9 +242,7 @@ class _DashboardState extends State<Dashboard> {
           width: _currentPage == index ? 24 : 8,
           height: 8,
           decoration: BoxDecoration(
-            color: _currentPage == index
-                ? AppColors.primary
-                : Colors.grey[300],
+            color: _currentPage == index ? AppColors.primary : Colors.grey[300],
             borderRadius: BorderRadius.circular(4),
           ),
         ),
@@ -314,35 +308,59 @@ class _DashboardState extends State<Dashboard> {
 
   /// Build Statistics Section
   Widget _buildStatisticsSection() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Statistik',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           StatCard(
             title: 'Keuangan',
-            lightColor: Color(0xFF81C784),
-            darkColor: Color(0xFF66BB6A),
+            lightColor: const Color(0xFF81C784),
+            darkColor: const Color(0xFF66BB6A),
             icon: Icons.attach_money,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FinanceStatisticsPage(),
+                ),
+              );
+            },
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           StatCard(
             title: 'Kegiatan',
-            lightColor: Color(0xFF64B5F6),
-            darkColor: Color(0xFF42A5F5),
+            lightColor: const Color(0xFF64B5F6),
+            darkColor: const Color(0xFF42A5F5),
             icon: Icons.grid_view,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ActivityStatisticsPage(),
+                ),
+              );
+            },
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           StatCard(
             title: 'Kependudukan',
-            lightColor: Color(0xFFE57373),
-            darkColor: Color(0xFFC62828),
+            lightColor: const Color(0xFFE57373),
+            darkColor: const Color(0xFFC62828),
             icon: Icons.people,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PopulationStatisticsPage(),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -369,14 +387,10 @@ class _DashboardState extends State<Dashboard> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => const LogAktivitasPage(),
-                  ),
+                  MaterialPageRoute(builder: (_) => const LogAktivitasPage()),
                 );
               },
-              style: TextButton.styleFrom(
-                foregroundColor: AppColors.primary,
-              ),
+              style: TextButton.styleFrom(foregroundColor: AppColors.primary),
               child: const Text('Lihat Semua →'),
             ),
           ),
