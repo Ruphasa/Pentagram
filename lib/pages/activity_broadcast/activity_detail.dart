@@ -10,161 +10,160 @@ class ActivityDetail extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text('Detail Kegiatan'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('Edit kegiatan')));
-            },
-            icon: const Icon(Icons.edit),
+        backgroundColor: Colors.blue,
+        elevation: 0,
+        title: const Text(
+          'Detail Kegiatan',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
-        ],
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Activity Header
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            activity['nama'],
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: _getCategoryColor(
-                              activity['kategori'],
-                            ).withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Text(
-                            activity['kategori'],
-                            style: TextStyle(
-                              color: _getCategoryColor(activity['kategori']),
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      activity['deskripsi'],
-                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                    ),
-                  ],
+            // Header with category
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: _getCategoryColor(activity['kategori']),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(24),
+                  bottomRight: Radius.circular(24),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-
-            // Activity Details
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Informasi Kegiatan',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      activity['kategori'],
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    _buildDetailRow(
-                      icon: Icons.person,
-                      label: 'Penanggung Jawab',
-                      value: activity['penanggung_jawab'],
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    activity['nama'],
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
-                    const SizedBox(height: 12),
-                    _buildDetailRow(
-                      icon: Icons.calendar_today,
-                      label: 'Tanggal Pelaksanaan',
-                      value: _formatDate(activity['tanggal']),
-                    ),
-                    const SizedBox(height: 12),
-                    _buildDetailRow(
-                      icon: Icons.location_on,
-                      label: 'Lokasi',
-                      value: activity['lokasi'],
-                    ),
-                    const SizedBox(height: 12),
-                    _buildDetailRow(
-                      icon: Icons.group,
-                      label: 'Jumlah Peserta',
-                      value: '${activity['peserta']} orang',
-                    ),
-                    const SizedBox(height: 12),
-                    _buildDetailRow(
-                      icon: Icons.category,
-                      label: 'Kategori',
-                      value: activity['kategori'],
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
+
             const SizedBox(height: 24),
 
-            // Action Buttons
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Edit kegiatan')),
-                      );
-                    },
-                    icon: const Icon(Icons.edit),
-                    label: const Text('Edit Kegiatan'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+            // Details Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildDetailRow(
+                    icon: Icons.person,
+                    label: 'Penanggung Jawab',
+                    value: activity['penanggung_jawab'],
+                  ),
+                  const SizedBox(height: 16),
+                  _buildDetailRow(
+                    icon: Icons.calendar_today,
+                    label: 'Tanggal',
+                    value: _formatDate(activity['tanggal']),
+                  ),
+                  const SizedBox(height: 16),
+                  _buildDetailRow(
+                    icon: Icons.access_time,
+                    label: 'Waktu',
+                    value: activity['waktu'] ?? 'Belum ditentukan',
+                  ),
+                  const SizedBox(height: 16),
+                  _buildDetailRow(
+                    icon: Icons.location_on,
+                    label: 'Lokasi',
+                    value: activity['lokasi'] ?? 'Belum ditentukan',
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Description
+                  const Text(
+                    'Deskripsi',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      _showDeleteDialog(context);
-                    },
-                    icon: const Icon(Icons.delete),
-                    label: const Text('Hapus'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                  const SizedBox(height: 8),
+                  Text(
+                    activity['deskripsi'] ?? 'Tidak ada deskripsi',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[700],
+                      height: 1.5,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 24),
+
+                  // Action Buttons
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            _showEditDialog(context);
+                          },
+                          icon: const Icon(Icons.edit),
+                          label: const Text('Edit Kegiatan'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            elevation: 0,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            _showDeleteDialog(context);
+                          },
+                          icon: const Icon(Icons.delete),
+                          label: const Text('Hapus'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            elevation: 0,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
             ),
           ],
         ),
@@ -180,7 +179,14 @@ class ActivityDetail extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 20, color: Colors.grey[600]),
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.blue.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(icon, size: 20, color: Colors.blue),
+        ),
         const SizedBox(width: 12),
         Expanded(
           child: Column(
@@ -189,17 +195,16 @@ class ActivityDetail extends StatelessWidget {
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   color: Colors.grey[600],
-                  fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: 4),
               Text(
                 value,
                 style: const TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
@@ -245,10 +250,19 @@ class ActivityDetail extends StatelessWidget {
     return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
 
+  void _showEditDialog(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Edit ${activity['nama']}'),
+        backgroundColor: Colors.orange,
+      ),
+    );
+  }
+
   void _showDeleteDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
         return AlertDialog(
           title: const Text('Hapus Kegiatan'),
           content: Text(
@@ -256,16 +270,17 @@ class ActivityDetail extends StatelessWidget {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Navigator.of(dialogContext).pop(),
               child: const Text('Batal'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop(); // Go back to list
+                Navigator.of(dialogContext).pop();
+                Navigator.of(context).pop(); // Return to list
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('${activity['nama']} berhasil dihapus'),
+                    backgroundColor: Colors.red,
                   ),
                 );
               },
