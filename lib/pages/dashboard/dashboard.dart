@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/models/aktivitas_data.dart';
+import 'package:pentagram/pages/log_aktivitas/log_aktivitas_page.dart';
 import 'package:pentagram/pages/notifikasi/notifikasi.dart';
 import 'package:pentagram/pages/profil/profil_page.dart';
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:pentagram/pages/channel_transfer/daftar_channel.dart';
 import 'package:pentagram/pages/manajemen_pengguna/daftar_pengguna.dart';
+import 'package:pentagram/widgets/aktivitas_card.dart';
 
 
 class Dashboard extends StatelessWidget {
@@ -277,6 +280,52 @@ class Dashboard extends StatelessWidget {
               ),
             ),
             
+            const SizedBox(height: 24),
+
+            // Log Aktivitas Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Log Aktivitas',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Card log aktivitas (3 terbaru)
+                  Column(
+                    children: aktivitasData.take(3).map((data) {
+                      return AktivitasCard(aktivitas: data);
+                    }).toList(),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Tombol Lihat Semua
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const LogAktivitasPage()),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppColors.primary,
+                      ),
+                      child: const Text('Lihat Semua →'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
             const SizedBox(height: 24),
           ],
         ),
