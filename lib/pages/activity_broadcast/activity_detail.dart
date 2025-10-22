@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/utils/date_formatter.dart';
 
 class ActivityDetail extends StatelessWidget {
   final Map<String, dynamic> activity;
@@ -90,7 +91,7 @@ class ActivityDetail extends StatelessWidget {
                   _buildDetailRow(
                     icon: Icons.calendar_today,
                     label: 'Tanggal',
-                    value: _formatDate(activity['tanggal']),
+                    value: DateFormatter.formatDate(activity['tanggal']),
                   ),
                   const SizedBox(height: 16),
                   _buildDetailRow(
@@ -229,25 +230,6 @@ class ActivityDetail extends StatelessWidget {
       default:
         return const Color(0xFF2196F3);
     }
-  }
-
-  String _formatDate(String dateString) {
-    final date = DateTime.parse(dateString);
-    final months = [
-      'Januari',
-      'Februari',
-      'Maret',
-      'April',
-      'Mei',
-      'Juni',
-      'Juli',
-      'Agustus',
-      'September',
-      'Oktober',
-      'November',
-      'Desember',
-    ];
-    return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
 
   void _showEditDialog(BuildContext context) {
