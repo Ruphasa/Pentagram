@@ -1,7 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/pages/login/login_page.dart';
 
 class ProfilPage extends StatelessWidget {
   const ProfilPage({super.key});
+
+  void _handleLogout(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+      (route) => false,
+    );
+
+    Future.microtask(() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Anda telah logout.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -175,9 +193,7 @@ class ProfilPage extends StatelessWidget {
                     title: 'Logout',
                     iconColor: Colors.red,
                     titleColor: Colors.red,
-                    onTap: () {
-                      // Handle logout
-                    },
+                    onTap: () => _handleLogout(context),
                   ),
                   const Divider(height: 1),
                 ],
