@@ -1,52 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/utils/app_colors.dart';
 
 class FilterAktivitasDialog extends StatefulWidget {
-  final String? initialDeskripsi;
-  final String? initialNamaPelaku;
-  final DateTime? initialDariTanggal;
-  final DateTime? initialSampaiTanggal;
-  final void Function(String deskripsi, String namaPelaku, DateTime? dari, DateTime? sampai) onApply;
-
-  const FilterAktivitasDialog({
-    required this.onApply, super.key,
-    this.initialDeskripsi,
-    this.initialNamaPelaku,
-    this.initialDariTanggal,
-    this.initialSampaiTanggal,
-  });
+  const FilterAktivitasDialog({super.key});
 
   @override
   State<FilterAktivitasDialog> createState() => _FilterAktivitasDialogState();
 }
 
 class _FilterAktivitasDialogState extends State<FilterAktivitasDialog> {
-  late TextEditingController _deskripsiController;
-  late TextEditingController _namaPelakuController;
-  DateTime? _dariTanggal;
-  DateTime? _sampaiTanggal;
+  DateTime? startDate;
+  DateTime? endDate;
 
-  @override
-  void initState() {
-    super.initState();
-    _deskripsiController = TextEditingController(text: widget.initialDeskripsi ?? '');
-    _namaPelakuController = TextEditingController(text: widget.initialNamaPelaku ?? '');
-    _dariTanggal = widget.initialDariTanggal;
-    _sampaiTanggal = widget.initialSampaiTanggal;
-  }
-
-  Future<void> _pilihTanggal(BuildContext context, bool isDari) async {
-    final DateTime? picked = await showDatePicker(
+  Future<void> _pickDate(BuildContext context, bool isStart) async {
+    final picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2035),
+      firstDate: DateTime(2024),
+      lastDate: DateTime(2030),
     );
     if (picked != null) {
       setState(() {
-        if (isDari) {
-          _dariTanggal = picked;
+        if (isStart) {
+          startDate = picked;
         } else {
-          _sampaiTanggal = picked;
+          endDate = picked;
         }
       });
     }
@@ -54,120 +32,92 @@ class _FilterAktivitasDialogState extends State<FilterAktivitasDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      titlePadding: const EdgeInsets.only(top: 16, left: 20, right: 8, bottom: 0),
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            'Filter Aktivitas',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: Color(0xFF5A63B9),
+    return Dialog(
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Filter Aktivitas',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.close, color: Colors.black87),
-            onPressed: () => Navigator.pop(context),
-            tooltip: 'Tutup',
-          ),
-        ],
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: _deskripsiController,
-            decoration: const InputDecoration(labelText: 'Deskripsi Aktivitas'),
-          ),
-          const SizedBox(height: 10),
-          TextField(
-            controller: _namaPelakuController,
-            decoration: const InputDecoration(labelText: 'Nama Pelaku'),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: InkWell(
-                  onTap: () => _pilihTanggal(context, true),
-                  child: InputDecorator(
-                    decoration: const InputDecoration(labelText: 'Dari Tanggal'),
-                    child: Text(
-                      _dariTanggal == null
-                          ? '-'
-                          : '${_dariTanggal!.day}/${_dariTanggal!.month}/${_dariTanggal!.year}',
+            const SizedBox(height: 20),
+            _buildDateField(
+              label: 'Dari Tanggal',
+              value: startDate,
+              onTap: () => _pickDate(context, true),
+            ),
+            const SizedBox(height: 16),
+            _buildDateField(
+              label: 'Sampai Tanggal',
+              value: endDate,
+              onTap: () => _pickDate(context, false),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Batal'),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Terapkan'),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: InkWell(
-                  onTap: () => _pilihTanggal(context, false),
-                  child: InputDecorator(
-                    decoration: const InputDecoration(labelText: 'Sampai Tanggal'),
-                    child: Text(
-                      _sampaiTanggal == null
-                          ? '-'
-                          : '${_sampaiTanggal!.day}/${_sampaiTanggal!.month}/${_sampaiTanggal!.year}',
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      actions: [
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Tombol Reset (pojok kiri)
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _deskripsiController.clear();
-                    _namaPelakuController.clear();
-                    _dariTanggal = null;
-                    _sampaiTanggal = null;
-                  });
-                },
-                child: const Text(
-                  'Reset',
-                  style: TextStyle(color: Colors.black87),
-                ),
-              ),
-
-              // Tombol Terapkan (pojok kanan)
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF5A63B9),
-                  foregroundColor: Colors.white,
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                onPressed: () {
-                  widget.onApply(
-                    _deskripsiController.text,
-                    _namaPelakuController.text,
-                    _dariTanggal,
-                    _sampaiTanggal,
-                  );
-                  Navigator.pop(context);
-                },
-                child: const Text('Terapkan'),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildDateField({
+    required String label,
+    required DateTime? value,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey.shade300),
+          color: Colors.grey.shade50,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              value != null
+                  ? "${value.day}/${value.month}/${value.year}"
+                  : label,
+              style: TextStyle(
+                color: value != null ? Colors.black : Colors.grey,
+              ),
+            ),
+            const Icon(Icons.calendar_today, size: 20, color: Colors.grey),
+          ],
+        ),
+      ),
     );
   }
 }
