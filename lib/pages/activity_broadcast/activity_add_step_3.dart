@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/pages/activity_broadcast/components/activity_summary_card.dart';
-import 'package:pentagram/pages/activity_broadcast/data/activity_const.dart';
+import 'package:pentagram/repositories/activity_constants.dart';
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:pentagram/utils/date_formatter.dart';
 import 'package:pentagram/widgets/enhanced_dropdown.dart';
@@ -38,7 +38,7 @@ class ActivityAddStep3 extends StatelessWidget {
           label: 'Penanggung Jawab',
           hint: 'Pilih penanggung jawab',
           icon: Icons.person_rounded,
-          items: ActivityConst.penanggungJawabOptions,
+          items: ActivityConstants.penanggungJawabOptions,
           onChanged: onPenanggungJawabChanged,
           validator: (value) {
             if (value == null || value.isEmpty) {

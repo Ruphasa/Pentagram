@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/models/activity.dart';
 import 'package:pentagram/pages/activity_broadcast/activity_detail.dart';
+import 'package:pentagram/utils/date_formatter.dart';
 
 class ActivityCard extends StatelessWidget {
-  final Map<String, dynamic> activity;
+  final Activity activity;
   final int number;
 
   const ActivityCard({required this.activity, required this.number, super.key});
@@ -56,14 +58,14 @@ class ActivityCard extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       color: _getCategoryColor(
-                        activity['kategori'],
+                        activity.kategori,
                       ).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      activity['kategori'],
+                      activity.kategori,
                       style: TextStyle(
-                        color: _getCategoryColor(activity['kategori']),
+                        color: _getCategoryColor(activity.kategori),
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
                       ),
@@ -75,7 +77,7 @@ class ActivityCard extends StatelessWidget {
 
               // Activity name
               Text(
-                activity['nama'],
+                activity.nama,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -92,7 +94,7 @@ class ActivityCard extends StatelessWidget {
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(
-                      activity['penanggung_jawab'],
+                      activity.penanggungJawab,
                       style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -106,7 +108,7 @@ class ActivityCard extends StatelessWidget {
                   const Icon(Icons.calendar_today, size: 16, color: Colors.grey),
                   const SizedBox(width: 4),
                   Text(
-                    _formatDate(activity['tanggal']),
+                    DateFormatter.formatDate(activity.tanggal),
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                   const Spacer(),
@@ -139,24 +141,5 @@ class ActivityCard extends StatelessWidget {
       default:
         return const Color(0xFF2196F3);
     }
-  }
-
-  String _formatDate(String dateString) {
-    final date = DateTime.parse(dateString);
-    final months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'Mei',
-      'Jun',
-      'Jul',
-      'Agu',
-      'Sep',
-      'Okt',
-      'Nov',
-      'Des',
-    ];
-    return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
 }
