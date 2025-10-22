@@ -8,8 +8,7 @@ class CommonHeader extends StatelessWidget {
   final double expandedHeight;
 
   const CommonHeader({
-    super.key,
-    required this.title,
+    required this.title, super.key,
     this.subtitle,
     this.actions,
     this.expandedHeight = 120,

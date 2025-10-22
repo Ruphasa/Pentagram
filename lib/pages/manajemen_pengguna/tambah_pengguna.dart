@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
 
 class TambahPenggunaPage extends StatelessWidget {
-  TambahPenggunaPage({super.key});
+  const TambahPenggunaPage({super.key});
 
   @override
   Widget build(BuildContext context) {

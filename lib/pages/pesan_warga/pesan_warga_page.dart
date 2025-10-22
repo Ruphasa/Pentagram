@@ -3,9 +3,8 @@ import 'package:pentagram/models/pesan_warga.dart';
 import 'package:pentagram/widgets/app_header.dart';
 import 'package:pentagram/widgets/pesan_table.dart';
 import 'package:pentagram/widgets/filter_pesan_dialog.dart';
-import 'package:pentagram/widgets/side_menu.dart';
-import 'pesan_warga_detail.dart';
-import 'pesan_warga_edit.dart';
+import 'package:pentagram/pages/pesan_warga/pesan_warga_detail.dart';
+import 'package:pentagram/pages/pesan_warga/pesan_warga_edit.dart';
 
 class PesanWargaPage extends StatefulWidget {
   const PesanWargaPage({super.key});
@@ -99,7 +98,6 @@ class _PesanWargaPageState extends State<PesanWargaPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const AppHeader(),
-      drawer: const SideMenu(),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

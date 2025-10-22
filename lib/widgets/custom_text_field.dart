@@ -8,9 +8,9 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
 
   const CustomTextField({
-    super.key,
     required this.controller,
     required this.hint,
+    super.key,
     this.keyboardType = TextInputType.text,
     this.validator,
   });
@@ -22,10 +22,7 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(
-          color: AppColors.textMuted,
-          fontSize: 14,
-        ),
+        hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 14),
         filled: true,
         fillColor: AppColors.backgroundGrey,
         border: OutlineInputBorder(
@@ -46,12 +43,14 @@ class CustomTextField extends StatelessWidget {
         ),
       ),
       style: const TextStyle(color: AppColors.textPrimary),
-      validator: validator ?? (value) {
-        if (value == null || value.isEmpty) {
-          return 'Field ini harus diisi';
-        }
-        return null;
-      },
+      validator:
+          validator ??
+          (value) {
+            if (value == null || value.isEmpty) {
+              return 'Field ini harus diisi';
+            }
+            return null;
+          },
     );
   }
 }

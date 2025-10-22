@@ -9,11 +9,11 @@ class CustomDropdown extends StatelessWidget {
   final String? Function(String?)? validator;
 
   const CustomDropdown({
-    super.key,
     required this.value,
     required this.hint,
     required this.items,
     required this.onChanged,
+    super.key,
     this.validator,
   });
 

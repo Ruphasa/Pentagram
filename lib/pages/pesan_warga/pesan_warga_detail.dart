@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../models/pesan_warga.dart';
+import 'package:pentagram/models/pesan_warga.dart';
 
 class PesanWargaDetailOverlay extends StatelessWidget {
   final PesanWarga pesan;
-  const PesanWargaDetailOverlay({super.key, required this.pesan});
+  const PesanWargaDetailOverlay({required this.pesan, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FilterPesanDialog extends StatefulWidget {
   final void Function(String? judul, String? status) onFilter;
 
-  const FilterPesanDialog({super.key, required this.onFilter});
+  const FilterPesanDialog({required this.onFilter, super.key});
 
   @override
   State<FilterPesanDialog> createState() => _FilterPesanDialogState();

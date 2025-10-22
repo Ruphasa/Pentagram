@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class DrawerListTile extends StatelessWidget {
   const DrawerListTile({
-    super.key,
     required this.title,
     required this.icon,
     required this.onTap,
+    super.key,
     this.isSubMenu = false,
     this.iconColor,
     this.textColor,

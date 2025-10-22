@@ -40,7 +40,7 @@ class _LoginFormState extends State<LoginForm> {
 
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Email dan password harus diisi'), backgroundColor: Colors.red),
+        const SnackBar(content: Text('Email dan password harus diisi')),
       );
       return;
     }
@@ -52,7 +52,7 @@ class _LoginFormState extends State<LoginForm> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Email atau password salah'), backgroundColor: Colors.red),
+        const SnackBar(content: Text('Email atau password salah')),
       );
     }
   }
@@ -106,8 +106,6 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _buildTextField(String label, TextEditingController controller, bool obscure) {
-    const secondaryColor = Color(0xFF5a63b9);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -149,8 +147,6 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _buildLoginButton() {
-    const secondaryColor = Color(0xFF5a63b9);
-
     return MouseRegion(
       onEnter: (_) => setState(() => _isHoveringButton = true),
       onExit: (_) => setState(() => _isHoveringButton = false),
@@ -197,8 +193,6 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _buildRegisterLink(BuildContext context) {
-    const secondaryColor = Color(0xFF5a63b9);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

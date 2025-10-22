@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/models/transaksi.dart';
 import 'package:pentagram/widgets/transaksi_card.dart';
-import 'package:pentagram/utils/app_colors.dart';
-import 'package:pentagram/utils/icon_mapper.dart';
 import 'package:pentagram/pages/keuangan/pengeluaran_page.dart';
+import 'package:pentagram/utils/app_colors.dart';
 
 class PemasukanPage extends StatefulWidget {
   const PemasukanPage({super.key});
@@ -32,14 +31,6 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
     ),
   ];
 
-  double get _totalPemasukan =>
-      _pemasukanList.fold(0, (sum, item) => sum + item.jumlah);
-  String _formatCurrency(num value) {
-    final intVal = value.toInt();
-    final s = intVal.toString().replaceAllMapped(
-        RegExp(r'\B(?=(\d{3})+(?!\d))'), (m) => '.');
-    return 'Rp $s';
-  }
   @override
   void initState() {
     super.initState();
@@ -58,164 +49,43 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
 
     showDialog(
       context: context,
-      builder: (context) => Dialog(
-        backgroundColor: AppColors.cardBackground,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: BorderSide(color: AppColors.primary.withOpacity(0.3), width: 1),
-        ),
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                AppColors.primary.withOpacity(0.05),
-                AppColors.cardBackground,
-                AppColors.secondary.withOpacity(0.05),
-              ],
+      builder: (context) => AlertDialog(
+        title: const Text('Tambah Pemasukan'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: keteranganCtrl,
+              decoration: const InputDecoration(labelText: 'Keterangan'),
             ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      iconFromKey('arrow_downward'),
-                      color: AppColors.primary,
-                      size: 24,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  const Text(
-                    "Tambah Pemasukan",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              TextField(
-                controller: keteranganCtrl,
-                style: const TextStyle(color: AppColors.textPrimary),
-                decoration: InputDecoration(
-                  labelText: "Keterangan",
-                  labelStyle: const TextStyle(color: AppColors.textSecondary),
-                  prefixIcon: Icon(
-                    iconFromKey('list_alt'),
-                    color: AppColors.primary,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: AppColors.border),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide:
-                        BorderSide(color: AppColors.primary.withOpacity(0.8), width: 2),
-                  ),
-                  filled: true,
-                  fillColor: AppColors.border.withOpacity(0.3),
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: jumlahCtrl,
-                keyboardType: TextInputType.number,
-                style: const TextStyle(color: AppColors.textPrimary),
-                decoration: InputDecoration(
-                  labelText: "Jumlah",
-                  labelStyle: const TextStyle(color: AppColors.textSecondary),
-                  prefixIcon: Icon(
-                    iconFromKey('attach_money'),
-                    color: AppColors.primary,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: AppColors.border),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide:
-                        BorderSide(color: AppColors.primary.withOpacity(0.8), width: 2),
-                  ),
-                  filled: true,
-                  fillColor: AppColors.border.withOpacity(0.3),
-                ),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: TextButton.styleFrom(
-                      foregroundColor: AppColors.textSecondary,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 12,
-                      ),
-                    ),
-                    child: const Text("Batal"),
-                  ),
-                  const SizedBox(width: 12),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (keteranganCtrl.text.isEmpty ||
-                          jumlahCtrl.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: const Text('Harap isi semua field'),
-                            backgroundColor: AppColors.error,
-                          ),
-                        );
-                        return;
-                      }
-                      setState(() {
-                        _pemasukanList.add(Transaksi(
-                          id: DateTime.now().millisecondsSinceEpoch.toString(),
-                          jenis: 'pemasukan',
-                          keterangan: keteranganCtrl.text,
-                          jumlah: double.tryParse(jumlahCtrl.text) ?? 0,
-                          tanggal: DateTime.now(),
-                        ));
-                      });
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: AppColors.textPrimary,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 12,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text(
-                      "Simpan",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+            TextField(
+              controller: jumlahCtrl,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Jumlah'),
+            ),
+          ],
         ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Batal'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _pemasukanList.add(Transaksi(
+                  id: DateTime.now().millisecondsSinceEpoch.toString(),
+                  jenis: 'pemasukan',
+                  keterangan: keteranganCtrl.text,
+                  jumlah: double.tryParse(jumlahCtrl.text) ?? 0,
+                  tanggal: DateTime.now(),
+                ));
+              });
+              Navigator.pop(context);
+            },
+            child: const Text('Simpan'),
+          ),
+        ],
       ),
     );
   }
@@ -223,11 +93,11 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textOnPrimary,
-        title: const Text("Keuangan"),
+        title: const Text('Keuangan'),
         actions: [
           IconButton(
             onPressed: () {
@@ -246,172 +116,32 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
           controller: _tabController,
           indicatorColor: AppColors.secondary,
           labelColor: AppColors.textOnPrimary,
-          unselectedLabelColor: AppColors.textSecondary,
+          unselectedLabelColor: AppColors.textOnPrimary,
           tabs: const [
             Tab(text: 'Pemasukan', icon: Icon(Icons.arrow_downward_rounded)),
             Tab(text: 'Pengeluaran', icon: Icon(Icons.arrow_upward_rounded)),
           ],
         ),
       ),
-      floatingActionButton: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          gradient: LinearGradient(
-            colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withOpacity(0.5),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        child: FloatingActionButton.extended(
-          onPressed: _tambahPemasukan,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          icon: Icon(iconFromKey('add'), color: AppColors.textPrimary),
-          label: const Text(
-            "Tambah",
-            style: TextStyle(
-              color: AppColors.textPrimary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
-      body: Column(
+      body: TabBarView(
+        controller: _tabController,
         children: [
-          // Summary Card
-          Container(
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColors.primary.withOpacity(0.2),
-                  AppColors.primary.withOpacity(0.05),
-                ],
-              ),
-              border: Border.all(
-                color: AppColors.primary.withOpacity(0.3),
-                width: 1,
-              ),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Icon(
-                    iconFromKey('arrow_downward'),
-                    color: AppColors.primary,
-                    size: 32,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Total Pemasukan",
-                        style: TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        _formatCurrency(_totalPemasukan),
-                        style: const TextStyle(
-                          color: AppColors.primary,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          // Tab Pemasukan
+          ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: _pemasukanList.length,
+            itemBuilder: (context, index) {
+              return TransaksiCard(transaksi: _pemasukanList[index]);
+            },
           ),
-
-          // List Header
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                const Text(
-                  "Riwayat Transaksi",
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    "${_pemasukanList.length}",
-                    style: const TextStyle(
-                      color: AppColors.primary,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // List
-          Expanded(
-            child: _pemasukanList.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          iconFromKey('inbox'),
-                          size: 64,
-                          color: AppColors.textMuted,
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          "Belum ada pemasukan",
-                          style: TextStyle(
-                            color: AppColors.textSecondary,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: _pemasukanList.length,
-                    itemBuilder: (context, index) {
-                      return TransaksiCard(
-                        transaksi: _pemasukanList[index],
-                      );
-                    },
-                  ),
-          ),
+          // Tab Pengeluaran
+          const PengeluaranPage(),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _tambahPemasukan,
+        backgroundColor: AppColors.primary,
+        child: const Icon(Icons.add_rounded, color: AppColors.textOnPrimary),
       ),
     );
   }
