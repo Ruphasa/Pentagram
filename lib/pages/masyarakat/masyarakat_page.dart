@@ -101,7 +101,7 @@ class _MasyarakatPageState extends State<MasyarakatPage> with SingleTickerProvid
           controller: _tabController,
           indicatorColor: AppColors.secondary,
           labelColor: AppColors.textOnPrimary,
-          unselectedLabelColor: AppColors.textSecondary,
+          unselectedLabelColor: AppColors.textPrimary,
           tabs: const [
             Tab(text: 'Warga', icon: Icon(Icons.people_rounded)),
             Tab(text: 'Keluarga', icon: Icon(Icons.family_restroom_rounded)),
