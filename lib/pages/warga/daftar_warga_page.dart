@@ -18,6 +18,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        toolbarHeight: 72,
         title: const Text('Daftar Warga'),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textOnPrimary,
