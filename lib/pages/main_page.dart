@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/pages/dashboard.dart';
+import 'package:pentagram/pages/dashboard/dashboard.dart';
 import 'package:pentagram/pages/activity_broadcast/activity_view.dart';
 import 'package:pentagram/pages/keuangan/pemasukan_page.dart';
 import 'package:pentagram/pages/warga/daftar_warga_page.dart';
@@ -16,7 +16,7 @@ class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   
   final List<Widget> _pages = [
-    const DashboardScreen(),
+    const HomeScreen(),
     const ActivityView(),
     const PemasukanPage(),
     const DaftarWargaPage(),
