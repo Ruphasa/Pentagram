@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/widgets/side_menu.dart';
-import 'package:pentagram/widgets/app_header.dart';
 import 'package:pentagram/widgets/tambah_warga_form.dart';
 import 'package:pentagram/utils/app_colors.dart';
 
@@ -12,7 +10,6 @@ class TambahWargaPage extends StatefulWidget {
 }
 
 class _TambahWargaPageState extends State<TambahWargaPage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
   // Controllers
@@ -90,10 +87,12 @@ class _TambahWargaPageState extends State<TambahWargaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      drawer: const SideMenu(),
-      appBar: const AppHeader(),
-      backgroundColor: AppColors.black,
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textOnPrimary,
+        title: const Text('Tambah Warga'),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -105,7 +104,7 @@ class _TambahWargaPageState extends State<TambahWargaPage> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
-                color: AppColors.white,
+                color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 24),

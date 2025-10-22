@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/widgets/side_menu.dart';
-import 'package:pentagram/widgets/app_header.dart';
+import 'package:pentagram/utils/app_colors.dart';
 
 class TambahMutasiPage extends StatefulWidget {
   const TambahMutasiPage({super.key});
@@ -10,7 +9,6 @@ class TambahMutasiPage extends StatefulWidget {
 }
 
 class _TambahMutasiPageState extends State<TambahMutasiPage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
   String? jenisMutasi;
@@ -24,9 +22,12 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      drawer: const SideMenu(),
-      appBar: const AppHeader(),
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textOnPrimary,
+        title: const Text('Tambah Mutasi Keluarga'),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -238,7 +239,6 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
           ),
         ),
       ),
-      backgroundColor: const Color(0xFFF4F7FB),
     );
   }
 }

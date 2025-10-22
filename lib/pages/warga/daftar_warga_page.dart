@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/models/warga.dart';
-import 'package:pentagram/widgets/app_header.dart';
-import 'package:pentagram/widgets/side_menu.dart';
 import 'package:pentagram/utils/app_colors.dart';
 
 class DaftarWargaPage extends StatefulWidget {
@@ -18,9 +16,12 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.black,
-      drawer: const SideMenu(),
-      appBar: const AppHeader(),
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: const Text('Daftar Warga'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textOnPrimary,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -35,8 +36,8 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                   icon: const Icon(Icons.filter_alt, size: 18),
                   label: const Text('Filter'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.magenta,
-                    foregroundColor: Colors.white,
+                    backgroundColor: AppColors.buttonPrimary,
+                    foregroundColor: AppColors.textOnPrimary,
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -50,10 +51,10 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1A1A1F),
+                  color: AppColors.cardBackground,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: const Color(0xFF333333),
+                    color: AppColors.border,
                     width: 1,
                   ),
                   boxShadow: [
@@ -72,10 +73,10 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                         child: SingleChildScrollView(
                           child: DataTable(
                             headingRowColor: MaterialStateProperty.all(
-                              const Color(0xFF0F0F13),
+                              AppColors.secondary,
                             ),
                             dataRowColor: MaterialStateProperty.all(
-                              const Color(0xFF1A1A1F),
+                              AppColors.background,
                             ),
                             columns: [
                               DataColumn(
@@ -84,7 +85,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 13,
-                                    color: AppColors.white,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ),
@@ -94,7 +95,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 13,
-                                    color: AppColors.white,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ),
@@ -104,7 +105,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 13,
-                                    color: AppColors.white,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ),
@@ -114,7 +115,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 13,
-                                    color: AppColors.white,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ),
@@ -124,7 +125,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 13,
-                                    color: AppColors.white,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ),
@@ -134,7 +135,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 13,
-                                    color: AppColors.white,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ),
@@ -144,7 +145,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 13,
-                                    color: AppColors.white,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ),
@@ -154,7 +155,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 13,
-                                    color: AppColors.white,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ),
@@ -166,7 +167,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                     '${warga.no}',
                                     style: TextStyle(
                                       fontSize: 13,
-                                      color: AppColors.white,
+                                      color: AppColors.textPrimary,
                                     ),
                                   )),
                                   DataCell(
@@ -174,7 +175,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                       warga.nama,
                                       style: const TextStyle(
                                         fontSize: 13,
-                                        color: AppColors.magenta,
+                                        color: AppColors.textPrimary,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -183,7 +184,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                     warga.nik,
                                     style: TextStyle(
                                       fontSize: 13,
-                                      color: AppColors.white,
+                                      color: AppColors.textPrimary,
                                     ),
                                   )),
                                   DataCell(
@@ -191,7 +192,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                       warga.keluarga,
                                       style: const TextStyle(
                                         fontSize: 13,
-                                        color: AppColors.magenta,
+                                        color: AppColors.textPrimary,
                                       ),
                                     ),
                                   ),
@@ -199,7 +200,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                     warga.jenisKelamin,
                                     style: TextStyle(
                                       fontSize: 13,
-                                      color: AppColors.white,
+                                      color: AppColors.textPrimary,
                                     ),
                                   )),
                                   DataCell(
@@ -209,14 +210,14 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                         vertical: 4,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: AppColors.cyan.withOpacity(0.1),
+                                        color: AppColors.accent.withOpacity(0.1),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Text(
                                         warga.statusDomisili,
                                         style: const TextStyle(
                                           fontSize: 12,
-                                          color: AppColors.cyan,
+                                          color: AppColors.accent,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -229,14 +230,14 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                         vertical: 4,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: AppColors.cyan.withOpacity(0.1),
+                                        color: AppColors.accent.withOpacity(0.1),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Text(
                                         warga.statusHidup,
                                         style: const TextStyle(
                                           fontSize: 12,
-                                          color: AppColors.cyan,
+                                          color: AppColors.accent,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -289,7 +290,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                               vertical: 8,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.magenta,
+                              color: AppColors.accent,
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(

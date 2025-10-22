@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/widgets/login_form.dart';
+import 'package:pentagram/pages/login/login_form.dart';
+import 'package:pentagram/utils/app_colors.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const secondaryColor = Color(0xFF5a63b9);
-
-    return Scaffold(
-      backgroundColor: secondaryColor.withOpacity(0.08),
-      body: const SafeArea(
+    return const Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             padding: EdgeInsets.all(24),

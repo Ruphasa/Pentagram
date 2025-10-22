@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/widgets/side_menu.dart';
-import 'package:pentagram/widgets/app_header.dart';
-import 'package:pentagram/models/aktivitas_data.dart';
-import 'package:pentagram/widgets/aktivitas_table.dart';
-import 'package:pentagram/widgets/filter_aktivitas_dialog.dart';
+import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/pages/log_aktivitas/aktivitas_data.dart';
+import 'package:pentagram/pages/log_aktivitas/aktivitas_table.dart';
+import 'package:pentagram/pages/log_aktivitas/filter_dialog.dart';
 
 class LogAktivitasPage extends StatefulWidget {
   const LogAktivitasPage({super.key});
@@ -49,9 +48,12 @@ class _LogAktivitasPageState extends State<LogAktivitasPage> {
     final bool isMobile = MediaQuery.of(context).size.width < 700;
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: const AppHeader(),
-      drawer: const SideMenu(),
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: const Text('Log Aktivitas'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textOnPrimary,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
