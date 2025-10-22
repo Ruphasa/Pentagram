@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pentagram/models/aktivitas_data.dart';
 import 'package:pentagram/pages/log_aktivitas/log_aktivitas_page.dart';
 import 'package:pentagram/pages/notifikasi/notifikasi.dart';
+import 'package:pentagram/pages/penerimaan_warga/penerimaan_warga_page.dart';
 import 'package:pentagram/pages/profil/profil_page.dart';
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:pentagram/pages/channel_transfer/daftar_channel.dart';
@@ -229,6 +230,21 @@ class Dashboard extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => DaftarPenggunaPage(), // lib/pages/manajemen_pengguna/daftar_pengguna.dart
+                            ),
+                          );
+                        },
+                      ),
+                      // === Penerimaan Warga ===
+                      _buildQuickAccessCard(
+                        context,
+                        color: const Color(0xFF4DB6AC), 
+                        icon: Icons.home_rounded,
+                        label: 'Penerimaan\nWarga', 
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PenerimaanWargaPage(),
                             ),
                           );
                         },
