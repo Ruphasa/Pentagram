@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/models/activity.dart';
 import 'package:pentagram/utils/date_formatter.dart';
 
 class ActivityDetail extends StatelessWidget {
-  final Map<String, dynamic> activity;
+  final Activity activity;
 
   const ActivityDetail({required this.activity, super.key});
 
@@ -34,7 +35,7 @@ class ActivityDetail extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: _getCategoryColor(activity['kategori']),
+                color: _getCategoryColor(activity.kategori),
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
@@ -53,7 +54,7 @@ class ActivityDetail extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      activity['kategori'],
+                      activity.kategori,
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
@@ -63,7 +64,7 @@ class ActivityDetail extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    activity['nama'],
+                    activity.nama,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -85,25 +86,25 @@ class ActivityDetail extends StatelessWidget {
                   _buildDetailRow(
                     icon: Icons.person,
                     label: 'Penanggung Jawab',
-                    value: activity['penanggung_jawab'],
+                    value: activity.penanggungJawab,
                   ),
                   const SizedBox(height: 16),
                   _buildDetailRow(
                     icon: Icons.calendar_today,
                     label: 'Tanggal',
-                    value: DateFormatter.formatDate(activity['tanggal']),
+                    value: DateFormatter.formatDate(activity.tanggal),
                   ),
                   const SizedBox(height: 16),
                   _buildDetailRow(
                     icon: Icons.access_time,
                     label: 'Waktu',
-                    value: activity['waktu'] ?? 'Belum ditentukan',
+                    value: activity.waktu,
                   ),
                   const SizedBox(height: 16),
                   _buildDetailRow(
                     icon: Icons.location_on,
                     label: 'Lokasi',
-                    value: activity['lokasi'] ?? 'Belum ditentukan',
+                    value: activity.lokasi,
                   ),
                   const SizedBox(height: 24),
 
@@ -117,7 +118,7 @@ class ActivityDetail extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    activity['deskripsi'] ?? 'Tidak ada deskripsi',
+                    activity.deskripsi,
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[700],
@@ -235,7 +236,7 @@ class ActivityDetail extends StatelessWidget {
   void _showEditDialog(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Edit ${activity['nama']}'),
+        content: Text('Edit ${activity.nama}'),
         backgroundColor: Colors.orange,
       ),
     );
@@ -248,7 +249,7 @@ class ActivityDetail extends StatelessWidget {
         return AlertDialog(
           title: const Text('Hapus Kegiatan'),
           content: Text(
-            'Apakah Anda yakin ingin menghapus kegiatan "${activity['nama']}"?',
+            'Apakah Anda yakin ingin menghapus kegiatan "${activity.nama}"?',
           ),
           actions: [
             TextButton(
@@ -258,10 +259,10 @@ class ActivityDetail extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.of(dialogContext).pop();
-                Navigator.of(context).pop(); // Return to list
+                Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('${activity['nama']} berhasil dihapus'),
+                    content: Text('${activity.nama} berhasil dihapus'),
                     backgroundColor: Colors.red,
                   ),
                 );

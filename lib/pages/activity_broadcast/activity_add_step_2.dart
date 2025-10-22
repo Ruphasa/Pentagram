@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/pages/activity_broadcast/data/activity_const.dart';
+import 'package:pentagram/repositories/activity_constants.dart';
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:pentagram/widgets/enhanced_date_field.dart';
 import 'package:pentagram/widgets/enhanced_dropdown.dart';
@@ -37,7 +37,7 @@ class ActivityAddStep2 extends StatelessWidget {
           label: 'Lokasi Kegiatan',
           hint: 'Pilih lokasi',
           icon: Icons.location_on_rounded,
-          items: ActivityConst.lokasiOptions,
+          items: ActivityConstants.lokasiOptions,
           onChanged: onLokasiChanged,
           validator: (value) {
             if (value == null || value.isEmpty) {

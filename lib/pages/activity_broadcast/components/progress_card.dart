@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/pages/activity_broadcast/data/activities.dart';
-import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/services/activity_service.dart';
 
 class ProgressCard extends StatelessWidget {
   const ProgressCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final activityService = ActivityService();
+    final stats = activityService.getMonthlyStatistics();
+    
+    final total = stats['total'] as int;
+    final completed = stats['completed'] as int;
+    final percentage = stats['percentage'] as int;
+    final progressValue = total > 0 ? completed / total : 0.0;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -40,13 +47,13 @@ class ProgressCard extends StatelessWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
+                  color: _getProgressColor(percentage).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Text(
-                  '75%',
+                child: Text(
+                  '$percentage%',
                   style: TextStyle(
-                    color: Colors.green,
+                    color: _getProgressColor(percentage),
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
@@ -58,25 +65,52 @@ class ProgressCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(
-              value: 0.75,
+              value: progressValue,
               minHeight: 10,
               backgroundColor: Colors.grey[200],
-              valueColor: const AlwaysStoppedAnimation<Color>(
-                AppColors.primary,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                _getProgressColor(percentage),
               ),
             ),
           ),
           const SizedBox(height: 8),
-          Text(
-            '${(activities.length * 0.75).round()}/${activities.length} Kegiatan Selesai',
-            style: TextStyle(
-              fontSize: 13,
-              color: Colors.grey[600],
-              fontWeight: FontWeight.w500,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$completed/$total Kegiatan Selesai',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              if (stats['remaining'] > 0)
+                Text(
+                  '${stats['remaining']} tersisa',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[500],
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+            ],
           ),
         ],
       ),
     );
+  }
+
+  /// Get progress color based on percentage
+  Color _getProgressColor(int percentage) {
+    if (percentage >= 75) {
+      return Colors.green;
+    } else if (percentage >= 50) {
+      return Colors.orange;
+    } else if (percentage >= 25) {
+      return Colors.deepOrange;
+    } else {
+      return Colors.red;
+    }
   }
 }
