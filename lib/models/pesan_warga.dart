@@ -1,17 +1,25 @@
 class PesanWarga {
-  final int id;
-  final String pengirim;
-  final String judul;
-  final String deskripsi;
-  final String status;
-  final DateTime tanggalDibuat;
+  final String nama;
+  final String pesan;
+  final String waktu;
+  final bool unread;
+  final String avatar;
 
   PesanWarga({
-    required this.id,
-    required this.pengirim,
-    required this.judul,
-    required this.deskripsi,
-    required this.status,
-    required this.tanggalDibuat,
+    required this.nama,
+    required this.pesan,
+    required this.waktu,
+    required this.unread,
+    required this.avatar,
   });
+
+  factory PesanWarga.fromMap(Map<String, dynamic> map) {
+    return PesanWarga(
+      nama: map['nama'],
+      pesan: map['pesan'],
+      waktu: map['waktu'],
+      unread: map['unread'],
+      avatar: map['avatar'],
+    );
+  }
 }

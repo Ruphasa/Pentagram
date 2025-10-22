@@ -1,101 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/utils/app_colors.dart';
 
-class FilterPesanDialog extends StatefulWidget {
-  final void Function(String? judul, String? status) onFilter;
+class FilterPesanDialog extends StatelessWidget {
+  final String selectedFilter;
+  final Function(String) onFilterSelected;
 
-  const FilterPesanDialog({required this.onFilter, super.key});
-
-  @override
-  State<FilterPesanDialog> createState() => _FilterPesanDialogState();
-}
-
-class _FilterPesanDialogState extends State<FilterPesanDialog> {
-  final TextEditingController _judulController = TextEditingController();
-  String? status;
+  const FilterPesanDialog({
+    super.key,
+    required this.selectedFilter,
+    required this.onFilterSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      titlePadding: const EdgeInsets.only(top: 16, left: 20, right: 8, bottom: 0),
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            'Filter Pesan Warga',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: Color(0xFF5A63B9),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.close, color: Colors.black87),
-            onPressed: () => Navigator.pop(context),
-            tooltip: 'Tutup',
-          ),
-        ],
+      backgroundColor: AppColors.cardBackground,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      title: const Text(
+        'Filter Pesan',
+        style: TextStyle(
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          TextField(
-            controller: _judulController,
-            decoration: const InputDecoration(labelText: 'Judul'),
-          ),
-          const SizedBox(height: 10),
-          DropdownButtonFormField<String>(
-            decoration: const InputDecoration(labelText: 'Status'),
-            initialValue: status,
-            items: const [
-              DropdownMenuItem(value: 'Pending', child: Text('Pending')),
-              DropdownMenuItem(value: 'Diterima', child: Text('Diterima')),
-              DropdownMenuItem(value: 'Ditolak', child: Text('Ditolak')),
-            ],
-            onChanged: (v) => setState(() => status = v),
-          ),
+          _buildDialogOption(context, 'Semua', Icons.all_inbox_rounded),
+          _buildDialogOption(context, 'Belum Dibaca', Icons.mark_email_unread_rounded),
+          _buildDialogOption(context, 'Sudah Dibaca', Icons.drafts_rounded),
         ],
       ),
-      actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      actions: [
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Tombol Reset di kiri bawah
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _judulController.clear();
-                    status = null;
-                  });
-                },
-                child: const Text(
-                  'Reset',
-                  style: TextStyle(color: Colors.black87),
-                ),
-              ),
+    );
+  }
 
-              // Tombol Terapkan di kanan bawah
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF5A63B9),
-                  foregroundColor: Colors.white,
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                onPressed: () {
-                  widget.onFilter(_judulController.text, status);
-                  Navigator.pop(context);
-                },
-                child: const Text('Terapkan'),
-              ),
-            ],
-          ),
+  Widget _buildDialogOption(BuildContext context, String label, IconData icon) {
+    final isSelected = selectedFilter == label;
+    return ListTile(
+      leading: Icon(
+        icon,
+        color: isSelected ? AppColors.primary : AppColors.iconPrimary,
+      ),
+      title: Text(
+        label,
+        style: TextStyle(
+          color: AppColors.textPrimary,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
-      ],
+      ),
+      trailing:
+          isSelected ? const Icon(Icons.check_circle_rounded, color: AppColors.primary) : null,
+      onTap: () {
+        onFilterSelected(label);
+        Navigator.pop(context);
+      },
     );
   }
 }
