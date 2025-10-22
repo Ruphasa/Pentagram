@@ -11,13 +11,70 @@ class TambahMutasiPage extends StatefulWidget {
 class _TambahMutasiPageState extends State<TambahMutasiPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String? jenisMutasi;
-  String? keluarga;
-  String? alasanMutasi;
-  DateTime? tanggalMutasi;
+  String? _jenisMutasi;
+  String? _keluarga;
+  String? _alasanMutasi;
+  DateTime? _tanggalMutasi;
 
-  final List<String> jenisList = ['Pindah Rumah', 'Pindah Kota', 'Pindah Negara'];
-  final List<String> keluargaList = ['Keluarga Mara Nunez', 'Keluarga Ijat', 'Keluarga Damar'];
+  final List<String> _jenisList = ['Pindah Rumah', 'Pindah Kota', 'Pindah Negara'];
+  final List<String> _keluargaList = ['Keluarga Mara Nunez', 'Keluarga Ijat', 'Keluarga Damar'];
+
+  Future<void> _pilihTanggalMutasi(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.primary,
+              onPrimary: AppColors.textOnPrimary,
+              surface: AppColors.cardBackground,
+              onSurface: AppColors.textPrimary,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      setState(() {
+        _tanggalMutasi = picked;
+      });
+    }
+  }
+
+  String _formatTanggal(DateTime? tanggal) {
+    if (tanggal == null) return 'Pilih Tanggal';
+    return '${tanggal.day.toString().padLeft(2, '0')}/${tanggal.month.toString().padLeft(2, '0')}/${tanggal.year}';
+  }
+
+  void _simpanData() {
+    if (_formKey.currentState!.validate()) {
+      if (_tanggalMutasi == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Harap pilih tanggal mutasi'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+        return;
+      }
+
+      // TODO: Tambahkan logika simpan ke backend / database
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Data mutasi berhasil disimpan'),
+          backgroundColor: AppColors.success,
+        ),
+      );
+
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,218 +84,260 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textOnPrimary,
         title: const Text('Tambah Mutasi Keluarga'),
+        elevation: 0,
       ),
-      body: SafeArea(
+      body: Form(
+        key: _formKey,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Center(
-            child: Container(
-              width: 900,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 6,
-                    offset: const Offset(0, 3),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSectionHeader('Data Mutasi'),
+              _buildDropdownField(
+                label: 'Jenis Mutasi',
+                value: _jenisMutasi,
+                items: _jenisList,
+                icon: Icons.change_circle_rounded,
+                hint: '-- Pilih Jenis Mutasi --',
+                onChanged: (val) => setState(() => _jenisMutasi = val),
+              ),
+              const SizedBox(height: 16),
+              _buildDropdownField(
+                label: 'Keluarga',
+                value: _keluarga,
+                items: _keluargaList,
+                icon: Icons.family_restroom_rounded,
+                hint: '-- Pilih Keluarga --',
+                onChanged: (val) => setState(() => _keluarga = val),
+              ),
+              const SizedBox(height: 16),
+              _buildTextField(
+                label: 'Alasan Mutasi',
+                hint: 'Masukkan alasan mutasi...',
+                icon: Icons.text_fields_rounded,
+                maxLines: 3,
+                onChanged: (val) => _alasanMutasi = val,
+              ),
+              const SizedBox(height: 16),
+              _buildDateField(
+                label: 'Tanggal Mutasi',
+                value: _tanggalMutasi,
+                onTap: () => _pilihTanggalMutasi(context),
+              ),
+              const SizedBox(height: 32),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.textSecondary,
+                        side: const BorderSide(color: AppColors.border),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: const Text('Batal'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    flex: 2,
+                    child: ElevatedButton(
+                      onPressed: _simpanData,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.textOnPrimary,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 2,
+                      ),
+                      child: const Text('Simpan Data'),
+                    ),
                   ),
                 ],
               ),
-              padding: const EdgeInsets.all(24),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Buat Mutasi Keluarga',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-
-                    // Jenis Mutasi
-                    const Text(
-                      'Jenis Mutasi',
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(height: 8),
-                    DropdownButtonFormField<String>(
-                      initialValue: jenisMutasi,
-                      hint: const Text('-- Pilih Jenis Mutasi --'),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                      ),
-                      items: jenisList.map((String item) {
-                        return DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(item),
-                        );
-                      }).toList(),
-                      onChanged: (val) => setState(() => jenisMutasi = val),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Keluarga
-                    const Text(
-                      'Keluarga',
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(height: 8),
-                    DropdownButtonFormField<String>(
-                      initialValue: keluarga,
-                      hint: const Text('-- Pilih Keluarga --'),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                      ),
-                      items: keluargaList.map((String item) {
-                        return DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(item),
-                        );
-                      }).toList(),
-                      onChanged: (val) => setState(() => keluarga = val),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Alasan Mutasi
-                    const Text(
-                      'Alasan Mutasi',
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(height: 8),
-                    TextFormField(
-                      maxLines: 3,
-                      onChanged: (val) => alasanMutasi = val,
-                      decoration: InputDecoration(
-                        hintText: 'Masukkan alasan disini...',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding: const EdgeInsets.all(12),
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Tanggal Mutasi
-                    const Text(
-                      'Tanggal Mutasi',
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            readOnly: true,
-                            controller: TextEditingController(
-                              text: tanggalMutasi == null
-                                  ? ''
-                                  : '${tanggalMutasi!.day}/${tanggalMutasi!.month}/${tanggalMutasi!.year}',
-                            ),
-                            decoration: InputDecoration(
-                              hintText: '--/--/----',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                              suffixIcon: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.close),
-                                    onPressed: () => setState(() => tanggalMutasi = null),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.calendar_today_outlined),
-                                    onPressed: () async {
-                                      final picked = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(2100),
-                                      );
-                                      if (picked != null) {
-                                        setState(() => tanggalMutasi = picked);
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 28),
-
-                    // Tombol Simpan dan Reset
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              // Simpan data
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF6C63FF),
-                            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            foregroundColor: Colors.white, // tambahkan ini
-                          ),
-                          child: const Text(
-                            'Simpan',
-                            style: TextStyle(color: Colors.white), // pastikan ini juga
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        OutlinedButton(
-                          onPressed: () {
-                            setState(() {
-                              jenisMutasi = null;
-                              keluarga = null;
-                              alasanMutasi = null;
-                              tanggalMutasi = null;
-                            });
-                          },
-                          style: OutlinedButton.styleFrom(
-                            side: const BorderSide(color: Colors.grey),
-                            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            foregroundColor: Colors.grey, // tambahkan ini
-                          ),
-                          child: const Text(
-                            'Reset',
-                            style: TextStyle(color: Colors.grey), // pastikan ini juga
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+              const SizedBox(height: 32),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  // ==== WIDGET HELPERS ====
+
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Row(
+        children: [
+          Container(
+            width: 4,
+            height: 20,
+            decoration: BoxDecoration(
+              gradient: AppColors.primaryGradient,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required String label,
+    required String hint,
+    required IconData icon,
+    int maxLines = 1,
+    void Function(String)? onChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          maxLines: maxLines,
+          onChanged: onChanged,
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: const TextStyle(color: AppColors.textMuted),
+            prefixIcon: Icon(icon, color: AppColors.primary),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.border),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.border),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+            ),
+            filled: true,
+            fillColor: AppColors.cardBackground,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDropdownField({
+    required String label,
+    required List<String> items,
+    required IconData icon,
+    required void Function(String?) onChanged,
+    String? value,
+    String? hint,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.border),
+            borderRadius: BorderRadius.circular(12),
+            color: AppColors.cardBackground,
+          ),
+          child: DropdownButtonFormField<String>(
+            value: value,
+            isExpanded: true,
+            decoration: InputDecoration(
+              prefixIcon: Icon(icon, color: AppColors.primary),
+              border: InputBorder.none,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            ),
+            icon: const Icon(Icons.arrow_drop_down_rounded, color: AppColors.primary),
+            style: const TextStyle(fontSize: 14, color: AppColors.textPrimary),
+            items: items.map((String item) {
+              return DropdownMenuItem<String>(
+                value: item,
+                child: Text(item),
+              );
+            }).toList(),
+            hint: hint != null ? Text(hint) : null,
+            onChanged: onChanged,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDateField({
+    required String label,
+    required DateTime? value,
+    required VoidCallback onTap,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        const SizedBox(height: 8),
+        InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.border),
+              borderRadius: BorderRadius.circular(12),
+              color: AppColors.cardBackground,
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.calendar_today_rounded, color: AppColors.primary, size: 20),
+                const SizedBox(width: 12),
+                Text(
+                  _formatTanggal(value),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: value == null ? AppColors.textMuted : AppColors.textPrimary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
