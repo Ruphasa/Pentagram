@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pentagram/models/transaksi.dart';
 import 'package:pentagram/widgets/transaksi_card.dart';
 import 'package:pentagram/pages/keuangan/pengeluaran_page.dart';
+import 'package:pentagram/pages/keuangan/cetak_laporan_page.dart';
 import 'package:pentagram/utils/app_colors.dart';
 
 class PemasukanPage extends StatefulWidget {
@@ -101,10 +102,10 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
         actions: [
           IconButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Fitur cetak laporan akan segera hadir'),
-                  backgroundColor: AppColors.primary,
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CetakLaporanPage(),
                 ),
               );
             },

@@ -214,7 +214,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           const SizedBox(height: 8),
           DropdownButtonFormField<String>(
-            value: value,
+            initialValue: value,
             hint: Text(hint, style: const TextStyle(color: Colors.black45)),
             isExpanded: true,
             items: items

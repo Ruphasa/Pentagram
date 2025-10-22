@@ -17,7 +17,7 @@ class ActivityView extends StatefulWidget {
 class _ActivityViewState extends State<ActivityView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  String _selectedFilter = 'Semua';
+  final String _selectedFilter = 'Semua';
 
   @override
   void initState() {
