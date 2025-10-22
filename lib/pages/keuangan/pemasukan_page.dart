@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:pentagram/models/transaksi.dart';
 import 'package:pentagram/widgets/transaksi_card.dart';
-<<<<<<< HEAD:lib/page/keuangan/pemasukan_page.dart
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:pentagram/utils/icon_mapper.dart';
-=======
 import 'package:pentagram/pages/keuangan/pengeluaran_page.dart';
-import 'package:pentagram/utils/app_colors.dart';
->>>>>>> 21ecf30e8b934b4f8726e86535323fb3a32ce5cc:lib/pages/keuangan/pemasukan_page.dart
 
 class PemasukanPage extends StatefulWidget {
   const PemasukanPage({super.key});
@@ -37,10 +32,14 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
     ),
   ];
 
-<<<<<<< HEAD:lib/page/keuangan/pemasukan_page.dart
   double get _totalPemasukan =>
       _pemasukanList.fold(0, (sum, item) => sum + item.jumlah);
-=======
+  String _formatCurrency(num value) {
+    final intVal = value.toInt();
+    final s = intVal.toString().replaceAllMapped(
+        RegExp(r'\B(?=(\d{3})+(?!\d))'), (m) => '.');
+    return 'Rp $s';
+  }
   @override
   void initState() {
     super.initState();
@@ -52,7 +51,6 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
     _tabController.dispose();
     super.dispose();
   }
->>>>>>> 21ecf30e8b934b4f8726e86535323fb3a32ce5cc:lib/pages/keuangan/pemasukan_page.dart
 
   void _tambahPemasukan() {
     final TextEditingController keteranganCtrl = TextEditingController();
@@ -61,10 +59,10 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
     showDialog(
       context: context,
       builder: (context) => Dialog(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: AppColors.cardBackground,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
-          side: BorderSide(color: AppColors.cyan.withOpacity(0.3), width: 1),
+          side: BorderSide(color: AppColors.primary.withOpacity(0.3), width: 1),
         ),
         child: Container(
           padding: const EdgeInsets.all(24),
@@ -74,9 +72,9 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                AppColors.cyan.withOpacity(0.05),
-                AppColors.backgroundDark,
-                AppColors.magenta.withOpacity(0.05),
+                AppColors.primary.withOpacity(0.05),
+                AppColors.cardBackground,
+                AppColors.secondary.withOpacity(0.05),
               ],
             ),
           ),
@@ -88,13 +86,13 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
                 children: [
                   Container(
                     padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: AppColors.cyan.withOpacity(0.2),
+                      decoration: BoxDecoration(
+                      color: AppColors.primary.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
                       iconFromKey('arrow_downward'),
-                      color: AppColors.cyan,
+                      color: AppColors.primary,
                       size: 24,
                     ),
                   ),
@@ -118,7 +116,7 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
                   labelStyle: const TextStyle(color: AppColors.textSecondary),
                   prefixIcon: Icon(
                     iconFromKey('list_alt'),
-                    color: AppColors.cyan,
+                    color: AppColors.primary,
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -127,7 +125,7 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide:
-                        BorderSide(color: AppColors.cyan.withOpacity(0.8), width: 2),
+                        BorderSide(color: AppColors.primary.withOpacity(0.8), width: 2),
                   ),
                   filled: true,
                   fillColor: AppColors.border.withOpacity(0.3),
@@ -143,7 +141,7 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
                   labelStyle: const TextStyle(color: AppColors.textSecondary),
                   prefixIcon: Icon(
                     iconFromKey('attach_money'),
-                    color: AppColors.cyan,
+                    color: AppColors.primary,
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -152,7 +150,7 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide:
-                        BorderSide(color: AppColors.cyan.withOpacity(0.8), width: 2),
+                        BorderSide(color: AppColors.primary.withOpacity(0.8), width: 2),
                   ),
                   filled: true,
                   fillColor: AppColors.border.withOpacity(0.3),
@@ -198,8 +196,8 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.cyan,
-                      foregroundColor: AppColors.black,
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: AppColors.textPrimary,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 24,
                         vertical: 12,
@@ -225,40 +223,45 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD:lib/page/keuangan/pemasukan_page.dart
-      backgroundColor: AppColors.backgroundDark,
+  backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          "Pemasukan",
-          style: TextStyle(
-            color: AppColors.textPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textOnPrimary,
+        title: const Text("Keuangan"),
         actions: [
           IconButton(
-            icon: Icon(iconFromKey('history'), color: AppColors.cyan),
             onPressed: () {
-              // TODO: Tambahkan aksi filter/history
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Fitur cetak laporan akan segera hadir'),
+                  backgroundColor: AppColors.primary,
+                ),
+              );
             },
+            icon: const Icon(Icons.print_rounded),
+            tooltip: 'Cetak Laporan',
           ),
         ],
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: AppColors.secondary,
+          labelColor: AppColors.textOnPrimary,
+          unselectedLabelColor: AppColors.textSecondary,
+          tabs: const [
+            Tab(text: 'Pemasukan', icon: Icon(Icons.arrow_downward_rounded)),
+            Tab(text: 'Pengeluaran', icon: Icon(Icons.arrow_upward_rounded)),
+          ],
+        ),
       ),
       floatingActionButton: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           gradient: LinearGradient(
-            colors: [AppColors.cyan, AppColors.cyan.withOpacity(0.8)],
+            colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
           ),
           boxShadow: [
             BoxShadow(
-              color: AppColors.cyan.withOpacity(0.5),
+              color: AppColors.primary.withOpacity(0.5),
               blurRadius: 20,
               offset: const Offset(0, 8),
             ),
@@ -268,11 +271,11 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
           onPressed: _tambahPemasukan,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          icon: Icon(iconFromKey('add'), color: AppColors.black),
+          icon: Icon(iconFromKey('add'), color: AppColors.textPrimary),
           label: const Text(
             "Tambah",
             style: TextStyle(
-              color: AppColors.black,
+              color: AppColors.textPrimary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -290,12 +293,12 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  AppColors.cyan.withOpacity(0.2),
-                  AppColors.cyan.withOpacity(0.05),
+                  AppColors.primary.withOpacity(0.2),
+                  AppColors.primary.withOpacity(0.05),
                 ],
               ),
               border: Border.all(
-                color: AppColors.cyan.withOpacity(0.3),
+                color: AppColors.primary.withOpacity(0.3),
                 width: 1,
               ),
             ),
@@ -304,12 +307,12 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.cyan.withOpacity(0.2),
+                    color: AppColors.primary.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Icon(
                     iconFromKey('arrow_downward'),
-                    color: AppColors.cyan,
+                    color: AppColors.primary,
                     size: 32,
                   ),
                 ),
@@ -327,13 +330,9 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        NumberFormat.currency(
-                          locale: 'id_ID',
-                          symbol: 'Rp ',
-                          decimalDigits: 0,
-                        ).format(_totalPemasukan),
+                        _formatCurrency(_totalPemasukan),
                         style: const TextStyle(
-                          color: AppColors.cyan,
+                          color: AppColors.primary,
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
@@ -363,13 +362,13 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
-                    color: AppColors.cyan.withOpacity(0.2),
+                    color: AppColors.primary.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     "${_pemasukanList.length}",
                     style: const TextStyle(
-                      color: AppColors.cyan,
+                      color: AppColors.primary,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -413,57 +412,6 @@ class _PemasukanPageState extends State<PemasukanPage> with SingleTickerProvider
                   ),
           ),
         ],
-=======
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.textOnPrimary,
-        title: const Text("Keuangan"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Fitur cetak laporan akan segera hadir'),
-                  backgroundColor: AppColors.primary,
-                ),
-              );
-            },
-            icon: const Icon(Icons.print_rounded),
-            tooltip: 'Cetak Laporan',
-          ),
-        ],
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: AppColors.secondary,
-          labelColor: AppColors.textOnPrimary,
-          unselectedLabelColor: AppColors.textOnPrimary,
-          tabs: const [
-            Tab(text: 'Pemasukan', icon: Icon(Icons.arrow_downward_rounded)),
-            Tab(text: 'Pengeluaran', icon: Icon(Icons.arrow_upward_rounded)),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          // Tab Pemasukan
-          ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: _pemasukanList.length,
-            itemBuilder: (context, index) {
-              return TransaksiCard(transaksi: _pemasukanList[index]);
-            },
-          ),
-          // Tab Pengeluaran
-          const PengeluaranPage(),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _tambahPemasukan,
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add_rounded, color: AppColors.textOnPrimary),
->>>>>>> 21ecf30e8b934b4f8726e86535323fb3a32ce5cc:lib/pages/keuangan/pemasukan_page.dart
       ),
     );
   }
