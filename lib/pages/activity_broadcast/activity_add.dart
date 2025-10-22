@@ -175,7 +175,7 @@ class _ActivityAddState extends State<ActivityAdd> {
                         ),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          side: BorderSide(color: AppColors.primary),
+                          side: const BorderSide(color: AppColors.primary),
                           foregroundColor: AppColors.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -354,7 +354,7 @@ class _ActivityAddState extends State<ActivityAdd> {
           const SizedBox(width: 12),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.primary,
@@ -428,7 +428,7 @@ class _ActivityAddState extends State<ActivityAdd> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: AppColors.primary, width: 2),
+                  borderSide: const BorderSide(color: AppColors.primary, width: 2),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -493,7 +493,7 @@ class _ActivityAddState extends State<ActivityAdd> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: DropdownButtonFormField<String>(
-              value: value,
+              initialValue: value,
               onChanged: onChanged,
               validator: validator,
               style: const TextStyle(fontSize: 16, color: Colors.black87),
@@ -513,7 +513,7 @@ class _ActivityAddState extends State<ActivityAdd> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: AppColors.primary, width: 2),
+                  borderSide: const BorderSide(color: AppColors.primary, width: 2),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -526,7 +526,7 @@ class _ActivityAddState extends State<ActivityAdd> {
                 filled: true,
                 fillColor: Colors.grey[50],
               ),
-              icon: Icon(Icons.arrow_drop_down, color: AppColors.primary),
+              icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
               items: items.map((String item) {
                 return DropdownMenuItem<String>(
                   value: item,
@@ -556,14 +556,14 @@ class _ActivityAddState extends State<ActivityAdd> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Row(
               children: [
                 Icon(Icons.calendar_today_rounded,
                     color: AppColors.primary, size: 20),
-                const SizedBox(width: 8),
-                const Text(
+                SizedBox(width: 8),
+                Text(
                   'Tanggal Pelaksanaan',
                   style: TextStyle(
                     fontSize: 15,
@@ -661,12 +661,12 @@ class _ActivityAddState extends State<ActivityAdd> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             children: [
               Icon(Icons.checklist_rounded,
                   color: AppColors.primary, size: 24),
-              const SizedBox(width: 8),
-              const Text(
+              SizedBox(width: 8),
+              Text(
                 'Ringkasan Kegiatan',
                 style: TextStyle(
                   fontSize: 18,
@@ -784,7 +784,7 @@ class _ActivityAddState extends State<ActivityAdd> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(primary: AppColors.primary),
+            colorScheme: const ColorScheme.light(primary: AppColors.primary),
           ),
           child: child!,
         );
