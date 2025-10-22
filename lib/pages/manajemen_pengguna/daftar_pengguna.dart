@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/pages/manajemen_pengguna/tambah_pengguna.dart';
 
 class DaftarPenggunaPage extends StatelessWidget {
   DaftarPenggunaPage({super.key});
 
   final List<Map<String, String>> dataPengguna = [
-    {'no': '1', 'nama': 'bla', 'email': 'y@gmail.com', 'status': 'Diterima'},
-    {'no': '2', 'nama': 'ijat4', 'email': 'ijat4@gmail.com', 'status': 'Diterima'},
-    {'no': '3', 'nama': 'ijat3', 'email': 'ijat3@gmail.com', 'status': 'Diterima'},
-    {'no': '4', 'nama': 'ijat2', 'email': 'ijat2@gmail.com', 'status': 'Diterima'},
-    {'no': '5', 'nama': 'ijat', 'email': 'ijat1@gmail.com', 'status': 'Diterima'},
-    {'no': '6', 'nama': 'AFIFAH KHOIRUNNISA', 'email': 'afi@gmail.com', 'status': 'Diterima'},
-    {'no': '7', 'nama': 'Raudhli Firdaus Naufal', 'email': 'raudhlifirdausn@gmail.com', 'status': 'Diterima'},
-    {'no': '8', 'nama': 'ASDOPAR', 'email': 'ASDOPAR@GMAIL.COM', 'status': 'Diterima'},
-    {'no': '9', 'nama': 'FAJRUL', 'email': 'FAJRUL10@gmail.com', 'status': 'Diterima'},
-    {'no': '10', 'nama': 'Mara Nunez', 'email': 'tecug@mailinator.com', 'status': 'Diterima'},
+    {'no': '1', 'nama': 'Budi Santoso', 'email': 'budi@gmail.com', 'status': 'Diterima'},
+    {'no': '2', 'nama': 'Siti Aminah', 'email': 'siti@gmail.com', 'status': 'Menunggu'},
+    {'no': '3', 'nama': 'Rizky Ananda', 'email': 'rizky@gmail.com', 'status': 'Diterima'},
+    {'no': '4', 'nama': 'Dewi Lestari', 'email': 'dewi@gmail.com', 'status': 'Ditolak'},
+    {'no': '5', 'nama': 'Ahmad Fauzi', 'email': 'ahmad@gmail.com', 'status': 'Menunggu'},
+    {'no': '6', 'nama': 'Nadya Pratama', 'email': 'nadya@gmail.com', 'status': 'Diterima'},
+    {'no': '7', 'nama': 'Fajar Nugroho', 'email': 'fajar@gmail.com', 'status': 'Ditolak'},
+    {'no': '8', 'nama': 'Citra Permata', 'email': 'citra@gmail.com', 'status': 'Diterima'},
+    {'no': '9', 'nama': 'Ilham Saputra', 'email': 'ilham@gmail.com', 'status': 'Menunggu'},
+    {'no': '10', 'nama': 'Dina Kusuma', 'email': 'dina@gmail.com', 'status': 'Diterima'},
+    {'no': '11', 'nama': 'Rahmat Hidayat', 'email': 'rahmat@gmail.com', 'status': 'Menunggu'},
+    {'no': '12', 'nama': 'Laila Rahma', 'email': 'laila@gmail.com', 'status': 'Diterima'},
+    {'no': '13', 'nama': 'Teguh Prasetyo', 'email': 'teguh@gmail.com', 'status': 'Ditolak'},
+    {'no': '14', 'nama': 'Yulia Kartika', 'email': 'yulia@gmail.com', 'status': 'Menunggu'},
+    {'no': '15', 'nama': 'Anton Wijaya', 'email': 'anton@gmail.com', 'status': 'Diterima'},
+    {'no': '16', 'nama': 'Bella Puspita', 'email': 'bella@gmail.com', 'status': 'Ditolak'},
+    {'no': '17', 'nama': 'Hendra Gunawan', 'email': 'hendra@gmail.com', 'status': 'Menunggu'},
+    {'no': '18', 'nama': 'Maya Lestari', 'email': 'maya@gmail.com', 'status': 'Diterima'},
+    {'no': '19', 'nama': 'Reza Aditya', 'email': 'reza@gmail.com', 'status': 'Menunggu'},
+    {'no': '20', 'nama': 'Intan Permata', 'email': 'intan@gmail.com', 'status': 'Diterima'},
   ];
 
   @override
@@ -24,155 +35,304 @@ class DaftarPenggunaPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textOnPrimary,
-        title: const Text('Daftar Pengguna'),
+        title: const Text('Manajemen Pengguna'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.filter_list),
+            onPressed: () => _showFilterDialog(context),
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Container(
+            padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 6,
-                  offset: const Offset(0, 3),
+                  color: Colors.grey.withOpacity(0.1),
+                  blurRadius: 8,
+                  spreadRadius: 1,
                 ),
               ],
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header Table dan Filter
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Daftar Pengguna',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF6C63FF),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                const Text(
+                  'Daftar Pengguna',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // List pengguna
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: dataPengguna.length,
+                  itemBuilder: (context, index) {
+                    final data = dataPengguna[index];
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 16),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade50,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.grey.shade300),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.05),
+                            blurRadius: 6,
+                            offset: const Offset(0, 3),
                           ),
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        ),
-                        icon: const Icon(Icons.filter_list, color: Colors.white),
-                        label: const Text('Filter', style: TextStyle(color: Colors.white)),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-
-                // Table Header
-                Container(
-                  color: Colors.grey.shade100,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: const Row(
-                    children: [
-                      Expanded(flex: 1, child: Text('NO')),
-                      Expanded(flex: 3, child: Text('NAMA')),
-                      Expanded(flex: 4, child: Text('EMAIL')),
-                      Expanded(flex: 3, child: Text('STATUS REGISTRASI')),
-                      Expanded(flex: 1, child: Text('AKSI')),
-                    ],
-                  ),
-                ),
-
-                const Divider(height: 1),
-
-                // Table Rows
-                ...dataPengguna.map(
-                  (data) => Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                    decoration: BoxDecoration(
-                      color: int.parse(data['no']!) % 2 == 0
-                          ? Colors.grey.shade50
-                          : Colors.white,
-                      border: const Border(
-                        bottom: BorderSide(color: Colors.grey, width: 0.3),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(flex: 1, child: Text(data['no']!)),
-                        Expanded(flex: 3, child: Text(data['nama']!)),
-                        Expanded(flex: 4, child: Text(data['email']!)),
-                        Expanded(
-                          flex: 3,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.green.shade100,
-                              borderRadius: BorderRadius.circular(16),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: AppColors.primary.withOpacity(0.2),
+                          child: Text(
+                            data['no']!,
+                            style: TextStyle(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.bold,
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                            child: Text(
-                              data['status']!,
-                              textAlign: TextAlign.center,
+                          ),
+                        ),
+                        title: Text(
+                          data['nama']!,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                          ),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 4),
+                            Text(
+                              data['email']!,
                               style: TextStyle(
-                                color: Colors.green.shade800,
-                                fontWeight: FontWeight.w500,
+                                color: Colors.grey.shade700,
+                                fontSize: 13,
                               ),
                             ),
-                          ),
+                            const SizedBox(height: 6),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: _statusColor(data['status']!),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 4),
+                              child: Text(
+                                data['status']!,
+                                style: const TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        const Expanded(
-                          flex: 1,
-                          child: Icon(Icons.more_vert, color: Colors.grey),
+                        trailing: PopupMenuButton<String>(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          onSelected: (value) {
+                            if (value == 'detail') {
+                              _showDetailDialog(context, data);
+                            } else if (value == 'hapus') {
+                              _showDeleteDialog(context, data);
+                            }
+                          },
+                          itemBuilder: (context) => [
+                            const PopupMenuItem(
+                              value: 'detail',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.info_outline, size: 18),
+                                  SizedBox(width: 8),
+                                  Text('Detail'),
+                                ],
+                              ),
+                            ),
+                            const PopupMenuItem(
+                              value: 'hapus',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.delete_outline, size: 18),
+                                  SizedBox(width: 8),
+                                  Text('Hapus'),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                // Pagination
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.chevron_left),
-                        color: Colors.grey,
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF6C63FF),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Text(
-                          '1',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade300),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Text('2'),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.chevron_right),
-                        color: Colors.grey,
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ],
             ),
           ),
         ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.primary,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const TambahPenggunaPage()),
+          );
+        },
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+    );
+  }
+
+  Color _statusColor(String status) {
+    switch (status) {
+      case 'Diterima':
+        return Colors.green.shade100;
+      case 'Ditolak':
+        return Colors.red.shade100;
+      case 'Menunggu':
+        return Colors.yellow.shade100;
+      default:
+        return Colors.grey.shade200;
+    }
+  }
+
+  void _showFilterDialog(BuildContext context) {
+    final TextEditingController namaController = TextEditingController();
+    String? selectedStatus;
+
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          'Filter Manajemen Pengguna',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: namaController,
+              decoration: InputDecoration(
+                labelText: 'Nama',
+                hintText: 'Cari nama...',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: 'Status',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              hint: const Text('-- Pilih Status --'),
+              items: const [
+                DropdownMenuItem(value: 'Diterima', child: Text('Diterima')),
+                DropdownMenuItem(value: 'Ditolak', child: Text('Ditolak')),
+                DropdownMenuItem(value: 'Menunggu', child: Text('Menunggu')),
+              ],
+              onChanged: (value) {
+                selectedStatus = value;
+              },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              namaController.clear();
+              selectedStatus = null;
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.grey.shade800,
+              backgroundColor: Colors.grey.shade200,
+            ),
+            child: const Text('Reset Filter'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+            ),
+            child: const Text('Terapkan'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDetailDialog(BuildContext context, Map<String, String> data) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Detail Pengguna'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Nama: ${data['nama']}'),
+            Text('Email: ${data['email']}'),
+            Text('Status: ${data['status']}'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Tutup'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context, Map<String, String> data) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Hapus Pengguna'),
+        content: Text('Apakah kamu yakin ingin menghapus ${data['nama']}?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Batal'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('${data['nama']} telah dihapus'),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            child: const Text('Hapus', style: TextStyle(color: Colors.white)),
+          ),
+        ],
       ),
     );
   }

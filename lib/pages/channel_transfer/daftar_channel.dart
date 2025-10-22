@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'detail_channel_page.dart';
+import 'tambah_channel.dart'; // arah ke file lib/pages/channel_transfer/tambah_channel.dart
 
 class DaftarChannelPage extends StatelessWidget {
-  DaftarChannelPage({super.key});
+  const DaftarChannelPage({super.key});
 
-  final List<Map<String, String>> channelData = [
+  final List<Map<String, String>> channelData = const [
     {
-      'no': '1',
       'nama': 'Transfer via BCA',
-      'tipe': 'bank',
+      'tipe': 'Bank',
       'an': 'RT Jawara Karangploso',
-      'thumbnail': '-',
+      'thumbnail': 'assets/icons/bank.png',
     },
     {
-      'no': '2',
       'nama': 'Gopay Ketua RT',
-      'tipe': 'ewallet',
+      'tipe': 'E-Wallet',
       'an': 'Budi Santoso',
-      'thumbnail': '-',
+      'thumbnail': 'assets/icons/ewallet.png',
     },
     {
-      'no': '3',
       'nama': 'QRIS Resmi RT 08',
-      'tipe': 'qris',
+      'tipe': 'QRIS',
       'an': 'RW 08 Karangploso',
-      'thumbnail': '-',
+      'thumbnail': 'assets/icons/qris.png',
     },
   ];
 
@@ -33,137 +32,111 @@ class DaftarChannelPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        title: const Text(
+          'Daftar Channel Transfer',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textOnPrimary,
-        title: const Text('Daftar Channel Transfer'),
+        elevation: 0,
       ),
-      body: SafeArea(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(24),
-                child: Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
-                        blurRadius: 6,
-                        spreadRadius: 1,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+
+      // === Tombol Tambah Channel ===
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.primary,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const TambahChannelPage(),
+            ),
+          );
+        },
+        child: const Icon(Icons.add, color: Colors.white, size: 28),
+      ),
+
+      // === Daftar Channel ===
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ListView.builder(
+          itemCount: channelData.length,
+          itemBuilder: (context, index) {
+            final data = channelData[index];
+            return Container(
+              margin: const EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                ],
+              ),
+              child: ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                leading: CircleAvatar(
+                  radius: 26,
+                  backgroundColor: AppColors.primary.withOpacity(0.15),
+                  child: Icon(
+                    Icons.account_balance_wallet_rounded,
+                    color: AppColors.primary,
+                    size: 28,
+                  ),
+                ),
+                title: Text(
+                  data['nama']!,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 4),
+                    Text(
+                      'Tipe: ${data['tipe']}',
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                    Text(
+                      'A/N: ${data['an']}',
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                  ],
+                ),
+                trailing: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => DetailChannelPage(data: data),
+                      ),
+                    );
+                  },
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        'Daftar Channel',
+                      Text(
+                        'Detail',
                         style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const SizedBox(height: 24),
-
-                      // Tabel header
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 12),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Row(
-                          children: [
-                            Expanded(flex: 1, child: Text('NO')),
-                            Expanded(flex: 3, child: Text('NAMA')),
-                            Expanded(flex: 2, child: Text('TIPE')),
-                            Expanded(flex: 3, child: Text('A/N')),
-                            Expanded(flex: 2, child: Text('THUMBNAIL')),
-                            Expanded(flex: 1, child: Text('AKSI')),
-                          ],
-                        ),
-                      ),
-                      const Divider(height: 0),
-
-                      // Data rows
-                      ...channelData.map((data) {
-                        return Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 14),
-                          decoration: BoxDecoration(
-                            color: int.parse(data['no']!) % 2 == 0
-                                ? Colors.grey.shade50
-                                : Colors.white,
-                            border: const Border(
-                              bottom: BorderSide(
-                                color: Color(0xFFE0E0E0),
-                                width: 0.5,
-                              ),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(flex: 1, child: Text(data['no']!)),
-                              Expanded(flex: 3, child: Text(data['nama']!)),
-                              Expanded(flex: 2, child: Text(data['tipe']!)),
-                              Expanded(flex: 3, child: Text(data['an']!)),
-                              Expanded(flex: 2, child: Text(data['thumbnail']!)),
-                              const Expanded(
-                                flex: 1,
-                                child: Icon(
-                                  Icons.more_vert,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-
-                      const SizedBox(height: 24),
-
-                      // Pagination
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.chevron_left),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: Colors.deepPurple,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Text(
-                              '1',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.chevron_right),
-                          ),
-                        ],
-                      ),
+                      SizedBox(width: 4),
+                      Icon(Icons.arrow_forward_ios,
+                          color: AppColors.primary, size: 16),
                     ],
                   ),
                 ),
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pentagram/pages/notifikasi/notifikasi.dart';
 import 'package:pentagram/pages/profil/profil_page.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/pages/channel_transfer/daftar_channel.dart';
+import 'package:pentagram/pages/manajemen_pengguna/daftar_pengguna.dart';
+
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -180,31 +183,59 @@ class Dashboard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Container(
-                    width: 90,
-                    height: 90,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF80CBC4),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.campaign, size: 32, color: Colors.white),
-                        SizedBox(height: 4),
-                        Text(
-                          'Broadcast',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // === Broadcast ===
+                      _buildQuickAccessCard(
+                        context,
+                        color: const Color(0xFF80CBC4),
+                        icon: Icons.campaign,
+                        label: 'Broadcast',
+                        onTap: () {
+                          // Arahkan ke halaman Broadcast yang sudah ada
+                          Navigator.pushNamed(context, '/broadcast');
+                        },
+                      ),
+
+                      // === Daftar Channel ===
+                      _buildQuickAccessCard(
+                        context,
+                        color: const Color(0xFF9575CD),
+                        icon: Icons.tv_rounded,
+                        label: 'Daftar Channel',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                   DaftarChannelPage(), // lib/pages/channel_transfer/tambah_channel.dart
+                            ),
+                          );
+                        },
+                      ),
+
+                      // === Daftar Pengguna ===
+                      _buildQuickAccessCard(
+                        context,
+                        color: const Color(0xFFFFB74D),
+                        icon: Icons.group_rounded,
+                        label: 'Daftar Pengguna',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DaftarPenggunaPage(), // lib/pages/manajemen_pengguna/daftar_pengguna.dart
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
+
             
             const SizedBox(height: 24),
             
@@ -300,4 +331,48 @@ class Dashboard extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildQuickAccessCard(
+  BuildContext context, {
+  required Color color,
+  required IconData icon,
+  required String label,
+  required VoidCallback onTap,
+}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      width: 90,
+      height: 90,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 32, color: Colors.white),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 }
