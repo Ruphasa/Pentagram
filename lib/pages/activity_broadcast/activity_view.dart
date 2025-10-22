@@ -13,7 +13,7 @@ class ActivityView extends StatefulWidget {
 
 class _ActivityViewState extends State<ActivityView> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  String _selectedFilter = 'Semua';
+  final String _selectedFilter = 'Semua';
 
   @override
   void initState() {
@@ -208,7 +208,7 @@ class _ActivityViewState extends State<ActivityView> with SingleTickerProviderSt
                             value: 0.75,
                             minHeight: 10,
                             backgroundColor: Colors.grey[200],
-                            valueColor: AlwaysStoppedAnimation<Color>(
+                            valueColor: const AlwaysStoppedAnimation<Color>(
                               AppColors.primary,
                             ),
                           ),

@@ -45,7 +45,7 @@ class _FilterPesanDialogState extends State<FilterPesanDialog> {
           const SizedBox(height: 10),
           DropdownButtonFormField<String>(
             decoration: const InputDecoration(labelText: 'Status'),
-            value: status,
+            initialValue: status,
             items: const [
               DropdownMenuItem(value: 'Pending', child: Text('Pending')),
               DropdownMenuItem(value: 'Diterima', child: Text('Diterima')),
@@ -57,7 +57,7 @@ class _FilterPesanDialogState extends State<FilterPesanDialog> {
       ),
       actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       actions: [
-        Container(
+        SizedBox(
           width: double.infinity,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

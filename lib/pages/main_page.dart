@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pentagram/pages/dashboard/dashboard.dart';
 import 'package:pentagram/pages/activity_broadcast/activity_view.dart';
 import 'package:pentagram/pages/keuangan/pemasukan_page.dart';
-import 'package:pentagram/pages/warga/daftar_warga_page.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/pages/masyarakat/masyarakat_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
     const Dashboard(),
     const ActivityView(),
     const PemasukanPage(),
-    const DaftarWargaPage(),
+    const MasyarakatPage(),
   ];
 
   @override

@@ -67,7 +67,7 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
                     ),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
-                      value: jenisMutasi,
+                      initialValue: jenisMutasi,
                       hint: const Text('-- Pilih Jenis Mutasi --'),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -93,7 +93,7 @@ class _TambahMutasiPageState extends State<TambahMutasiPage> {
                     ),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
-                      value: keluarga,
+                      initialValue: keluarga,
                       hint: const Text('-- Pilih Keluarga --'),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
