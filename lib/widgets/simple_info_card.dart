@@ -8,11 +8,11 @@ class SimpleInfoCard extends StatelessWidget {
   final List<Color> gradientColors;
 
   const SimpleInfoCard({
-    super.key,
     required this.title,
     required this.value,
     required this.icon,
     required this.gradientColors,
+    super.key,
   });
 
   @override

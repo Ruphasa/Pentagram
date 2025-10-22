@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../models/pesan_warga.dart';
+import 'package:pentagram/models/pesan_warga.dart';
 
 class PesanWargaEditOverlay extends StatefulWidget {
   final PesanWarga pesan;
-  const PesanWargaEditOverlay({super.key, required this.pesan});
+  const PesanWargaEditOverlay({required this.pesan, super.key});
 
   @override
   State<PesanWargaEditOverlay> createState() => _PesanWargaEditOverlayState();

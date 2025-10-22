@@ -20,7 +20,7 @@ class _KeuanganPageState extends State<KeuanganPage> {
         child: CustomScrollView(
           slivers: [
             // App Bar dengan Gradient
-            CommonHeader(
+            const CommonHeader(
               title: 'Keuangan',
             ),
             

@@ -8,12 +8,11 @@ class FilterAktivitasDialog extends StatefulWidget {
   final void Function(String deskripsi, String namaPelaku, DateTime? dari, DateTime? sampai) onApply;
 
   const FilterAktivitasDialog({
-    super.key,
+    required this.onApply, super.key,
     this.initialDeskripsi,
     this.initialNamaPelaku,
     this.initialDariTanggal,
     this.initialSampaiTanggal,
-    required this.onApply,
   });
 
   @override

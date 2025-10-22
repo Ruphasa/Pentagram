@@ -4,7 +4,6 @@ import 'package:pentagram/pages/login/login_page.dart';
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:pentagram/firebase_options.dart';
-import 'package:pentagram/pages/register/register_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

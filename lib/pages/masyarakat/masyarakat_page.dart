@@ -21,7 +21,7 @@ class _MasyarakatPageState extends State<MasyarakatPage> {
         child: CustomScrollView(
           slivers: [
             // App Bar dengan Gradient
-            CommonHeader(
+            const CommonHeader(
               title: 'Masyarakat',
             ),
 
@@ -35,25 +35,25 @@ class _MasyarakatPageState extends State<MasyarakatPage> {
                     decoration: BoxDecoration(
                       color: AppColors.cardBackground,
                       borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: AppColors.shadow,
                           blurRadius: 8,
-                          offset: const Offset(0, 2),
+                          offset: Offset(0, 2),
                         ),
                       ],
                     ),
                     child: TextField(
                       controller: _searchController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Cari warga...',
-                        hintStyle: const TextStyle(color: AppColors.textMuted),
-                        prefixIcon: const Icon(
+                        hintStyle: TextStyle(color: AppColors.textMuted),
+                        prefixIcon: Icon(
                           Icons.search_rounded,
                           color: AppColors.iconPrimary,
                         ),
                         border: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(
+                        contentPadding: EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 14,
                         ),
@@ -172,11 +172,11 @@ class _MasyarakatPageState extends State<MasyarakatPage> {
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: AppColors.shadow,
             blurRadius: 8,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -245,7 +245,7 @@ class _MasyarakatPageState extends State<MasyarakatPage> {
           const SizedBox(height: 12),
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.family_restroom_rounded,
                 size: 16,
                 color: AppColors.iconSecondary,

@@ -29,7 +29,6 @@ class TambahWargaForm extends StatefulWidget {
   final VoidCallback onSubmit;
 
   const TambahWargaForm({
-    super.key,
     required this.formKey,
     required this.namaController,
     required this.nikController,
@@ -50,6 +49,7 @@ class TambahWargaForm extends StatefulWidget {
     required this.onPendidikanChanged,
     required this.onSelectDate,
     required this.onSubmit,
+    super.key,
   });
 
   @override

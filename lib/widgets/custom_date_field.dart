@@ -8,10 +8,10 @@ class CustomDateField extends StatelessWidget {
   final String? Function(String?)? validator;
 
   const CustomDateField({
-    super.key,
     required this.controller,
     required this.hint,
     required this.onTap,
+    super.key,
     this.validator,
   });
 
@@ -23,10 +23,7 @@ class CustomDateField extends StatelessWidget {
       onTap: onTap,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(
-          color: AppColors.textMuted,
-          fontSize: 14,
-        ),
+        hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 14),
         filled: true,
         fillColor: AppColors.backgroundGrey,
         border: OutlineInputBorder(
@@ -49,25 +46,35 @@ class CustomDateField extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              icon: const Icon(Icons.close, size: 18, color: AppColors.textSecondary),
+              icon: const Icon(
+                Icons.close,
+                size: 18,
+                color: AppColors.textSecondary,
+              ),
               onPressed: () {
                 controller.clear();
               },
             ),
             IconButton(
-              icon: const Icon(Icons.calendar_today, size: 18, color: AppColors.primary),
+              icon: const Icon(
+                Icons.calendar_today,
+                size: 18,
+                color: AppColors.primary,
+              ),
               onPressed: onTap,
             ),
           ],
         ),
       ),
       style: const TextStyle(color: AppColors.textPrimary),
-      validator: validator ?? (value) {
-        if (value == null || value.isEmpty) {
-          return 'Field ini harus diisi';
-        }
-        return null;
-      },
+      validator:
+          validator ??
+          (value) {
+            if (value == null || value.isEmpty) {
+              return 'Field ini harus diisi';
+            }
+            return null;
+          },
     );
   }
 }

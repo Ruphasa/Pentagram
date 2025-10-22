@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/pesan_warga.dart';
+import 'package:pentagram/models/pesan_warga.dart';
 
 class TablePesanWarga extends StatelessWidget {
   final List<PesanWarga> data;
@@ -12,11 +12,11 @@ class TablePesanWarga extends StatelessWidget {
   final bool? isMobile;
 
   const TablePesanWarga({
-    super.key,
     required this.data,
     required this.onView,
     required this.onEdit,
     required this.onDelete,
+    super.key,
     this.currentPage,
     this.totalPages,
     this.onPageChanged,

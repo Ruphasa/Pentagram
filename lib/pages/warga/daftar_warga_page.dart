@@ -78,7 +78,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                             dataRowColor: MaterialStateProperty.all(
                               AppColors.background,
                             ),
-                            columns: [
+                            columns: const [
                               DataColumn(
                                 label: Text(
                                   'NO',
@@ -165,7 +165,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                 cells: [
                                   DataCell(Text(
                                     '${warga.no}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 13,
                                       color: AppColors.textPrimary,
                                     ),
@@ -182,7 +182,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                   ),
                                   DataCell(Text(
                                     warga.nik,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 13,
                                       color: AppColors.textPrimary,
                                     ),
@@ -198,7 +198,7 @@ class _DaftarWargaPageState extends State<DaftarWargaPage> {
                                   ),
                                   DataCell(Text(
                                     warga.jenisKelamin,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 13,
                                       color: AppColors.textPrimary,
                                     ),

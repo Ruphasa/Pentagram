@@ -4,7 +4,7 @@ import 'package:pentagram/models/transaksi.dart';
 class TransaksiCard extends StatelessWidget {
   final Transaksi transaksi;
 
-  const TransaksiCard({super.key, required this.transaksi});
+  const TransaksiCard({required this.transaksi, super.key});
 
   @override
   Widget build(BuildContext context) {
