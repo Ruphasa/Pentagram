@@ -23,31 +23,31 @@ class CustomDropdown extends StatelessWidget {
       value: value,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(
-          color: Colors.grey[600],
+        hintStyle: const TextStyle(
+          color: AppColors.textMuted,
           fontSize: 14,
         ),
         filled: true,
-        fillColor: const Color(0xFF0F0F13),
+        fillColor: AppColors.backgroundGrey,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFF333333)),
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFF333333)),
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.magenta, width: 2),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 12,
         ),
       ),
-      dropdownColor: const Color(0xFF1A1A1F),
-      style: const TextStyle(color: AppColors.white),
+      dropdownColor: AppColors.cardBackground,
+      style: const TextStyle(color: AppColors.textPrimary),
       items: items.map((String item) {
         return DropdownMenuItem<String>(
           value: item,
