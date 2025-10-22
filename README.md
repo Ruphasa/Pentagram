@@ -1,5 +1,13 @@
 # Pentagram
 
+## Preview App
+
+
+You can preview our ongoing work on the Jawara Pintar app using the link below.  
+Since Flutter supports web deployment, we’ve hosted the app using **Firebase Hosting**:
+
+👉 [https://pentagram-smt5.web.app](https://pentagram-smt5.web.app)
+
 ## 👥 Contributors
 
 <table>
