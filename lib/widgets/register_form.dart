@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/pages/login/login_page.dart';
+import 'package:pentagram/utils/app_colors.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -35,18 +37,17 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       constraints: const BoxConstraints(maxWidth: 600),
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        color: AppColors.cardBackground,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
+            color: AppColors.shadow,
+            blurRadius: 20,
+            offset: Offset(0, 8),
           ),
         ],
       ),
@@ -55,20 +56,26 @@ class _RegisterFormState extends State<RegisterForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Daftar Akun',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+            ShaderMask(
+              shaderCallback: (bounds) =>
+                  AppColors.primaryGradient.createShader(bounds),
+              child: const Text(
+                'Buat Akun Baru',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
             const SizedBox(height: 8),
             const Text(
-              'Lengkapi formulir untuk membuat akun.',
-              style: TextStyle(fontSize: 14, color: Colors.black54),
+              'Lengkapi formulir di bawah ini untuk mendaftar.',
+              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 8),
+            const Divider(color: AppColors.divider, thickness: 1),
+            const SizedBox(height: 16),
             _buildTextField('Nama Lengkap', _namaController),
             _buildTextField('NIK', _nikController),
             _buildTextField('Email', _emailController),
@@ -98,24 +105,20 @@ class _RegisterFormState extends State<RegisterForm> {
               onChanged: (v) {
                 setState(() {
                   _rumah = v;
-                  if (v != null && v.isNotEmpty) {
-                    _alamatController.clear();
-                  }
+                  if (v != null && v.isNotEmpty) _alamatController.clear();
                 });
               },
             ),
             const Text(
               'Kalau tidak ada di daftar, isi alamat rumah di bawah ini',
-              style: TextStyle(fontSize: 12, color: Colors.black54),
+              style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 6),
             _buildTextField(
               'Alamat Rumah (Jika Tidak Ada di List)',
               _alamatController,
               onChanged: (v) {
-                if (v.isNotEmpty) {
-                  setState(() => _rumah = null);
-                }
+                if (v.isNotEmpty) setState(() => _rumah = null);
               },
             ),
             _buildDropdown(
@@ -126,7 +129,9 @@ class _RegisterFormState extends State<RegisterForm> {
               onChanged: (v) => setState(() => _statusRumah = v),
             ),
             const SizedBox(height: 16),
-            _buildUploadField(),
+            _buildUploadField(
+              label: 'Foto Identias',
+            ),
             const SizedBox(height: 32),
             _buildRegisterButton(),
             const SizedBox(height: 20),
@@ -144,8 +149,6 @@ class _RegisterFormState extends State<RegisterForm> {
     String? hint,
     Function(String)? onChanged,
   }) {
-    const secondaryColor = Color(0xFF5a63b9);
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: Column(
@@ -156,7 +159,7 @@ class _RegisterFormState extends State<RegisterForm> {
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: Colors.black87,
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 8),
@@ -164,20 +167,22 @@ class _RegisterFormState extends State<RegisterForm> {
             controller: controller,
             obscureText: obscure,
             onChanged: onChanged,
-            style: const TextStyle(color: Colors.black87),
+            style: const TextStyle(color: AppColors.textPrimary),
             decoration: InputDecoration(
               hintText: hint ?? 'Masukkan $label di sini',
-              hintStyle: const TextStyle(color: Colors.black38),
+              hintStyle: const TextStyle(color: AppColors.textMuted),
+              filled: true,
+              fillColor: AppColors.backgroundGrey,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Colors.black26, width: 1.5),
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Colors.black26, width: 1.5),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: secondaryColor, width: 2),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(
+                  color: AppColors.primary,
+                  width: 2,
+                ),
               ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
@@ -197,8 +202,6 @@ class _RegisterFormState extends State<RegisterForm> {
     required List<String> items,
     required void Function(String?) onChanged,
   }) {
-    const secondaryColor = Color(0xFF5a63b9);
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: Column(
@@ -209,95 +212,112 @@ class _RegisterFormState extends State<RegisterForm> {
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: Colors.black87,
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 8),
           DropdownButtonFormField<String>(
             value: value,
-            hint: Text(hint, style: const TextStyle(color: Colors.black45)),
+            hint: Text(
+              hint,
+              style: const TextStyle(color: AppColors.textMuted),
+            ),
             isExpanded: true,
             items: items
                 .map((e) => DropdownMenuItem<String>(value: e, child: Text(e)))
                 .toList(),
             onChanged: onChanged,
             decoration: InputDecoration(
+              filled: true,
+              fillColor: AppColors.backgroundGrey,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(
+                  color: AppColors.primary,
+                  width: 2,
+                ),
+              ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 14,
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Colors.black26, width: 1.5),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Colors.black26, width: 1.5),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: secondaryColor, width: 2),
-              ),
             ),
-            iconEnabledColor: secondaryColor,
-            dropdownColor: Colors.white,
+            iconEnabledColor: AppColors.primary,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildUploadField() {
+  Widget _buildUploadField({required String label}) {
     return Container(
       height: 80,
-      width: double.infinity,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade300, width: 1.5),
+        color: AppColors.backgroundGrey,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black12, width: 1.5),
       ),
       child: const Text(
         'Upload foto KK/KTP (.png/.jpg)',
-        style: TextStyle(color: Colors.black54),
+        style: TextStyle(color: AppColors.textMuted),
       ),
     );
   }
 
   Widget _buildRegisterButton() {
-    const secondaryColor = Color(0xFF5a63b9);
-
     return MouseRegion(
       onEnter: (_) => setState(() => _isHoveringButton = true),
       onExit: (_) => setState(() => _isHoveringButton = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         transform: Matrix4.identity()..scale(_isHoveringButton ? 1.02 : 1.0),
-        child: SizedBox(
+        child: Container(
           width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: AppColors.primaryGradient,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: _isHoveringButton
+                ? [
+                    BoxShadow(
+                      color: AppColors.primary.withOpacity(0.4),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ]
+                : null,
+          ),
           child: ElevatedButton(
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Akun berhasil dibuat'),
-                  backgroundColor: Color(0xFF6b82ee),
+                  backgroundColor: AppColors.primary,
                 ),
               );
-              Navigator.pushReplacementNamed(context, '/login');
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: secondaryColor,
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(12),
               ),
-              elevation: _isHoveringButton ? 8 : 2,
             ),
             child: const Text(
               'Buat Akun',
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textOnPrimary,
               ),
             ),
           ),
@@ -307,32 +327,39 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   Widget _buildLoginLink(BuildContext context) {
-    const secondaryColor = Color(0xFF5a63b9);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
           'Sudah punya akun? ',
-          style: TextStyle(fontSize: 14, color: Colors.black54),
+          style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
         ),
         MouseRegion(
           onEnter: (_) => setState(() => _isHoveringLogin = true),
           onExit: (_) => setState(() => _isHoveringLogin = false),
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
-            onTap: () => Navigator.pushReplacementNamed(context, '/login'),
-            child: Text(
-              'Masuk',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: secondaryColor,
-                decoration: _isHoveringLogin
-                    ? TextDecoration.underline
-                    : TextDecoration.none,
-                decorationColor: secondaryColor,
-                decorationThickness: 2,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+            },
+            child: ShaderMask(
+              shaderCallback: (bounds) =>
+                  AppColors.primaryGradient.createShader(bounds),
+              child: Text(
+                'Masuk',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  decoration: _isHoveringLogin
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
+                  decorationColor: AppColors.primary,
+                  decorationThickness: 2,
+                ),
               ),
             ),
           ),
