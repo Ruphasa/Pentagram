@@ -267,7 +267,7 @@ class _DashboardState extends State<Dashboard> {
           ),
           const SizedBox(height: 12),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               QuickAccessCard(
                 color: const Color(0xFF80CBC4),
@@ -277,6 +277,7 @@ class _DashboardState extends State<Dashboard> {
                   Navigator.pushNamed(context, '/broadcast');
                 },
               ),
+              const SizedBox(width: 12),
               QuickAccessCard(
                 color: const Color(0xFF9575CD),
                 icon: Icons.tv_rounded,
@@ -290,6 +291,7 @@ class _DashboardState extends State<Dashboard> {
                   );
                 },
               ),
+              const SizedBox(width: 12),
               QuickAccessCard(
                 color: const Color(0xFFFFB74D),
                 icon: Icons.group_rounded,
@@ -307,7 +309,7 @@ class _DashboardState extends State<Dashboard> {
           ),
           const SizedBox(height: 12),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               QuickAccessCard(
                 color: const Color(0xFF4DB6AC),
@@ -322,8 +324,6 @@ class _DashboardState extends State<Dashboard> {
                   );
                 },
               ),
-              const SizedBox(width: 8), // Placeholder untuk menjaga layout
-              const SizedBox(width: 8), // Placeholder untuk menjaga layout
             ],
           ),
         ],
