@@ -44,10 +44,10 @@ Since Flutter supports web deployment, we’ve hosted the app using **Firebase H
       <td>
         <ol>
           <li>Login, logout ✅</li>
-          <li>Penerimaan warga </li>
+          <li>Penerimaan warga ✅</li>
           <li>Log aktivitas ✅</li>
-          <li>Pesan warga</li>
-          <li>Register</li>
+          <li>Pesan warga ✅</li>
+          <li>Register ✅</li>
         </ol>
       </td>
       <td>6</td>
@@ -93,7 +93,7 @@ Since Flutter supports web deployment, we’ve hosted the app using **Firebase H
       <td>
         <ol>
           <li>Data warga dan rumah ✅</li>
-          <li>Laporan keuangan</li>
+          <li>Laporan keuangan ✅</li>
         </ol>
       </td>
       <td>6</td>
@@ -103,7 +103,7 @@ Since Flutter supports web deployment, we’ve hosted the app using **Firebase H
   <tfoot>
     <tr>
       <td><b>Summary</b></td>
-      <td>9/16 (56.25%)</td>
+      <td>16/16 (100%)</td>
       <td>32</td>
     </tr>
   </tfoot>
