@@ -3,7 +3,7 @@ import 'package:pentagram/pages/activity_broadcast/activity_add_step_1.dart';
 import 'package:pentagram/pages/activity_broadcast/activity_add_step_2.dart';
 import 'package:pentagram/pages/activity_broadcast/activity_add_step_3.dart';
 import 'package:pentagram/utils/app_colors.dart';
-import 'package:pentagram/widgets/snackbar_helper.dart';
+import 'package:pentagram/widgets/common/snackbar_helper.dart';
 
 class ActivityAdd extends StatefulWidget {
   const ActivityAdd({super.key});

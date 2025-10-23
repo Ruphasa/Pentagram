@@ -3,7 +3,7 @@ import 'package:pentagram/models/activity_log.dart';
 import 'package:pentagram/services/activity_log_service.dart';
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:pentagram/utils/activity_helper.dart';
-import 'package:pentagram/widgets/filter_aktivitas_dialog.dart';
+import 'package:pentagram/widgets/log_aktivitas/filter_aktivitas_dialog.dart';
 
 class LogAktivitasPage extends StatefulWidget {
   const LogAktivitasPage({super.key});

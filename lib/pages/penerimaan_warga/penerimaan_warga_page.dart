@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:pentagram/models/penerimaan_warga.dart';
-import 'package:pentagram/widgets/penerimaan_card.dart';
-import 'package:pentagram/widgets/filter_penerimaan_warga.dart';
+import 'package:pentagram/widgets/penerimaan/penerimaan_card.dart';
+import 'package:pentagram/widgets/penerimaan/filter_penerimaan_warga.dart';
 import 'package:pentagram/pages/penerimaan_warga/penerimaan_warga_detail.dart';
 
 class PenerimaanWargaPage extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:pentagram/models/pesan_warga.dart';
-import 'package:pentagram/widgets/pesan_card.dart';
-import 'package:pentagram/widgets/filter_pesan_dialog.dart';
+import 'package:pentagram/widgets/pesan/pesan_card.dart';
+import 'package:pentagram/widgets/pesan/filter_pesan_dialog.dart';
 import 'package:pentagram/pages/pesan/detail_pesan.dart';
 
 class PesanWargaPage extends StatefulWidget {

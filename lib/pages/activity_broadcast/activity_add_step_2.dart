@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/repositories/activity_constants.dart';
 import 'package:pentagram/utils/app_colors.dart';
-import 'package:pentagram/widgets/enhanced_date_field.dart';
-import 'package:pentagram/widgets/enhanced_dropdown.dart';
+import 'package:pentagram/widgets/common/enhanced_date_field.dart';
+import 'package:pentagram/widgets/common/enhanced_dropdown.dart';
 
 class ActivityAddStep2 extends StatelessWidget {
   final DateTime? selectedDate;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
-import 'package:pentagram/widgets/register_form.dart';
+import 'package:pentagram/widgets/auth/register_form.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});

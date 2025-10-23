@@ -22,6 +22,7 @@ class CommonHeader extends StatelessWidget {
       pinned: true,
       automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
+      actions: actions,
       flexibleSpace: FlexibleSpaceBar(
         title: Padding(
           padding: const EdgeInsetsDirectional.only(start: 24, bottom: 16),
