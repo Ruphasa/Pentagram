@@ -235,30 +235,51 @@ class _BroadcastPageState extends State<BroadcastPage>
                       borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: responsive.elevation(10),
-                          offset: const Offset(0, 2),
+                          color: Colors.black.withOpacity(0.08),
+                          blurRadius: responsive.elevation(15),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
-                    child: TabBar(
-                      controller: _tabController,
-                      indicator: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
+                    child: Padding(
+                      padding: EdgeInsets.all(responsive.padding(4)),
+                      child: TabBar(
+                        controller: _tabController,
+                        indicator: BoxDecoration(
+                          color: AppColors.primary,
+                          borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primary.withOpacity(0.3),
+                              blurRadius: responsive.elevation(8),
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        labelColor: Colors.white,
+                        unselectedLabelColor: Colors.grey[600],
+                        labelStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: responsive.fontSize(14),
+                          letterSpacing: 0.3,
+                        ),
+                        unselectedLabelStyle: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: responsive.fontSize(14),
+                          letterSpacing: 0.2,
+                        ),
+                        labelPadding: EdgeInsets.symmetric(
+                          horizontal: responsive.padding(8),
+                          vertical: responsive.padding(12),
+                        ),
+                        tabs: const [
+                          Tab(text: 'Semua'),
+                          Tab(text: 'Urgent'),
+                          Tab(text: 'Terkirim'),
+                        ],
+                        dividerColor: Colors.transparent,
                       ),
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.grey,
-                      labelStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: responsive.fontSize(14),
-                      ),
-                      tabs: const [
-                        Tab(text: 'Semua'),
-                        Tab(text: 'Urgent'),
-                        Tab(text: 'Terkirim'),
-                      ],
-                      dividerColor: Colors.transparent,
                     ),
                   ),
                 ),

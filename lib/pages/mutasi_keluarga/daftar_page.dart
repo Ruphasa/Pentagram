@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/utils/responsive_helper.dart';
 import 'package:pentagram/pages/mutasi_keluarga/tambah_page.dart';
 import 'package:pentagram/pages/mutasi_keluarga/detail_page.dart';
 
@@ -28,6 +29,7 @@ class DaftarMutasiPage extends StatelessWidget {
   ];
 
   void _showFilterDialog(BuildContext context) {
+    final responsive = context.responsive;
     String? selectedStatus;
     String? selectedKeluarga;
 
@@ -36,19 +38,27 @@ class DaftarMutasiPage extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
           ),
-          title: const Text('Filter Mutasi Keluarga'),
+          title: Text(
+            'Filter Mutasi Keluarga',
+            style: TextStyle(fontSize: responsive.fontSize(18)),
+          ),
           content: SizedBox(
-            width: 400,
+            width: responsive.responsive<double>(
+              mobile: MediaQuery.of(context).size.width * 0.8,
+              tablet: 400,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Status',
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(fontSize: responsive.fontSize(14)),
+                    border: const OutlineInputBorder(),
                   ),
+                  style: TextStyle(fontSize: responsive.fontSize(14), color: Colors.black),
                   value: selectedStatus,
                   items: const [
                     DropdownMenuItem(value: 'Pindah Rumah', child: Text('Pindah Rumah')),
@@ -56,12 +66,14 @@ class DaftarMutasiPage extends StatelessWidget {
                   ],
                   onChanged: (value) => selectedStatus = value,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: responsive.spacing(16)),
                 DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Keluarga',
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(fontSize: responsive.fontSize(14)),
+                    border: const OutlineInputBorder(),
                   ),
+                  style: TextStyle(fontSize: responsive.fontSize(14), color: Colors.black),
                   value: selectedKeluarga,
                   items: dataMutasi.map((data) {
                     return DropdownMenuItem(
@@ -77,13 +89,25 @@ class DaftarMutasiPage extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Reset Filter'),
+              child: Text(
+                'Reset Filter',
+                style: TextStyle(fontSize: responsive.fontSize(14)),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Terapkan'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                  horizontal: responsive.padding(16),
+                  vertical: responsive.padding(10),
+                ),
+              ),
+              child: Text(
+                'Terapkan',
+                style: TextStyle(fontSize: responsive.fontSize(14)),
+              ),
             ),
           ],
         );
@@ -93,24 +117,29 @@ class DaftarMutasiPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = context.responsive;
+    
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textOnPrimary,
-        title: const Text('Daftar Mutasi Keluarga'),
+        title: Text(
+          'Daftar Mutasi Keluarga',
+          style: TextStyle(fontSize: responsive.fontSize(18)),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(responsive.padding(24)),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(responsive.borderRadius(16)),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.05),
-                  blurRadius: 6,
+                  blurRadius: responsive.elevation(6),
                   offset: const Offset(0, 3),
                 ),
               ],
@@ -119,39 +148,147 @@ class DaftarMutasiPage extends StatelessWidget {
               children: [
                 // Header Table dan Filter
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Daftar Mutasi',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () => _showFilterDialog(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF6C63FF),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        ),
-                        icon: const Icon(Icons.filter_list, color: Colors.white),
-                        label: const Text('Filter', style: TextStyle(color: Colors.white)),
-                      ),
-                    ],
+                  padding: EdgeInsets.symmetric(
+                    horizontal: responsive.padding(16),
+                    vertical: responsive.padding(20),
                   ),
+                  child: responsive.isCompact
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              'Daftar Mutasi',
+                              style: TextStyle(
+                                fontSize: responsive.fontSize(18),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(height: responsive.spacing(12)),
+                            ElevatedButton.icon(
+                              onPressed: () => _showFilterDialog(context),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF6C63FF),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(responsive.borderRadius(8)),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: responsive.padding(12), // Reduced horizontal padding
+                                  vertical: responsive.padding(8), // Reduced vertical padding
+                                ),
+                              ),
+                              icon: Icon(
+                                Icons.filter_list,
+                                color: Colors.white,
+                                size: responsive.iconSize(18), // Reduced icon size
+                              ),
+                              label: Text(
+                                'Filter',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: responsive.fontSize(12), // Reduced font size
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Daftar Mutasi',
+                              style: TextStyle(
+                                fontSize: responsive.fontSize(18),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            ElevatedButton.icon(
+                              onPressed: () => _showFilterDialog(context),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF6C63FF),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(responsive.borderRadius(8)),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: responsive.padding(12), // Reduced horizontal padding
+                                  vertical: responsive.padding(8), // Reduced vertical padding
+                                ),
+                              ),
+                              icon: Icon(
+                                Icons.filter_list,
+                                color: Colors.white,
+                                size: responsive.iconSize(18), // Reduced icon size
+                              ),
+                              label: Text(
+                                'Filter',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: responsive.fontSize(12), // Reduced font size
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                 ),
 
                 // Table Header
                 Container(
                   color: Colors.grey.shade100,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: const Row(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: responsive.padding(16),
+                    vertical: responsive.padding(12),
+                  ),
+                  child: Row(
                     children: [
-                      Expanded(flex: 1, child: Text('NO')),
-                      Expanded(flex: 3, child: Text('TANGGAL')),
-                      Expanded(flex: 4, child: Text('KELUARGA')),
-                      Expanded(flex: 3, child: Text('JENIS MUTASI')),
-                      Expanded(flex: 1, child: Text('AKSI')),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          'NO',
+                          style: TextStyle(
+                            fontSize: responsive.fontSize(12),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          'TANGGAL',
+                          style: TextStyle(
+                            fontSize: responsive.fontSize(12),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Text(
+                          'KELUARGA',
+                          style: TextStyle(
+                            fontSize: responsive.fontSize(12),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          'JENIS MUTASI',
+                          style: TextStyle(
+                            fontSize: responsive.fontSize(12),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          'AKSI',
+                          style: TextStyle(
+                            fontSize: responsive.fontSize(12),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -161,15 +298,36 @@ class DaftarMutasiPage extends StatelessWidget {
                 // Table Rows
                 ...dataMutasi.map(
                   (data) => Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: responsive.padding(16),
+                      vertical: responsive.padding(14),
+                    ),
                     decoration: const BoxDecoration(
                       border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3)),
                     ),
                     child: Row(
                       children: [
-                        Expanded(flex: 1, child: Text(data['no']!)),
-                        Expanded(flex: 3, child: Text(data['tanggal']!)),
-                        Expanded(flex: 4, child: Text(data['keluarga']!)),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            data['no']!,
+                            style: TextStyle(fontSize: responsive.fontSize(14)),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            data['tanggal']!,
+                            style: TextStyle(fontSize: responsive.fontSize(14)),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 4,
+                          child: Text(
+                            data['keluarga']!,
+                            style: TextStyle(fontSize: responsive.fontSize(14)),
+                          ),
+                        ),
                         Expanded(
                           flex: 3,
                           child: Container(
@@ -177,9 +335,12 @@ class DaftarMutasiPage extends StatelessWidget {
                               color: data['jenis'] == 'Pindah Rumah'
                                   ? Colors.green.shade100
                                   : Colors.red.shade100,
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(responsive.borderRadius(16)),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: responsive.padding(12),
+                              vertical: responsive.padding(6),
+                            ),
                             child: Text(
                               data['jenis']!,
                               textAlign: TextAlign.center,
@@ -188,6 +349,7 @@ class DaftarMutasiPage extends StatelessWidget {
                                     ? Colors.green.shade800
                                     : Colors.red.shade800,
                                 fontWeight: FontWeight.w500,
+                                fontSize: responsive.fontSize(12),
                               ),
                             ),
                           ),
@@ -208,12 +370,19 @@ class DaftarMutasiPage extends StatelessWidget {
                               }
                             },
                             itemBuilder: (context) => [
-                              const PopupMenuItem(
+                              PopupMenuItem(
                                 value: 'detail',
-                                child: Text('Detail'),
+                                child: Text(
+                                  'Detail',
+                                  style: TextStyle(fontSize: responsive.fontSize(14)),
+                                ),
                               ),
                             ],
-                            child: const Icon(Icons.more_vert, color: Colors.grey),
+                            child: Icon(
+                              Icons.more_vert,
+                              color: Colors.grey,
+                              size: responsive.iconSize(20),
+                            ),
                           ),
                         ),
                       ],
@@ -235,16 +404,10 @@ class DaftarMutasiPage extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const TambahMutasiPage()),
           );
         },
-        child: Builder(
-          builder: (context) {
-            final screenWidth = MediaQuery.of(context).size.width;
-            final isCompact = screenWidth < 400;
-            return Icon(
-              Icons.add,
-              color: Colors.white,
-              size: isCompact ? 24 : 28,
-            );
-          },
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: responsive.iconSize(28),
         ),
       ),
     );
