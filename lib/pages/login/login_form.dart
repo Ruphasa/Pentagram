@@ -35,8 +35,9 @@ class _LoginFormState extends State<LoginForm> {
   final _passwordController = TextEditingController();
   bool _isHoveringButton = false;
   bool _isHoveringRegister = false;
+  bool _isLoading = false;
 
-  void _login() {
+  Future<void> _login() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
@@ -47,69 +48,160 @@ class _LoginFormState extends State<LoginForm> {
       return;
     }
 
+    // Set loading state
+    setState(() {
+      _isLoading = true;
+    });
+
+    // Simulate authentication delay
+    await Future.delayed(const Duration(milliseconds: 1500));
+
+    if (!mounted) return;
+
     if (email == 'admin@gmail.com' && password == 'password') {
-      Navigator.pushReplacement(
+      // Add a smooth transition
+      await Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MainPage()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const MainPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1.0, 0.0);
+            const end = Offset.zero;
+            const curve = Curves.easeInOut;
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var offsetAnimation = animation.drive(tween);
+            return SlideTransition(position: offsetAnimation, child: child);
+          },
+          transitionDuration: const Duration(milliseconds: 400),
+        ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Email atau password salah')),
-      );
+      setState(() {
+        _isLoading = false;
+      });
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Email atau password salah')),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 500),
-      padding: const EdgeInsets.all(32),
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(
-            color: AppColors.shadow,
-            blurRadius: 20,
-            offset: Offset(0, 8),
+    return Stack(
+      children: [
+        Container(
+          constraints: const BoxConstraints(maxWidth: 500),
+          padding: const EdgeInsets.all(32),
+          decoration: BoxDecoration(
+            color: AppColors.cardBackground,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                color: AppColors.shadow,
+                blurRadius: 20,
+                offset: Offset(0, 8),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ShaderMask(
-            shaderCallback: (bounds) =>
-                AppColors.primaryGradient.createShader(bounds),
-            child: const Text(
-              'Masuk ke akun anda',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ShaderMask(
+                shaderCallback: (bounds) =>
+                    AppColors.primaryGradient.createShader(bounds),
+                child: const Text(
+                  'Masuk ke akun anda',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Login untuk mengakses sistem Jawara Pintar.',
+                style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+              ),
+              const SizedBox(height: 8),
+              const Divider(
+                color: AppColors.divider,
+                thickness: 1,
+              ),
+              const SizedBox(height: 16),
+              _buildTextField('Email', _emailController, false),
+              const SizedBox(height: 24),
+              _buildTextField('Password', _passwordController, true),
+              const SizedBox(height: 32),
+              _buildLoginButton(),
+              const SizedBox(height: 20),
+              _buildRegisterLink(context),
+            ],
+          ),
+        ),
+        if (_isLoading)
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 20,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 4,
+                          valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      ShaderMask(
+                        shaderCallback: (bounds) =>
+                            AppColors.primaryGradient.createShader(bounds),
+                        child: const Text(
+                          'Memuat...',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Mohon tunggu sebentar',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 8),
-          const Text(
-            'Login untuk mengakses sistem Jawara Pintar.',
-            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
-          ),
-          const SizedBox(height: 8),
-          const Divider(
-            color: AppColors.divider, 
-            thickness: 1, 
-          ),
-          const SizedBox(height: 16),
-          _buildTextField('Email', _emailController, false),
-          const SizedBox(height: 24),
-          _buildTextField('Password', _passwordController, true),
-          const SizedBox(height: 32),
-          _buildLoginButton(),
-          const SizedBox(height: 20),
-          _buildRegisterLink(context),
-        ],
-      ),
+      ],
     );
   }
 
@@ -184,7 +276,7 @@ class _LoginFormState extends State<LoginForm> {
                 : null,
           ),
           child: ElevatedButton(
-            onPressed: _login,
+            onPressed: _isLoading ? null : _login,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
@@ -192,12 +284,22 @@ class _LoginFormState extends State<LoginForm> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
+              disabledBackgroundColor: Colors.transparent,
             ),
-            child: const Text(
-              'Login',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+            child: _isLoading
+                ? const SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                : const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                 color: AppColors.textOnPrimary,
               ),
             ),
