@@ -137,7 +137,7 @@ class _MasyarakatPageState extends State<MasyarakatPage> with SingleTickerProvid
 
   Widget _buildWargaTab() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
       child: Column(
         children: [
           // Search Bar
@@ -228,7 +228,7 @@ class _MasyarakatPageState extends State<MasyarakatPage> with SingleTickerProvid
 
   Widget _buildKeluargaTab() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
       child: Column(
         children: [
           // Button Mutasi Keluarga
@@ -285,7 +285,7 @@ class _MasyarakatPageState extends State<MasyarakatPage> with SingleTickerProvid
 
   Widget _buildRumahTab() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
       child: Column(
         children: [
           _buildRumahCard(
