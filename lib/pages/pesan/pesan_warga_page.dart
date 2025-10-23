@@ -117,11 +117,9 @@ class _PesanWargaPageState extends State<PesanWargaPage> {
   @override
   Widget build(BuildContext context) {
     final filteredList = _pesanList.where((p) {
-      final query = _searchController.text.toLowerCase();
       if (selectedFilter == 'Belum Dibaca' && !p.unread) return false;
       if (selectedFilter == 'Sudah Dibaca' && p.unread) return false;
-      return p.nama.toLowerCase().contains(query) ||
-          p.pesan.toLowerCase().contains(query);
+      return true;
     }).toList();
 
     return Scaffold(

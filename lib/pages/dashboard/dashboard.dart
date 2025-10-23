@@ -11,6 +11,7 @@ import 'package:pentagram/pages/dashboard/components/quick_access_card.dart';
 import 'package:pentagram/pages/dashboard/components/stat_card.dart';
 import 'package:pentagram/pages/log_aktivitas/log_aktivitas_page.dart';
 import 'package:pentagram/pages/notifikasi/notifikasi.dart';
+import 'package:pentagram/pages/penerimaan_warga/penerimaan_warga_page.dart';
 import 'package:pentagram/pages/profil/profil_page.dart';
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:pentagram/pages/channel_transfer/daftar_channel.dart';
@@ -135,19 +136,39 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  /// Build Upcoming Events Section
-  Widget _buildUpcomingEventsSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Kegiatan yang akan datang',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      // === Daftar Pengguna ===
+                      _buildQuickAccessCard(
+                        context,
+                        color: const Color(0xFFFFB74D),
+                        icon: Icons.group_rounded,
+                        label: 'Daftar Pengguna',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DaftarPenggunaPage(), // lib/pages/manajemen_pengguna/daftar_pengguna.dart
+                            ),
+                          );
+                        },
+                      ),
+                      // === Penerimaan Warga ===
+                      _buildQuickAccessCard(
+                        context,
+                        color: const Color(0xFF4DB6AC), 
+                        icon: Icons.home_rounded,
+                        label: 'Penerimaan\nWarga', 
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PenerimaanWargaPage(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
               if (_upcomingActivities.length > 1)
                 Container(
