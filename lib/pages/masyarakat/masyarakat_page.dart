@@ -4,6 +4,9 @@ import 'package:pentagram/pages/mutasi_keluarga/daftar_page.dart';
 import 'package:pentagram/pages/masyarakat/tambah_warga_page.dart';
 import 'package:pentagram/pages/masyarakat/tambah_keluarga_page.dart';
 import 'package:pentagram/pages/masyarakat/tambah_rumah_page.dart';
+import 'package:pentagram/pages/masyarakat/detail_warga_page.dart';
+import 'package:pentagram/pages/masyarakat/detail_keluarga_page.dart';
+import 'package:pentagram/pages/masyarakat/detail_rumah_page.dart';
 
 class MasyarakatPage extends StatefulWidget {
   const MasyarakatPage({super.key});
@@ -455,7 +458,19 @@ class _MasyarakatPageState extends State<MasyarakatPage> with SingleTickerProvid
               ),
               const Spacer(),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailWargaPage(
+                        name: name,
+                        nik: nik,
+                        role: role,
+                        status: status,
+                      ),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.arrow_forward_rounded, size: 16),
                 label: const Text('Detail'),
                 style: TextButton.styleFrom(
@@ -570,7 +585,19 @@ class _MasyarakatPageState extends State<MasyarakatPage> with SingleTickerProvid
                 ),
               ),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailKeluargaPage(
+                        namaKeluarga: namaKeluarga,
+                        kepalaKeluarga: kepalaKeluarga,
+                        jumlahAnggota: jumlahAnggota,
+                        alamat: alamat,
+                      ),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.arrow_forward_rounded, size: 16),
                 label: const Text('Detail'),
                 style: TextButton.styleFrom(
@@ -687,7 +714,20 @@ class _MasyarakatPageState extends State<MasyarakatPage> with SingleTickerProvid
                 ),
               ),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailRumahPage(
+                        alamat: alamat,
+                        rt: rt,
+                        rw: rw,
+                        kepalaKeluarga: kepalaKeluarga,
+                        status: status,
+                      ),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.arrow_forward_rounded, size: 16),
                 label: const Text('Detail'),
                 style: TextButton.styleFrom(

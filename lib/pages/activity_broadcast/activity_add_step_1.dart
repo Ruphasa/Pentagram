@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pentagram/pages/activity_broadcast/data/activity_const.dart';
+import 'package:pentagram/repositories/activity_constants.dart';
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:pentagram/widgets/enhanced_dropdown.dart';
 import 'package:pentagram/widgets/enhanced_text_field.dart';
@@ -41,7 +41,7 @@ class ActivityAddStep1 extends StatelessWidget {
           label: 'Kategori Kegiatan',
           hint: 'Pilih kategori',
           icon: Icons.category_rounded,
-          items: ActivityConst.kategoriOptions,
+          items: ActivityConstants.kategoriOptions,
           onChanged: onKategoriChanged,
           validator: (value) {
             if (value == null || value.isEmpty) {
