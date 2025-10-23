@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/utils/responsive_helper.dart';
 import 'package:pentagram/services/broadcast_service.dart';
 import 'package:pentagram/models/broadcast_message.dart';
 import 'package:pentagram/pages/broadcast/broadcast_create.dart';
@@ -75,6 +76,7 @@ class _BroadcastPageState extends State<BroadcastPage>
   @override
   Widget build(BuildContext context) {
     final stats = _broadcastService.getBroadcastStatistics();
+    final responsive = context.responsive;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6FA),
@@ -84,7 +86,7 @@ class _BroadcastPageState extends State<BroadcastPage>
           slivers: [
             // Header
             SliverAppBar(
-              expandedHeight: 280,
+              expandedHeight: responsive.isCompact ? 250 : 280,
               floating: false,
               pinned: true,
               backgroundColor: AppColors.primary,
@@ -102,7 +104,7 @@ class _BroadcastPageState extends State<BroadcastPage>
                   ),
                   child: SafeArea(
                     child: Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: EdgeInsets.all(responsive.padding(20)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -112,18 +114,18 @@ class _BroadcastPageState extends State<BroadcastPage>
                               Row(
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.all(8),
+                                    padding: EdgeInsets.all(responsive.padding(8)),
                                     decoration: BoxDecoration(
                                       color: Colors.white.withOpacity(0.2),
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
                                     ),
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.campaign,
                                       color: Colors.white,
-                                      size: 24,
+                                      size: responsive.iconSize(24),
                                     ),
                                   ),
-                                  const SizedBox(width: 12),
+                                  SizedBox(width: responsive.spacing(12)),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -132,15 +134,15 @@ class _BroadcastPageState extends State<BroadcastPage>
                                         'Total Broadcast',
                                         style: TextStyle(
                                           color: Colors.white.withOpacity(0.9),
-                                          fontSize: 12,
+                                          fontSize: responsive.fontSize(12),
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                       Text(
                                         '${stats['totalMessages']}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 24,
+                                          fontSize: responsive.fontSize(24),
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -154,30 +156,30 @@ class _BroadcastPageState extends State<BroadcastPage>
                                 },
                                 icon: const Icon(Icons.info_outline),
                                 color: Colors.white,
-                                iconSize: 28,
+                                iconSize: responsive.iconSize(28),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 20),
-                          const Text(
+                          SizedBox(height: responsive.spacing(20)),
+                          Text(
                             'Broadcast Pesan',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 28,
+                              fontSize: responsive.fontSize(28),
                               fontWeight: FontWeight.bold,
                               letterSpacing: -0.5,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: responsive.spacing(8)),
                           Text(
                             'Kirim pengumuman dan informasi ke warga RT',
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.9),
-                              fontSize: 15,
+                              fontSize: responsive.fontSize(15),
                               fontWeight: FontWeight.w400,
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: responsive.spacing(24)),
                           // Stats Cards
                           Row(
                             children: [
@@ -186,22 +188,25 @@ class _BroadcastPageState extends State<BroadcastPage>
                                   'Terkirim',
                                   stats['sent'],
                                   Icons.check_circle,
+                                  responsive,
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              SizedBox(width: responsive.spacing(12)),
                               Expanded(
                                 child: _buildMiniStatCard(
                                   'Urgent',
                                   stats['urgent'],
                                   Icons.priority_high,
+                                  responsive,
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              SizedBox(width: responsive.spacing(12)),
                               Expanded(
                                 child: _buildMiniStatCard(
                                   'Hari Ini',
                                   stats['today'],
                                   Icons.today,
+                                  responsive,
                                 ),
                               ),
                             ],
@@ -218,20 +223,20 @@ class _BroadcastPageState extends State<BroadcastPage>
             SliverPersistentHeader(
               pinned: true,
               delegate: _SliverAppBarDelegate(
-                minHeight: 70,
-                maxHeight: 70,
+                minHeight: responsive.isCompact ? 60 : 70,
+                maxHeight: responsive.isCompact ? 60 : 70,
                 child: Container(
                   color: const Color(0xFFF5F6FA),
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: EdgeInsets.only(top: responsive.padding(10)),
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    margin: EdgeInsets.symmetric(horizontal: responsive.padding(20)),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.05),
-                          blurRadius: 10,
+                          blurRadius: responsive.elevation(10),
                           offset: const Offset(0, 2),
                         ),
                       ],
@@ -240,19 +245,20 @@ class _BroadcastPageState extends State<BroadcastPage>
                       controller: _tabController,
                       indicator: BoxDecoration(
                         color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
                       ),
                       labelColor: Colors.white,
                       unselectedLabelColor: Colors.grey,
-                      labelStyle: const TextStyle(
+                      labelStyle: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: responsive.fontSize(14),
                       ),
                       tabs: const [
                         Tab(text: 'Semua'),
                         Tab(text: 'Urgent'),
                         Tab(text: 'Terkirim'),
                       ],
+                      dividerColor: Colors.transparent,
                     ),
                   ),
                 ),
@@ -262,32 +268,37 @@ class _BroadcastPageState extends State<BroadcastPage>
             // Messages List Label
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+                padding: EdgeInsets.fromLTRB(
+                  responsive.padding(20),
+                  responsive.padding(20),
+                  responsive.padding(20),
+                  responsive.padding(16),
+                ),
                 child: Row(
                   children: [
-                    const Text(
+                    Text(
                       'Daftar Pesan',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: responsive.fontSize(18),
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: responsive.spacing(8)),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: responsive.padding(10),
+                        vertical: responsive.padding(4),
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
                       ),
                       child: Text(
                         '${_filteredMessages.length}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: responsive.fontSize(12),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -307,14 +318,14 @@ class _BroadcastPageState extends State<BroadcastPage>
                         children: [
                           Icon(
                             Icons.campaign_outlined,
-                            size: 80,
+                            size: responsive.iconSize(80),
                             color: Colors.grey[300],
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: responsive.spacing(16)),
                           Text(
                             'Belum ada broadcast',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: responsive.fontSize(16),
                               color: Colors.grey[600],
                               fontWeight: FontWeight.w500,
                             ),
@@ -324,12 +335,17 @@ class _BroadcastPageState extends State<BroadcastPage>
                     ),
                   )
                 : SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                    padding: EdgeInsets.fromLTRB(
+                      responsive.padding(20),
+                      0,
+                      responsive.padding(20),
+                      100,
+                    ),
                     sliver: SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
                           final message = _filteredMessages[index];
-                          return _buildMessageCard(message);
+                          return _buildMessageCard(message, responsive);
                         },
                         childCount: _filteredMessages.length,
                       ),
@@ -343,14 +359,14 @@ class _BroadcastPageState extends State<BroadcastPage>
         duration: const Duration(milliseconds: 200),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(responsive.borderRadius(20)),
             gradient: LinearGradient(
               colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
             ),
             boxShadow: [
               BoxShadow(
                 color: AppColors.primary.withOpacity(0.4),
-                blurRadius: 15,
+                blurRadius: responsive.elevation(15),
                 offset: const Offset(0, 5),
               ),
             ],
@@ -369,10 +385,13 @@ class _BroadcastPageState extends State<BroadcastPage>
             },
             backgroundColor: Colors.transparent,
             elevation: 0,
-            icon: const Icon(Icons.add_rounded, size: 28),
-            label: const Text(
+            icon: Icon(Icons.add_rounded, size: responsive.iconSize(28)),
+            label: Text(
               'Buat Broadcast',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: responsive.fontSize(16),
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
@@ -380,22 +399,22 @@ class _BroadcastPageState extends State<BroadcastPage>
     );
   }
 
-  Widget _buildMiniStatCard(String label, int value, IconData icon) {
+  Widget _buildMiniStatCard(String label, int value, IconData icon, ResponsiveHelper responsive) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(responsive.padding(12)),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
       ),
       child: Column(
         children: [
-          Icon(icon, color: Colors.white, size: 20),
-          const SizedBox(height: 4),
+          Icon(icon, color: Colors.white, size: responsive.iconSize(20)),
+          SizedBox(height: responsive.spacing(4)),
           Text(
             '$value',
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: responsive.fontSize(18),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -403,7 +422,7 @@ class _BroadcastPageState extends State<BroadcastPage>
             label,
             style: TextStyle(
               color: Colors.white.withOpacity(0.9),
-              fontSize: 10,
+              fontSize: responsive.fontSize(10),
             ),
           ),
         ],
@@ -411,7 +430,7 @@ class _BroadcastPageState extends State<BroadcastPage>
     );
   }
 
-  Widget _buildMessageCard(BroadcastMessage message) {
+  Widget _buildMessageCard(BroadcastMessage message, ResponsiveHelper responsive) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -422,18 +441,18 @@ class _BroadcastPageState extends State<BroadcastPage>
         );
       },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(16),
+        margin: EdgeInsets.only(bottom: responsive.spacing(12)),
+        padding: EdgeInsets.all(responsive.padding(16)),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(responsive.borderRadius(16)),
           border: message.isUrgent
               ? Border.all(color: Colors.red, width: 2)
               : null,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
+              blurRadius: responsive.elevation(10),
               offset: const Offset(0, 4),
             ),
           ],
@@ -444,18 +463,18 @@ class _BroadcastPageState extends State<BroadcastPage>
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: EdgeInsets.all(responsive.padding(8)),
                   decoration: BoxDecoration(
                     color: _getCategoryColor(message.category).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(responsive.borderRadius(8)),
                   ),
                   child: Icon(
                     _getCategoryIcon(message.category),
                     color: _getCategoryColor(message.category),
-                    size: 20,
+                    size: responsive.iconSize(20),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: responsive.spacing(12)),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -465,38 +484,38 @@ class _BroadcastPageState extends State<BroadcastPage>
                           Expanded(
                             child: Text(
                               message.title,
-                              style: const TextStyle(
-                                fontSize: 16,
+                              style: TextStyle(
+                                fontSize: responsive.fontSize(16),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                           if (message.isUrgent)
                             Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 4,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: responsive.padding(8),
+                                vertical: responsive.padding(4),
                               ),
                               decoration: BoxDecoration(
                                 color: Colors.red,
-                                borderRadius: BorderRadius.circular(6),
+                                borderRadius: BorderRadius.circular(responsive.borderRadius(6)),
                               ),
-                              child: const Text(
+                              child: Text(
                                 'URGENT',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 10,
+                                  fontSize: responsive.fontSize(10),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                         ],
                       ),
-                      const SizedBox(height: 4),
+                      SizedBox(height: responsive.spacing(4)),
                       Text(
                         message.category,
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: responsive.fontSize(12),
                           color: Colors.grey[600],
                         ),
                       ),
@@ -505,29 +524,29 @@ class _BroadcastPageState extends State<BroadcastPage>
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: responsive.spacing(12)),
             Text(
               message.content,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: responsive.fontSize(14),
                 color: Colors.grey[800],
                 height: 1.5,
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: responsive.spacing(12)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(Icons.person, size: 14, color: Colors.grey[600]),
-                    const SizedBox(width: 4),
+                    Icon(Icons.person, size: responsive.iconSize(14), color: Colors.grey[600]),
+                    SizedBox(width: responsive.spacing(4)),
                     Text(
                       message.sender,
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: responsive.fontSize(12),
                         color: Colors.grey[600],
                       ),
                     ),
@@ -535,12 +554,12 @@ class _BroadcastPageState extends State<BroadcastPage>
                 ),
                 Row(
                   children: [
-                    Icon(Icons.schedule, size: 14, color: Colors.grey[600]),
-                    const SizedBox(width: 4),
+                    Icon(Icons.schedule, size: responsive.iconSize(14), color: Colors.grey[600]),
+                    SizedBox(width: responsive.spacing(4)),
                     Text(
                       _formatDate(message.sentDate),
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: responsive.fontSize(12),
                         color: Colors.grey[600],
                       ),
                     ),
@@ -548,25 +567,25 @@ class _BroadcastPageState extends State<BroadcastPage>
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: responsive.spacing(8)),
             Row(
               children: [
-                Icon(Icons.people, size: 14, color: Colors.grey[600]),
-                const SizedBox(width: 4),
+                Icon(Icons.people, size: responsive.iconSize(14), color: Colors.grey[600]),
+                SizedBox(width: responsive.spacing(4)),
                 Text(
                   '${message.recipientCount} penerima',
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: responsive.fontSize(12),
                     color: Colors.grey[600],
                   ),
                 ),
-                const SizedBox(width: 16),
-                Icon(Icons.check_circle, size: 14, color: Colors.green),
-                const SizedBox(width: 4),
+                SizedBox(width: responsive.spacing(16)),
+                Icon(Icons.check_circle, size: responsive.iconSize(14), color: Colors.green),
+                SizedBox(width: responsive.spacing(4)),
                 Text(
                   '${message.readCount} dibaca',
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: responsive.fontSize(12),
                     color: Colors.grey[600],
                   ),
                 ),
@@ -628,83 +647,85 @@ class _BroadcastPageState extends State<BroadcastPage>
   }
 
   void _showStatistics() {
+    final responsive = context.responsive;
+    
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
+            topLeft: Radius.circular(responsive.borderRadius(24)),
+            topRight: Radius.circular(responsive.borderRadius(24)),
           ),
         ),
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(responsive.padding(24)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
               child: Container(
-                width: 40,
-                height: 4,
+                width: responsive.responsive<double>(mobile: 40, tablet: 50),
+                height: responsive.responsive<double>(mobile: 4, tablet: 5),
                 decoration: BoxDecoration(
                   color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: BorderRadius.circular(responsive.borderRadius(2)),
                 ),
               ),
             ),
-            const SizedBox(height: 24),
-            const Text(
+            SizedBox(height: responsive.spacing(24)),
+            Text(
               'Statistik Broadcast',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: responsive.fontSize(20),
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 20),
-            _buildStatItem('Total Pesan Terkirim', '45', Icons.send),
-            _buildStatItem('Pesan Urgent', '12', Icons.priority_high),
-            _buildStatItem('Total Penerima', '342', Icons.people),
-            _buildStatItem('Tingkat Baca', '87%', Icons.visibility),
+            SizedBox(height: responsive.spacing(16)),
+            _buildStatItem('Total Pesan Terkirim', '45', Icons.send, responsive),
+            _buildStatItem('Pesan Urgent', '12', Icons.priority_high, responsive),
+            _buildStatItem('Total Penerima', '342', Icons.people, responsive),
+            _buildStatItem('Tingkat Baca', '87%', Icons.visibility, responsive),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildStatItem(String label, String value, IconData icon) {
+  Widget _buildStatItem(String label, String value, IconData icon, ResponsiveHelper responsive) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: responsive.spacing(12)),
+      padding: EdgeInsets.all(responsive.padding(16)),
       decoration: BoxDecoration(
         color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
       ),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(responsive.padding(10)),
             decoration: BoxDecoration(
               color: AppColors.primary.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
             ),
-            child: Icon(icon, color: AppColors.primary, size: 24),
+            child: Icon(icon, color: AppColors.primary, size: responsive.iconSize(24)),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: responsive.spacing(16)),
           Expanded(
             child: Text(
               label,
-              style: const TextStyle(
-                fontSize: 14,
+              style: TextStyle(
+                fontSize: responsive.fontSize(14),
                 fontWeight: FontWeight.w500,
               ),
             ),
           ),
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 20,
+            style: TextStyle(
+              fontSize: responsive.fontSize(20),
               fontWeight: FontWeight.bold,
               color: AppColors.primary,
             ),
