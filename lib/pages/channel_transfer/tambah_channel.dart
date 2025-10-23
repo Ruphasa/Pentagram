@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/utils/responsive_helper.dart';
 
 class TambahChannelPage extends StatefulWidget {
   const TambahChannelPage({super.key});
@@ -18,44 +19,50 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = context.responsive;
+    
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Tambah Channel Transfer',
-          style: TextStyle(fontWeight: FontWeight.w600),
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: responsive.fontSize(16),
+          ),
         ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textOnPrimary,
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(responsive.padding(20)),
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(responsive.padding(24)),
           decoration: BoxDecoration(
             color: AppColors.cardBackground,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(responsive.borderRadius(16)),
             border: Border.all(color: AppColors.border),
-            boxShadow: const [
+            boxShadow: [
               BoxShadow(
                 color: Colors.black12,
-                blurRadius: 6,
-                offset: Offset(0, 3),
+                blurRadius: responsive.elevation(6),
+                offset: const Offset(0, 3),
               ),
             ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSectionHeader('Form Tambah Channel'),
-              const SizedBox(height: 20),
+              _buildSectionHeader('Form Tambah Channel', responsive),
+              SizedBox(height: responsive.spacing(20)),
 
               _buildTextField(
                 label: 'Nama Channel',
                 hint: 'Contoh: BCA, Dana, QRIS RT',
                 controller: namaController,
+                responsive: responsive,
               ),
               _buildDropdownField(
                 label: 'Tipe Channel',
@@ -63,83 +70,153 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
                 value: selectedTipe,
                 items: const ['Bank', 'E-Wallet', 'QRIS'],
                 onChanged: (val) => setState(() => selectedTipe = val),
+                responsive: responsive,
               ),
               _buildTextField(
                 label: 'Nomor Rekening / Akun',
                 hint: 'Contoh: 1234567890',
                 controller: rekeningController,
+                responsive: responsive,
               ),
               _buildTextField(
                 label: 'Nama Pemilik',
                 hint: 'Contoh: John Doe',
                 controller: pemilikController,
+                responsive: responsive,
               ),
               _buildUploadField(
                 label: 'Upload QR (Opsional)',
-                hint: 'Unggah gambar QR (.png / .jpg / .jpeg)',
+                hint: 'Unggah gambar QR',
+                responsive: responsive,
               ),
               _buildUploadField(
                 label: 'Thumbnail (Opsional)',
-                hint: 'Unggah gambar logo / ikon channel',
+                hint: 'Unggah logo channel',
+                responsive: responsive,
               ),
               _buildTextArea(
                 label: 'Catatan (Opsional)',
-                hint:
-                    'Contoh: Transfer hanya dari bank yang sama agar instan.',
+                hint: 'Contoh: Transfer hanya dari bank yang sama agar instan.',
                 controller: catatanController,
+                responsive: responsive,
               ),
 
-              const SizedBox(height: 30),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        // TODO: simpan logika
-                      },
-                      icon: const Icon(Icons.save_rounded),
-                      label: const Text(
-                        'Simpan',
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: AppColors.textOnPrimary,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+              SizedBox(height: responsive.spacing(30)),
+              responsive.isCompact
+                  ? Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              // TODO: simpan logika
+                            },
+                            icon: Icon(Icons.save_rounded, size: responsive.iconSize(18)),
+                            label: Text(
+                              'Simpan',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: responsive.fontSize(14),
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              foregroundColor: AppColors.textOnPrimary,
+                              padding: EdgeInsets.symmetric(vertical: responsive.padding(14)),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
+                              ),
+                              elevation: responsive.elevation(2),
+                            ),
+                          ),
                         ),
-                        elevation: 2,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () {
-                        namaController.clear();
-                        rekeningController.clear();
-                        pemilikController.clear();
-                        catatanController.clear();
-                        setState(() => selectedTipe = null);
-                      },
-                      icon: const Icon(Icons.refresh_rounded),
-                      label: const Text(
-                        'Reset',
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.textPrimary,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        side: const BorderSide(color: AppColors.border),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                        SizedBox(height: responsive.spacing(12)),
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                            onPressed: () {
+                              namaController.clear();
+                              rekeningController.clear();
+                              pemilikController.clear();
+                              catatanController.clear();
+                              setState(() => selectedTipe = null);
+                            },
+                            icon: Icon(Icons.refresh_rounded, size: responsive.iconSize(18)),
+                            label: Text(
+                              'Reset',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: responsive.fontSize(14),
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: AppColors.textPrimary,
+                              padding: EdgeInsets.symmetric(vertical: responsive.padding(14)),
+                              side: const BorderSide(color: AppColors.border),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              // TODO: simpan logika
+                            },
+                            icon: Icon(Icons.save_rounded, size: responsive.iconSize(18)),
+                            label: Text(
+                              'Simpan',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: responsive.fontSize(14),
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              foregroundColor: AppColors.textOnPrimary,
+                              padding: EdgeInsets.symmetric(vertical: responsive.padding(14)),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
+                              ),
+                              elevation: responsive.elevation(2),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: responsive.spacing(12)),
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: () {
+                              namaController.clear();
+                              rekeningController.clear();
+                              pemilikController.clear();
+                              catatanController.clear();
+                              setState(() => selectedTipe = null);
+                            },
+                            icon: Icon(Icons.refresh_rounded, size: responsive.iconSize(18)),
+                            label: Text(
+                              'Reset',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: responsive.fontSize(14),
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: AppColors.textPrimary,
+                              padding: EdgeInsets.symmetric(vertical: responsive.padding(14)),
+                              side: const BorderSide(color: AppColors.border),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),
@@ -149,22 +226,22 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
 
   // ==== COMPONENT BUILDERS ====
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildSectionHeader(String title, ResponsiveHelper responsive) {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 20,
+          width: responsive.isCompact ? 3 : 4,
+          height: responsive.isCompact ? 18 : 20,
           decoration: BoxDecoration(
             gradient: AppColors.primaryGradient,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: BorderRadius.circular(responsive.borderRadius(2)),
           ),
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: responsive.spacing(8)),
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 16,
+          style: TextStyle(
+            fontSize: responsive.fontSize(16),
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
           ),
@@ -177,32 +254,39 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
     required String label,
     required String hint,
     required TextEditingController controller,
+    required ResponsiveHelper responsive,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 18),
+      padding: EdgeInsets.only(bottom: responsive.spacing(18)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style:
-                  const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-          const SizedBox(height: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: responsive.fontSize(14),
+            ),
+          ),
+          SizedBox(height: responsive.spacing(6)),
           TextField(
             controller: controller,
             decoration: InputDecoration(
               hintText: hint,
+              hintStyle: TextStyle(fontSize: responsive.fontSize(13)),
               filled: true,
               fillColor: Colors.grey.shade50,
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: responsive.padding(16),
+                vertical: responsive.padding(14),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: AppColors.border),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: AppColors.primary, width: 1.2),
-                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: AppColors.primary, width: 1.2),
+                borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
               ),
             ),
           ),
@@ -217,39 +301,45 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
     required String? value,
     required List<String> items,
     required Function(String?) onChanged,
+    required ResponsiveHelper responsive,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 18),
+      padding: EdgeInsets.only(bottom: responsive.spacing(18)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style:
-                  const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-          const SizedBox(height: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: responsive.fontSize(14),
+            ),
+          ),
+          SizedBox(height: responsive.spacing(6)),
           DropdownButtonFormField<String>(
             value: value,
-            hint: Text(hint),
+            hint: Text(hint, style: TextStyle(fontSize: responsive.fontSize(13))),
             items: items
                 .map((e) => DropdownMenuItem<String>(
                       value: e,
-                      child: Text(e),
+                      child: Text(e, style: TextStyle(fontSize: responsive.fontSize(14))),
                     ))
                 .toList(),
             onChanged: onChanged,
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.grey.shade50,
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: responsive.padding(16),
+                vertical: responsive.padding(14),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: AppColors.border),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: AppColors.primary, width: 1.2),
-                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: AppColors.primary, width: 1.2),
+                borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
               ),
             ),
           ),
@@ -261,48 +351,71 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
   Widget _buildUploadField({
     required String label,
     required String hint,
+    required ResponsiveHelper responsive,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 18),
+      padding: EdgeInsets.only(bottom: responsive.spacing(18)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style:
-                  const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-          const SizedBox(height: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: responsive.fontSize(14),
+            ),
+          ),
+          SizedBox(height: responsive.spacing(6)),
           Container(
-            height: 80,
+            height: responsive.isCompact ? 70 : 80,
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            padding: EdgeInsets.symmetric(
+              horizontal: responsive.padding(16),
+              vertical: responsive.padding(14),
+            ),
             decoration: BoxDecoration(
               color: Colors.grey.shade50,
               border: Border.all(color: AppColors.border),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  hint,
-                  style: const TextStyle(fontSize: 13, color: Colors.grey),
+                Expanded(
+                  child: Text(
+                    hint,
+                    style: TextStyle(
+                      fontSize: responsive.fontSize(13),
+                      color: Colors.grey,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
+                SizedBox(width: responsive.spacing(8)),
                 ElevatedButton.icon(
                   onPressed: () {
                     // TODO: implement upload handler
                   },
-                  icon: const Icon(Icons.upload_file_rounded, size: 18),
-                  label: const Text('Pilih File'),
+                  icon: Icon(
+                    Icons.upload_file_rounded,
+                    size: responsive.iconSize(18),
+                  ),
+                  label: Text(
+                    'Pilih File',
+                    style: TextStyle(fontSize: responsive.fontSize(13)),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: AppColors.textOnPrimary,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 14, vertical: 10),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: responsive.padding(14),
+                      vertical: responsive.padding(10),
+                    ),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(responsive.borderRadius(8)),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -315,33 +428,40 @@ class _TambahChannelPageState extends State<TambahChannelPage> {
     required String label,
     required String hint,
     required TextEditingController controller,
+    required ResponsiveHelper responsive,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 18),
+      padding: EdgeInsets.only(bottom: responsive.spacing(18)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style:
-                  const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-          const SizedBox(height: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: responsive.fontSize(14),
+            ),
+          ),
+          SizedBox(height: responsive.spacing(6)),
           TextField(
             controller: controller,
             maxLines: 3,
             decoration: InputDecoration(
               hintText: hint,
+              hintStyle: TextStyle(fontSize: responsive.fontSize(13)),
               filled: true,
               fillColor: Colors.grey.shade50,
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: responsive.padding(16),
+                vertical: responsive.padding(14),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: AppColors.border),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: AppColors.primary, width: 1.2),
-                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: AppColors.primary, width: 1.2),
+                borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
               ),
             ),
           ),

@@ -25,6 +25,9 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isCompact = screenWidth < 400;
+    
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
@@ -56,23 +59,26 @@ class _MainPageState extends State<MainPage> {
             },
             borderRadius: BorderRadius.circular(16),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: EdgeInsets.symmetric(
+                horizontal: isCompact ? 12 : 16,
+                vertical: isCompact ? 10 : 12,
+              ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Stack(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.message_rounded,
                         color: AppColors.textOnPrimary,
-                        size: 24,
+                        size: isCompact ? 20 : 24,
                       ),
                       Positioned(
                         right: 0,
                         top: 0,
                         child: Container(
-                          width: 8,
-                          height: 8,
+                          width: isCompact ? 6 : 8,
+                          height: isCompact ? 6 : 8,
                           decoration: const BoxDecoration(
                             color: AppColors.error,
                             shape: BoxShape.circle,
@@ -81,12 +87,12 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(width: 8),
-                  const Text(
+                  SizedBox(width: isCompact ? 6 : 8),
+                  Text(
                     'Pesan',
                     style: TextStyle(
                       color: AppColors.textOnPrimary,
-                      fontSize: 14,
+                      fontSize: isCompact ? 12 : 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -110,7 +116,10 @@ class _MainPageState extends State<MainPage> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth / 4 * 0.2,
+              vertical: isCompact ? 6 : 8,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -118,21 +127,25 @@ class _MainPageState extends State<MainPage> {
                   icon: Icons.dashboard_rounded,
                   label: 'Dashboard',
                   index: 0,
+                  isCompact: isCompact,
                 ),
                 _buildNavItem(
                   icon: Icons.campaign_rounded,
                   label: 'Kegiatan',
                   index: 1,
+                  isCompact: isCompact,
                 ),
                 _buildNavItem(
                   icon: Icons.account_balance_wallet_rounded,
                   label: 'Keuangan',
                   index: 2,
+                  isCompact: isCompact,
                 ),
                 _buildNavItem(
                   icon: Icons.people_rounded,
                   label: 'Masyarakat',
                   index: 3,
+                  isCompact: isCompact,
                 ),
               ],
             ),
@@ -146,6 +159,7 @@ class _MainPageState extends State<MainPage> {
     required IconData icon,
     required String label,
     required int index,
+    required bool isCompact,
   }) {
     final isSelected = _currentIndex == index;
     
@@ -157,7 +171,10 @@ class _MainPageState extends State<MainPage> {
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: EdgeInsets.symmetric(
+          horizontal: isCompact ? 8 : 16,
+          vertical: isCompact ? 6 : 8,
+        ),
         decoration: BoxDecoration(
           gradient: isSelected ? AppColors.primaryGradient : null,
           borderRadius: BorderRadius.circular(12),
@@ -168,14 +185,14 @@ class _MainPageState extends State<MainPage> {
             Icon(
               icon,
               color: isSelected ? AppColors.textOnPrimary : AppColors.iconPrimary,
-              size: 24,
+              size: isCompact ? 20 : 24,
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: isCompact ? 2 : 4),
             Text(
               label,
               style: TextStyle(
                 color: isSelected ? AppColors.textOnPrimary : AppColors.textSecondary,
-                fontSize: 11,
+                fontSize: isCompact ? 9 : 11,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
               ),
             ),

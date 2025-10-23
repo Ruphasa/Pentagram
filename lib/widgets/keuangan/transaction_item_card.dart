@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/models/transaction.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/utils/responsive_helper.dart';
 import 'package:intl/intl.dart';
 
 class TransactionItemCard extends StatelessWidget {
@@ -30,52 +31,53 @@ class TransactionItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = context.responsive;
     final icon = transaction.isIncome
         ? Icons.arrow_downward_rounded
         : Icons.arrow_upward_rounded;
     final color = transaction.isIncome ? AppColors.success : AppColors.error;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(responsive.padding(16)),
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
+        borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
+        boxShadow: [
           BoxShadow(
             color: AppColors.shadow,
-            blurRadius: 8,
-            offset: Offset(0, 2),
+            blurRadius: responsive.elevation(8),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(responsive.padding(10)),
             decoration: BoxDecoration(
               color: color.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
             ),
-            child: Icon(icon, color: color, size: 20),
+            child: Icon(icon, color: color, size: responsive.iconSize(20)),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: responsive.spacing(12)),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   transaction.title,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: TextStyle(
+                    fontSize: responsive.fontSize(15),
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: responsive.spacing(4)),
                 Text(
                   _formatDate(transaction.date),
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: TextStyle(
+                    fontSize: responsive.fontSize(12),
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -85,7 +87,7 @@ class TransactionItemCard extends StatelessWidget {
           Text(
             _formatCurrency(transaction.amount),
             style: TextStyle(
-              fontSize: 15,
+              fontSize: responsive.fontSize(15),
               fontWeight: FontWeight.bold,
               color: color,
             ),

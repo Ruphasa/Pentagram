@@ -235,7 +235,17 @@ class DaftarMutasiPage extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const TambahMutasiPage()),
           );
         },
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Builder(
+          builder: (context) {
+            final screenWidth = MediaQuery.of(context).size.width;
+            final isCompact = screenWidth < 400;
+            return Icon(
+              Icons.add,
+              color: Colors.white,
+              size: isCompact ? 24 : 28,
+            );
+          },
+        ),
       ),
     );
   }

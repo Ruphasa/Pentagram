@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/utils/responsive_helper.dart';
 
 class CommonHeader extends StatelessWidget {
   final String title;
@@ -16,8 +17,10 @@ class CommonHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = context.responsive;
+    
     return SliverAppBar(
-      expandedHeight: expandedHeight,
+      expandedHeight: responsive.isCompact ? expandedHeight * 0.85 : expandedHeight,
       floating: false,
       pinned: true,
       automaticallyImplyLeading: false,
@@ -25,12 +28,16 @@ class CommonHeader extends StatelessWidget {
       actions: actions,
       flexibleSpace: FlexibleSpaceBar(
         title: Padding(
-          padding: const EdgeInsetsDirectional.only(start: 24, bottom: 16),
+          padding: EdgeInsetsDirectional.only(
+            start: responsive.padding(24),
+            bottom: responsive.padding(16),
+          ),
           child: Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               color: AppColors.textOnPrimary,
               fontWeight: FontWeight.bold,
+              fontSize: responsive.fontSize(16),
             ),
           ),
         ),
@@ -40,7 +47,12 @@ class CommonHeader extends StatelessWidget {
           ),
           child: subtitle != null
               ? Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 70, 16, 16),
+                  padding: EdgeInsets.fromLTRB(
+                    responsive.padding(16),
+                    responsive.isCompact ? 60 : 70,
+                    responsive.padding(16),
+                    responsive.padding(16),
+                  ),
                   child: subtitle!,
                 )
               : null,

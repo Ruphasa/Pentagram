@@ -191,7 +191,17 @@ class DaftarPenggunaPage extends StatelessWidget {
             MaterialPageRoute(builder: (_) => const TambahPenggunaPage()),
           );
         },
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Builder(
+          builder: (context) {
+            final screenWidth = MediaQuery.of(context).size.width;
+            final isCompact = screenWidth < 400;
+            return Icon(
+              Icons.add,
+              color: Colors.white,
+              size: isCompact ? 24 : 28,
+            );
+          },
+        ),
       ),
     );
   }

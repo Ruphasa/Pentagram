@@ -83,6 +83,8 @@ class _ActivityViewState extends State<ActivityView>
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isCompact = screenWidth < 400;
     final totalActivities = _activityService.getTotalActivitiesCount();
 
     return Scaffold(
@@ -211,10 +213,16 @@ class _ActivityViewState extends State<ActivityView>
             },
             backgroundColor: Colors.transparent,
             elevation: 0,
-            icon: const Icon(Icons.add_rounded, size: 28),
-            label: const Text(
+            icon: Icon(
+              Icons.add_rounded,
+              size: isCompact ? 24 : 28,
+            ),
+            label: Text(
               'Tambah',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: isCompact ? 14 : 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

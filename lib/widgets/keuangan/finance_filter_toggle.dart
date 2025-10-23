@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/utils/responsive_helper.dart';
 
 class FinanceFilterToggle extends StatelessWidget {
   final bool showIncome;
@@ -13,11 +14,13 @@ class FinanceFilterToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = context.responsive;
+    
     return Container(
-      padding: const EdgeInsets.all(4),
+      padding: EdgeInsets.all(responsive.padding(4)),
       decoration: BoxDecoration(
         color: AppColors.backgroundGrey,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
       ),
       child: Row(
         children: [
@@ -54,19 +57,21 @@ class _FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = context.responsive;
+    
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: EdgeInsets.symmetric(vertical: responsive.padding(12)),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.background : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(responsive.borderRadius(8)),
           boxShadow: isSelected
               ? [
-                  const BoxShadow(
+                  BoxShadow(
                     color: AppColors.shadow,
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
+                    blurRadius: responsive.elevation(4),
+                    offset: const Offset(0, 2),
                   ),
                 ]
               : null,
@@ -75,7 +80,7 @@ class _FilterButton extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: responsive.fontSize(14),
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
               color: isSelected ? AppColors.primary : AppColors.textSecondary,
             ),

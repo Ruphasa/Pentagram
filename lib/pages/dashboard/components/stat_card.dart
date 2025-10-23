@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/utils/responsive_helper.dart';
 
 class StatCard extends StatelessWidget {
   final String title;
@@ -18,21 +19,23 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = context.responsive;
+    
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(responsive.padding(20)),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [lightColor, darkColor],
           ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(responsive.borderRadius(20)),
           boxShadow: [
             BoxShadow(
               color: darkColor.withOpacity(0.3),
-              blurRadius: 10,
+              blurRadius: responsive.elevation(10),
               offset: const Offset(0, 5),
             ),
           ],
@@ -40,36 +43,36 @@ class StatCard extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(responsive.padding(12)),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
               ),
               child: Icon(
                 icon,
                 color: Colors.white,
-                size: 28,
+                size: responsive.iconSize(28),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: responsive.spacing(16)),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: responsive.fontSize(16),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: responsive.spacing(4)),
                   Text(
                     'Lihat statistik $title',
                     style: TextStyle(
                       color: Colors.white.withOpacity(0.9),
-                      fontSize: 12,
+                      fontSize: responsive.fontSize(12),
                     ),
                   ),
                 ],
@@ -78,7 +81,7 @@ class StatCard extends StatelessWidget {
             Icon(
               Icons.arrow_forward_ios,
               color: Colors.white.withOpacity(0.8),
-              size: 16,
+              size: responsive.iconSize(16),
             ),
           ],
         ),

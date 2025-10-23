@@ -90,42 +90,58 @@ class _MasyarakatPageState extends State<MasyarakatPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.textOnPrimary,
-        title: const Text('Masyarakat'),
-        elevation: 0,
-        bottom: TabBar(
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isCompact = screenWidth < 400;
+    
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: AppColors.primary,
+          title: const Text(
+            'Data Masyarakat',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: AppColors.textOnPrimary,
+            ),
+          ),
+          bottom: TabBar(
+            controller: _tabController,
+            indicatorColor: AppColors.textOnPrimary,
+            labelColor: AppColors.textOnPrimary,
+            unselectedLabelColor: AppColors.textOnPrimary.withOpacity(0.7),
+            tabs: const [
+              Tab(text: 'Warga'),
+              Tab(text: 'Keluarga'),
+              Tab(text: 'Rumah'),
+            ],
+          ),
+        ),
+        body: TabBarView(
           controller: _tabController,
-          indicatorColor: AppColors.secondary,
-          labelColor: AppColors.textOnPrimary,
-          unselectedLabelColor: AppColors.textPrimary,
-          tabs: const [
-            Tab(text: 'Warga', icon: Icon(Icons.people_rounded)),
-            Tab(text: 'Keluarga', icon: Icon(Icons.family_restroom_rounded)),
-            Tab(text: 'Rumah', icon: Icon(Icons.home_rounded)),
+          children: const [
+            WargaTab(),
+            KeluargaTab(),
+            RumahTab(),
           ],
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          WargaTab(),
-          KeluargaTab(),
-          RumahTab(),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _onFabPressed,
-        backgroundColor: AppColors.primary,
-        icon: Icon(_getFabIcon(), color: AppColors.textOnPrimary),
-        label: Text(
-          _getFabLabel(),
-          style: const TextStyle(
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: _onFabPressed,
+          backgroundColor: AppColors.primary,
+          icon: Icon(
+            _getFabIcon(),
             color: AppColors.textOnPrimary,
-            fontWeight: FontWeight.w600,
+            size: isCompact ? 20 : 24,
+          ),
+          label: Text(
+            _getFabLabel(),
+            style: TextStyle(
+              color: AppColors.textOnPrimary,
+              fontWeight: FontWeight.w600,
+              fontSize: isCompact ? 12 : 14,
+            ),
           ),
         ),
       ),

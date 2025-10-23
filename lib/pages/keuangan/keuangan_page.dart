@@ -58,6 +58,9 @@ class _KeuanganPageState extends State<KeuanganPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isCompact = screenWidth < 400;
+    
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -100,10 +103,14 @@ class _KeuanganPageState extends State<KeuanganPage> {
         icon: Icon(
           _showIncome ? Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
           color: AppColors.textOnPrimary,
+          size: isCompact ? 20 : 24,
         ),
         label: Text(
           _showIncome ? 'Tambah Pemasukan' : 'Tambah Pengeluaran',
-          style: const TextStyle(color: AppColors.textOnPrimary),
+          style: TextStyle(
+            color: AppColors.textOnPrimary,
+            fontSize: isCompact ? 12 : 14,
+          ),
         ),
         onPressed: () => _showAddTransactionForm(context),
       ),

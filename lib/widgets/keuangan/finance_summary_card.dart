@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
+import 'package:pentagram/utils/responsive_helper.dart';
 
 class FinanceSummaryCard extends StatelessWidget {
   final String title;
@@ -17,16 +18,18 @@ class FinanceSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = context.responsive;
+    
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(responsive.padding(16)),
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
+        borderRadius: BorderRadius.circular(responsive.borderRadius(16)),
+        boxShadow: [
           BoxShadow(
             color: AppColors.shadow,
-            blurRadius: 10,
-            offset: Offset(0, 2),
+            blurRadius: responsive.elevation(10),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -34,26 +37,26 @@ class FinanceSummaryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(responsive.padding(8)),
             decoration: BoxDecoration(
               color: color.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(responsive.borderRadius(8)),
             ),
-            child: Icon(icon, color: color, size: 20),
+            child: Icon(icon, color: color, size: responsive.iconSize(20)),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: responsive.spacing(12)),
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 12,
+            style: TextStyle(
+              fontSize: responsive.fontSize(12),
               color: AppColors.textSecondary,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: responsive.spacing(4)),
           Text(
             amount,
-            style: const TextStyle(
-              fontSize: 16,
+            style: TextStyle(
+              fontSize: responsive.fontSize(16),
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pentagram/models/activity.dart';
 import 'package:pentagram/utils/activity_helper.dart';
 import 'package:pentagram/pages/activity_broadcast/activity_detail.dart';
+import 'package:pentagram/utils/responsive_helper.dart';
 
 class EventCard extends StatelessWidget {
   final Activity activity;
@@ -15,6 +16,7 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = context.responsive;
     final categoryColor = ActivityHelper.getCategoryColor(activity.kategori);
 
     return GestureDetector(
@@ -27,8 +29,8 @@ class EventCard extends StatelessWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.only(right: 12),
-        padding: const EdgeInsets.all(20),
+        margin: EdgeInsets.only(right: responsive.spacing(12)),
+        padding: EdgeInsets.all(responsive.padding(20)),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -38,11 +40,11 @@ class EventCard extends StatelessWidget {
               categoryColor.withOpacity(0.7),
             ],
           ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(responsive.borderRadius(20)),
           boxShadow: [
             BoxShadow(
               color: categoryColor.withOpacity(0.3),
-              blurRadius: 10,
+              blurRadius: responsive.elevation(10),
               offset: const Offset(0, 4),
             ),
           ],
@@ -53,19 +55,19 @@ class EventCard extends StatelessWidget {
           children: [
             // Category badge
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 6,
+              padding: EdgeInsets.symmetric(
+                horizontal: responsive.padding(12),
+                vertical: responsive.padding(6),
               ),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
               ),
               child: Text(
                 activity.kategori,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: responsive.fontSize(12),
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -74,8 +76,8 @@ class EventCard extends StatelessWidget {
             // Event name
             Text(
               activity.nama,
-              style: const TextStyle(
-                fontSize: 20,
+              style: TextStyle(
+                fontSize: responsive.fontSize(20),
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
                 height: 1.2,
@@ -89,25 +91,25 @@ class EventCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: EdgeInsets.all(responsive.padding(10)),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
                     ),
                     child: Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.calendar_today,
                           color: Colors.white,
-                          size: 16,
+                          size: responsive.iconSize(16),
                         ),
-                        const SizedBox(width: 8),
+                        SizedBox(width: responsive.spacing(8)),
                         Expanded(
                           child: Text(
                             ActivityHelper.formatDate(activity.tanggal, short: true),
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
-                              fontSize: 13,
+                              fontSize: responsive.fontSize(13),
                               fontWeight: FontWeight.w600,
                             ),
                             maxLines: 1,
@@ -118,17 +120,17 @@ class EventCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: responsive.spacing(8)),
                 Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: EdgeInsets.all(responsive.padding(10)),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.white,
-                    size: 16,
+                    size: responsive.iconSize(16),
                   ),
                 ),
               ],

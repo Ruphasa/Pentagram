@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pentagram/utils/app_colors.dart';
-import 'package:pentagram/pages/masyarakat/detail_warga_page.dart';
+import 'package:pentagram/utils/responsive_helper.dart';
 
 class WargaCard extends StatelessWidget {
   final String name;
@@ -20,16 +20,18 @@ class WargaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = context.responsive;
+    
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(responsive.padding(16)),
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
+        borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
+        boxShadow: [
           BoxShadow(
             color: AppColors.shadow,
-            blurRadius: 8,
-            offset: Offset(0, 2),
+            blurRadius: responsive.elevation(8),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -39,36 +41,36 @@ class WargaCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 50,
-                height: 50,
+                width: responsive.isCompact ? 45 : 50,
+                height: responsive.isCompact ? 45 : 50,
                 decoration: BoxDecoration(
                   gradient: AppColors.primaryGradient,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.person_rounded,
                   color: AppColors.textOnPrimary,
-                  size: 28,
+                  size: responsive.iconSize(28),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: responsive.spacing(12)),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       name,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: TextStyle(
+                        fontSize: responsive.fontSize(16),
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: responsive.spacing(4)),
                     Text(
                       nik,
-                      style: const TextStyle(
-                        fontSize: 12,
+                      style: TextStyle(
+                        fontSize: responsive.fontSize(12),
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -76,18 +78,18 @@ class WargaCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
+                padding: EdgeInsets.symmetric(
+                  horizontal: responsive.padding(10),
+                  vertical: responsive.padding(4),
                 ),
                 decoration: BoxDecoration(
                   color: statusColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
                 ),
                 child: Text(
                   status,
                   style: TextStyle(
-                    fontSize: 11,
+                    fontSize: responsive.fontSize(11),
                     fontWeight: FontWeight.w600,
                     color: statusColor,
                   ),
@@ -95,48 +97,214 @@ class WargaCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: responsive.spacing(12)),
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.family_restroom_rounded,
-                size: 16,
+                size: responsive.iconSize(16),
                 color: AppColors.iconSecondary,
               ),
-              const SizedBox(width: 6),
+              SizedBox(width: responsive.spacing(6)),
               Text(
                 role,
-                style: const TextStyle(
-                  fontSize: 13,
+                style: TextStyle(
+                  fontSize: responsive.fontSize(13),
                   color: AppColors.textSecondary,
                 ),
               ),
               const Spacer(),
               TextButton.icon(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailWargaPage(
-                        name: name,
-                        nik: nik,
-                        role: role,
-                        status: status,
-                      ),
-                    ),
-                  );
+                  _showDetailDialog(context, responsive);
                 },
-                icon: const Icon(Icons.arrow_forward_rounded, size: 16),
-                label: const Text('Detail'),
+                icon: Icon(Icons.info_outline_rounded, size: responsive.iconSize(16)),
+                label: Text('Detail', style: TextStyle(fontSize: responsive.fontSize(13))),
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.primary,
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: EdgeInsets.symmetric(horizontal: responsive.padding(8)),
                 ),
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+
+  void _showDetailDialog(BuildContext context, ResponsiveHelper responsive) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(responsive.borderRadius(16)),
+          ),
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: responsive.isCompact ? double.infinity : 500,
+            ),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(responsive.padding(24)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: responsive.isCompact ? 50 : 60,
+                          height: responsive.isCompact ? 50 : 60,
+                          decoration: BoxDecoration(
+                            gradient: AppColors.primaryGradient,
+                            borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
+                          ),
+                          child: Icon(
+                            Icons.person_rounded,
+                            color: AppColors.textOnPrimary,
+                            size: responsive.iconSize(32),
+                          ),
+                        ),
+                        SizedBox(width: responsive.spacing(16)),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                name,
+                                style: TextStyle(
+                                  fontSize: responsive.fontSize(20),
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
+                              SizedBox(height: responsive.spacing(4)),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: responsive.padding(10),
+                                  vertical: responsive.padding(4),
+                                ),
+                                decoration: BoxDecoration(
+                                  color: statusColor.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
+                                ),
+                                child: Text(
+                                  status,
+                                  style: TextStyle(
+                                    fontSize: responsive.fontSize(12),
+                                    fontWeight: FontWeight.w600,
+                                    color: statusColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: Icon(
+                            Icons.close_rounded,
+                            size: responsive.iconSize(24),
+                          ),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: responsive.spacing(24)),
+                    Divider(height: 1, color: AppColors.border),
+                    SizedBox(height: responsive.spacing(24)),
+                    _buildDetailRow(
+                      'NIK',
+                      nik,
+                      Icons.badge_rounded,
+                      responsive,
+                    ),
+                    SizedBox(height: responsive.spacing(16)),
+                    _buildDetailRow(
+                      'Peran dalam Keluarga',
+                      role,
+                      Icons.family_restroom_rounded,
+                      responsive,
+                    ),
+                    SizedBox(height: responsive.spacing(24)),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          // TODO: Navigate to edit page
+                        },
+                        icon: Icon(Icons.edit_rounded, size: responsive.iconSize(18)),
+                        label: Text(
+                          'Edit Data',
+                          style: TextStyle(
+                            fontSize: responsive.fontSize(14),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: AppColors.textOnPrimary,
+                          padding: EdgeInsets.symmetric(vertical: responsive.padding(14)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(responsive.borderRadius(10)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value, IconData icon, ResponsiveHelper responsive) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.all(responsive.padding(8)),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(responsive.borderRadius(8)),
+          ),
+          child: Icon(
+            icon,
+            size: responsive.iconSize(20),
+            color: AppColors.primary,
+          ),
+        ),
+        SizedBox(width: responsive.spacing(12)),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: responsive.fontSize(12),
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              SizedBox(height: responsive.spacing(4)),
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: responsive.fontSize(15),
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

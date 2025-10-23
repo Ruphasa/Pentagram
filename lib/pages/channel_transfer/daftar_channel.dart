@@ -52,7 +52,17 @@ class DaftarChannelPage extends StatelessWidget {
             ),
           );
         },
-        child: const Icon(Icons.add, color: Colors.white, size: 28),
+        child: Builder(
+          builder: (context) {
+            final screenWidth = MediaQuery.of(context).size.width;
+            final isCompact = screenWidth < 400;
+            return Icon(
+              Icons.add,
+              color: Colors.white,
+              size: isCompact ? 24 : 28,
+            );
+          },
+        ),
       ),
 
       // === Daftar Channel ===
