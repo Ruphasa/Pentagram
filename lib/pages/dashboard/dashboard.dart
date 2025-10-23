@@ -136,39 +136,22 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-                      // === Daftar Pengguna ===
-                      _buildQuickAccessCard(
-                        context,
-                        color: const Color(0xFFFFB74D),
-                        icon: Icons.group_rounded,
-                        label: 'Daftar Pengguna',
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DaftarPenggunaPage(), // lib/pages/manajemen_pengguna/daftar_pengguna.dart
-                            ),
-                          );
-                        },
-                      ),
-                      // === Penerimaan Warga ===
-                      _buildQuickAccessCard(
-                        context,
-                        color: const Color(0xFF4DB6AC), 
-                        icon: Icons.home_rounded,
-                        label: 'Penerimaan\nWarga', 
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PenerimaanWargaPage(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+  /// Build Upcoming Events Section
+  Widget _buildUpcomingEventsSection() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Kegiatan mendatang',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               if (_upcomingActivities.length > 1)
                 Container(
@@ -320,6 +303,27 @@ class _DashboardState extends State<Dashboard> {
                   );
                 },
               ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              QuickAccessCard(
+                color: const Color(0xFF4DB6AC),
+                icon: Icons.home_rounded,
+                label: 'Penerimaan Warga',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PenerimaanWargaPage(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(width: 8), // Placeholder untuk menjaga layout
+              const SizedBox(width: 8), // Placeholder untuk menjaga layout
             ],
           ),
         ],
