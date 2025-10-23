@@ -65,9 +65,16 @@ class _KeuanganPageState extends State<KeuanganPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add_rounded, color: AppColors.textOnPrimary),
+        icon: Icon(
+          showIncome ? Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
+          color: AppColors.textOnPrimary,
+        ),
+        label: Text(
+          showIncome ? 'Tambah Pemasukan' : 'Tambah Pengeluaran',
+          style: const TextStyle(color: AppColors.textOnPrimary),
+        ),
         onPressed: () => _showAddTransactionForm(context),
       ),
     );
