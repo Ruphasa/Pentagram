@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pentagram/pages/broadcast/broadcast_page.dart';
 import 'package:pentagram/pages/channel_transfer/daftar_channel.dart';
 import 'package:pentagram/pages/dashboard/components/quick_access_card.dart';
 import 'package:pentagram/pages/manajemen_pengguna/daftar_pengguna.dart';
@@ -29,7 +30,12 @@ class QuickAccessSection extends StatelessWidget {
                     icon: Icons.campaign,
                     label: 'Broadcast',
                     onTap: () {
-                      Navigator.pushNamed(context, '/broadcast');
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(
+                          builder: (context) => const BroadcastPage(),
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(width: 12),
