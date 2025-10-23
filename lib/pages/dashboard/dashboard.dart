@@ -266,65 +266,64 @@ class _DashboardState extends State<Dashboard> {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              QuickAccessCard(
-                color: const Color(0xFF80CBC4),
-                icon: Icons.campaign,
-                label: 'Broadcast',
-                onTap: () {
-                  Navigator.pushNamed(context, '/broadcast');
-                },
-              ),
-              const SizedBox(width: 12),
-              QuickAccessCard(
-                color: const Color(0xFF9575CD),
-                icon: Icons.tv_rounded,
-                label: 'Daftar Channel',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DaftarChannelPage(),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(width: 12),
-              QuickAccessCard(
-                color: const Color(0xFFFFB74D),
-                icon: Icons.group_rounded,
-                label: 'Daftar Pengguna',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DaftarPenggunaPage(),
-                    ),
-                  );
-                },
-              ),
-            ],
+          Center(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  QuickAccessCard(
+                  color: const Color(0xFF80CBC4),
+                  icon: Icons.campaign,
+                  label: 'Broadcast',
+                  onTap: () {
+                    Navigator.pushNamed(context, '/broadcast');
+                  },
+                ),
+                const SizedBox(width: 12),
+                QuickAccessCard(
+                  color: const Color(0xFF9575CD),
+                  icon: Icons.tv_rounded,
+                  label: 'Daftar Channel',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DaftarChannelPage(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(width: 12),
+                QuickAccessCard(
+                  color: const Color(0xFFFFB74D),
+                  icon: Icons.group_rounded,
+                  label: 'Daftar Pengguna',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DaftarPenggunaPage(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(width: 12),
+                QuickAccessCard(
+                  color: const Color(0xFF4DB6AC),
+                  icon: Icons.home_rounded,
+                  label: 'Penerimaan Warga',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PenerimaanWargaPage(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              QuickAccessCard(
-                color: const Color(0xFF4DB6AC),
-                icon: Icons.home_rounded,
-                label: 'Penerimaan Warga',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PenerimaanWargaPage(),
-                    ),
-                  );
-                },
-              ),
-            ],
           ),
         ],
       ),
