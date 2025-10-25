@@ -4,7 +4,7 @@ import 'package:pentagram/pages/activity_broadcast/activity_view.dart';
 import 'package:pentagram/pages/keuangan/keuangan_page.dart';
 import 'package:pentagram/utils/app_colors.dart';
 import 'package:pentagram/pages/masyarakat/masyarakat_page.dart';
-import 'package:pentagram/pages/pesan/pesan_warga_page.dart';
+// Removed NotificationsPage import; using existing Notifikasi page via Dashboard entry
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -33,76 +33,9 @@ class _MainPageState extends State<MainPage> {
         index: _currentIndex,
         children: _pages,
       ),
-      floatingActionButton: Container(
-        margin: const EdgeInsets.only(bottom: 8),
-        decoration: BoxDecoration(
-          gradient: AppColors.primaryGradient,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withOpacity(0.4),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const PesanWargaPage(),
-                ),
-              );
-            },
-            borderRadius: BorderRadius.circular(16),
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: isCompact ? 12 : 16,
-                vertical: isCompact ? 10 : 12,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Stack(
-                    children: [
-                      Icon(
-                        Icons.message_rounded,
-                        color: AppColors.textOnPrimary,
-                        size: isCompact ? 20 : 24,
-                      ),
-                      Positioned(
-                        right: 0,
-                        top: 0,
-                        child: Container(
-                          width: isCompact ? 6 : 8,
-                          height: isCompact ? 6 : 8,
-                          decoration: const BoxDecoration(
-                            color: AppColors.error,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: isCompact ? 6 : 8),
-                  Text(
-                    'Pesan',
-                    style: TextStyle(
-                      color: AppColors.textOnPrimary,
-                      fontSize: isCompact ? 12 : 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+  // Floating Pesan removed per UX; no FAB here
+  floatingActionButton: null,
+  floatingActionButtonLocation: null,
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           color: AppColors.background,
@@ -147,6 +80,7 @@ class _MainPageState extends State<MainPage> {
                   index: 3,
                   isCompact: isCompact,
                 ),
+                // Notifikasi is accessible from Dashboard; no nav item here
               ],
             ),
           ),

@@ -183,49 +183,15 @@ class _ActivityViewState extends State<ActivityView>
           ],
         ),
       ),
-      floatingActionButton: AnimatedScale(
-        scale: _isHeaderVisible ? 1.0 : 0.9,
-        duration: const Duration(milliseconds: 200),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            gradient: LinearGradient(
-              colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withOpacity(0.4),
-                blurRadius: 15,
-                offset: const Offset(0, 5),
-              ),
-            ],
-          ),
-          child: FloatingActionButton.extended(
-            onPressed: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ActivityAdd()),
-              );
-              // Reload activities if new activity was added
-              if (result == true) {
-                _loadActivities();
-              }
-            },
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            icon: Icon(
-              Icons.add_rounded,
-              size: isCompact ? 24 : 28,
-            ),
-            label: Text(
-              'Tambah',
-              style: TextStyle(
-                fontSize: isCompact ? 14 : 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.primary,
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ActivityAdd(),
           ),
         ),
+        child: const Icon(Icons.add, color: AppColors.textOnPrimary),
       ),
     );
   }

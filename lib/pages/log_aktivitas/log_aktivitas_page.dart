@@ -6,7 +6,8 @@ import 'package:pentagram/utils/activity_helper.dart';
 import 'package:pentagram/widgets/log_aktivitas/filter_aktivitas_dialog.dart';
 
 class LogAktivitasPage extends StatefulWidget {
-  const LogAktivitasPage({super.key});
+  final bool embedded;
+  const LogAktivitasPage({super.key, this.embedded = false});
 
   @override
   State<LogAktivitasPage> createState() => _LogAktivitasPageState();
@@ -54,31 +55,12 @@ class _LogAktivitasPageState extends State<LogAktivitasPage> {
     );
   }
 
+  // Exposed for parent header actions
+  void openFilter() => _showFilterDialog();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        title: const Text(
-          'Log Aktivitas',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        elevation: 0,
-        actions: [
-          // Statistics button
-          IconButton(
-            icon: const Icon(Icons.analytics_outlined),
-            onPressed: () {
-              _showStatisticsDialog();
-            },
-            tooltip: 'Statistik',
-          ),
-        ],
-      ),
-      body: Column(
+    final content = Column(
         children: [
           // Search Bar + Filter Button
           Container(
@@ -132,31 +114,6 @@ class _LogAktivitasPageState extends State<LogAktivitasPage> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
-                // Filter Button
-                InkWell(
-                  onTap: _showFilterDialog,
-                  borderRadius: BorderRadius.circular(12),
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      gradient: AppColors.primaryGradient,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primary.withOpacity(0.3),
-                          blurRadius: 4,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.filter_list_rounded,
-                      color: Colors.white,
-                      size: 26,
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -202,7 +159,35 @@ class _LogAktivitasPageState extends State<LogAktivitasPage> {
                   ),
           ),
         ],
+      );
+
+    if (widget.embedded) return content;
+
+    return Scaffold(
+      backgroundColor: Colors.grey[50],
+      appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        title: const Text(
+          'Log Aktivitas',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.filter_list_rounded),
+            onPressed: _showFilterDialog,
+            tooltip: 'Filter',
+          ),
+          IconButton(
+            icon: const Icon(Icons.analytics_outlined),
+            onPressed: _showStatisticsDialog,
+            tooltip: 'Statistik',
+          ),
+        ],
       ),
+      body: content,
     );
   }
 
@@ -225,6 +210,7 @@ class _LogAktivitasPageState extends State<LogAktivitasPage> {
           horizontal: 16,
           vertical: 8,
         ),
+        onTap: () => _showLogDetail(log),
         leading: Container(
           width: 48,
           height: 48,
@@ -314,29 +300,7 @@ class _LogAktivitasPageState extends State<LogAktivitasPage> {
             ],
           ),
         ),
-        trailing: PopupMenuButton<String>(
-          icon: Icon(Icons.more_vert, color: Colors.grey[600]),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          onSelected: (value) {
-            if (value == 'detail') {
-              _showLogDetail(log);
-            }
-          },
-          itemBuilder: (context) => [
-            const PopupMenuItem(
-              value: 'detail',
-              child: Row(
-                children: [
-                  Icon(Icons.info_outline, size: 20),
-                  SizedBox(width: 12),
-                  Text('Lihat Detail'),
-                ],
-              ),
-            ),
-          ],
-        ),
+        // Remove trailing menu; tap the card to open detail
       ),
     );
   }

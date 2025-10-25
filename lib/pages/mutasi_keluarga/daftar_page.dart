@@ -118,7 +118,7 @@ class DaftarMutasiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final responsive = context.responsive;
-    
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -128,6 +128,13 @@ class DaftarMutasiPage extends StatelessWidget {
           'Daftar Mutasi Keluarga',
           style: TextStyle(fontSize: responsive.fontSize(18)),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.filter_list, size: responsive.iconSize(20)),
+            tooltip: 'Filter',
+            onPressed: () => _showFilterDialog(context),
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -145,250 +152,198 @@ class DaftarMutasiPage extends StatelessWidget {
               ],
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Header Table dan Filter
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: responsive.padding(16),
-                    vertical: responsive.padding(20),
-                  ),
-                  child: responsive.isCompact
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              'Daftar Mutasi',
-                              style: TextStyle(
-                                fontSize: responsive.fontSize(18),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            SizedBox(height: responsive.spacing(12)),
-                            ElevatedButton.icon(
-                              onPressed: () => _showFilterDialog(context),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF6C63FF),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(responsive.borderRadius(8)),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: responsive.padding(12), // Reduced horizontal padding
-                                  vertical: responsive.padding(8), // Reduced vertical padding
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.filter_list,
-                                color: Colors.white,
-                                size: responsive.iconSize(18), // Reduced icon size
-                              ),
-                              label: Text(
-                                'Filter',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: responsive.fontSize(12), // Reduced font size
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Daftar Mutasi',
-                              style: TextStyle(
-                                fontSize: responsive.fontSize(18),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: () => _showFilterDialog(context),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF6C63FF),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(responsive.borderRadius(8)),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: responsive.padding(12), // Reduced horizontal padding
-                                  vertical: responsive.padding(8), // Reduced vertical padding
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.filter_list,
-                                color: Colors.white,
-                                size: responsive.iconSize(18), // Reduced icon size
-                              ),
-                              label: Text(
-                                'Filter',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: responsive.fontSize(12), // Reduced font size
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                ),
-
-                // Table Header
-                Container(
-                  color: Colors.grey.shade100,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: responsive.padding(16),
-                    vertical: responsive.padding(12),
+                    vertical: responsive.padding(16),
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          'NO',
-                          style: TextStyle(
-                            fontSize: responsive.fontSize(12),
-                            fontWeight: FontWeight.w600,
-                          ),
+                      Text(
+                        'Daftar Mutasi',
+                        style: TextStyle(
+                          fontSize: responsive.fontSize(18),
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          'TANGGAL',
-                          style: TextStyle(
-                            fontSize: responsive.fontSize(12),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Text(
-                          'KELUARGA',
-                          style: TextStyle(
-                            fontSize: responsive.fontSize(12),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          'JENIS MUTASI',
-                          style: TextStyle(
-                            fontSize: responsive.fontSize(12),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          'AKSI',
-                          style: TextStyle(
-                            fontSize: responsive.fontSize(12),
-                            fontWeight: FontWeight.w600,
-                          ),
+                      Text(
+                        'Total: ${dataMutasi.length}',
+                        style: TextStyle(
+                          fontSize: responsive.fontSize(12),
+                          color: Colors.grey[600],
                         ),
                       ),
                     ],
                   ),
                 ),
 
-                const Divider(height: 1),
-
-                // Table Rows
-                ...dataMutasi.map(
-                  (data) => Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: responsive.padding(16),
-                      vertical: responsive.padding(14),
+                ...dataMutasi.map((data) {
+                  final isPindah = data['jenis'] == 'Pindah Rumah';
+                  final Color badgeBase = isPindah ? Colors.green : Colors.red;
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      left: responsive.padding(16),
+                      right: responsive.padding(16),
+                      bottom: responsive.spacing(12),
                     ),
-                    decoration: const BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3)),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Text(
-                            data['no']!,
-                            style: TextStyle(fontSize: responsive.fontSize(14)),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailMutasiPage(data: data),
                           ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            data['tanggal']!,
-                            style: TextStyle(fontSize: responsive.fontSize(14)),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 4,
-                          child: Text(
-                            data['keluarga']!,
-                            style: TextStyle(fontSize: responsive.fontSize(14)),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: data['jenis'] == 'Pindah Rumah'
-                                  ? Colors.green.shade100
-                                  : Colors.red.shade100,
-                              borderRadius: BorderRadius.circular(responsive.borderRadius(16)),
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.05),
+                              blurRadius: 6,
+                              offset: const Offset(0, 2),
                             ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: responsive.padding(12),
-                              vertical: responsive.padding(6),
-                            ),
-                            child: Text(
-                              data['jenis']!,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: data['jenis'] == 'Pindah Rumah'
-                                    ? Colors.green.shade800
-                                    : Colors.red.shade800,
-                                fontWeight: FontWeight.w500,
-                                fontSize: responsive.fontSize(12),
-                              ),
-                            ),
-                          ),
+                          ],
                         ),
-
-                        // Tombol aksi (popup dekat tombol)
-                        Expanded(
-                          flex: 1,
-                          child: PopupMenuButton<String>(
-                            onSelected: (value) {
-                              if (value == 'detail') {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailMutasiPage(data: data),
+                        padding: EdgeInsets.all(responsive.padding(14)),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: responsive.iconSize(36),
+                              height: responsive.iconSize(36),
+                              decoration: BoxDecoration(
+                                gradient: AppColors.primaryGradient,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.primary.withOpacity(0.25),
+                                    blurRadius: 6,
+                                    offset: const Offset(0, 2),
                                   ),
-                                );
-                              }
-                            },
-                            itemBuilder: (context) => [
-                              PopupMenuItem(
-                                value: 'detail',
-                                child: Text(
-                                  'Detail',
-                                  style: TextStyle(fontSize: responsive.fontSize(14)),
+                                ],
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                data['no']!,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: responsive.fontSize(12),
                                 ),
                               ),
-                            ],
-                            child: Icon(
-                              Icons.more_vert,
-                              color: Colors.grey,
-                              size: responsive.iconSize(20),
                             ),
-                          ),
+                            SizedBox(width: responsive.spacing(12)),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          data['keluarga']!,
+                                          style: TextStyle(
+                                            fontSize: responsive.fontSize(14),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: responsive.padding(10),
+                                          vertical: responsive.padding(4),
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: badgeBase.withOpacity(0.12),
+                                          borderRadius: BorderRadius.circular(responsive.borderRadius(20)),
+                                        ),
+                                        child: Text(
+                                          data['jenis']!,
+                                          style: TextStyle(
+                                            color: isPindah ? Colors.green.shade700 : Colors.red.shade700,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: responsive.fontSize(11),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: responsive.spacing(6)),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.event, size: responsive.iconSize(14), color: Colors.grey[600]),
+                                      SizedBox(width: responsive.spacing(6)),
+                                      Expanded(
+                                        child: Text(
+                                          data['tanggal']!,
+                                          style: TextStyle(
+                                            fontSize: responsive.fontSize(12),
+                                            color: Colors.grey[700],
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  if ((data['alamatLama'] ?? '').isNotEmpty)
+                                    Padding(
+                                      padding: EdgeInsets.only(top: responsive.spacing(6)),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Icon(Icons.home_outlined, size: responsive.iconSize(14), color: Colors.grey[600]),
+                                          SizedBox(width: responsive.spacing(6)),
+                                          Expanded(
+                                            child: Text(
+                                              'Dari: ${data['alamatLama']!}',
+                                              style: TextStyle(
+                                                fontSize: responsive.fontSize(12),
+                                                color: Colors.grey[700],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  if ((data['alamatBaru'] ?? '').isNotEmpty && data['alamatBaru'] != '-')
+                                    Padding(
+                                      padding: EdgeInsets.only(top: responsive.spacing(4)),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Icon(Icons.location_on_outlined, size: responsive.iconSize(14), color: Colors.grey[600]),
+                                          SizedBox(width: responsive.spacing(6)),
+                                          Expanded(
+                                            child: Text(
+                                              'Ke: ${data['alamatBaru']!}',
+                                              style: TextStyle(
+                                                fontSize: responsive.fontSize(12),
+                                                color: Colors.grey[700],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                }).toList(),
               ],
             ),
           ),

@@ -6,7 +6,8 @@ import 'package:pentagram/widgets/pesan/filter_pesan_dialog.dart';
 import 'package:pentagram/pages/pesan/detail_pesan.dart';
 
 class PesanWargaPage extends StatefulWidget {
-  const PesanWargaPage({super.key});
+  final bool embedded;
+  const PesanWargaPage({super.key, this.embedded = false});
 
   @override
   State<PesanWargaPage> createState() => _PesanWargaPageState();
@@ -114,6 +115,9 @@ class _PesanWargaPageState extends State<PesanWargaPage> {
     );
   }
 
+  // Exposed method for parent to open filter dialog
+  void openFilter() => _showFilterDialog();
+
   @override
   Widget build(BuildContext context) {
     final filteredList = _pesanList.where((p) {
@@ -122,23 +126,7 @@ class _PesanWargaPageState extends State<PesanWargaPage> {
       return true;
     }).toList();
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.textOnPrimary,
-        title: const Text('Pesan Warga'),
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_list_rounded),
-            onPressed: () {
-              _showFilterDialog();
-            },
-          ),
-        ],
-      ),
-      body: Column(
+    final content = Column(
         children: [
           // Search Bar
           Container(
@@ -227,7 +215,25 @@ class _PesanWargaPageState extends State<PesanWargaPage> {
             ),
           ),
         ],
+      );
+
+    if (widget.embedded) return content;
+
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textOnPrimary,
+        title: const Text('Pesan Warga'),
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.filter_list_rounded),
+            onPressed: _showFilterDialog,
+          ),
+        ],
       ),
+      body: content,
     );
   }
 

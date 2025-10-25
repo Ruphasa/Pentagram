@@ -22,22 +22,27 @@ class WargaCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final responsive = context.responsive;
     
-    return Container(
-      padding: EdgeInsets.all(responsive.padding(16)),
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
         borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow,
-            blurRadius: responsive.elevation(8),
-            offset: const Offset(0, 2),
+        onTap: () => _showDetailDialog(context, responsive),
+        child: Container(
+          padding: EdgeInsets.all(responsive.padding(16)),
+          decoration: BoxDecoration(
+            color: AppColors.cardBackground,
+            borderRadius: BorderRadius.circular(responsive.borderRadius(12)),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.shadow,
+                blurRadius: responsive.elevation(8),
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
           Row(
             children: [
               Container(
@@ -113,21 +118,11 @@ class WargaCard extends StatelessWidget {
                   color: AppColors.textSecondary,
                 ),
               ),
-              const Spacer(),
-              TextButton.icon(
-                onPressed: () {
-                  _showDetailDialog(context, responsive);
-                },
-                icon: Icon(Icons.info_outline_rounded, size: responsive.iconSize(16)),
-                label: Text('Detail', style: TextStyle(fontSize: responsive.fontSize(13))),
-                style: TextButton.styleFrom(
-                  foregroundColor: AppColors.primary,
-                  padding: EdgeInsets.symmetric(horizontal: responsive.padding(8)),
-                ),
-              ),
             ],
           ),
         ],
+      ),
+        ),
       ),
     );
   }

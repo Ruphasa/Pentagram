@@ -58,8 +58,8 @@ class _KeuanganPageState extends State<KeuanganPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isCompact = screenWidth < 400;
+  // screen width available if needed for responsive tweaks
+  // final screenWidth = MediaQuery.of(context).size.width;
     
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -98,21 +98,10 @@ class _KeuanganPageState extends State<KeuanganPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
-        icon: Icon(
-          _showIncome ? Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
-          color: AppColors.textOnPrimary,
-          size: isCompact ? 20 : 24,
-        ),
-        label: Text(
-          _showIncome ? 'Tambah Pemasukan' : 'Tambah Pengeluaran',
-          style: TextStyle(
-            color: AppColors.textOnPrimary,
-            fontSize: isCompact ? 12 : 14,
-          ),
-        ),
         onPressed: () => _showAddTransactionForm(context),
+        child: const Icon(Icons.add, color: AppColors.textOnPrimary),
       ),
     );
   }
